@@ -2,7 +2,8 @@ const http = require('http');
 const querystring = require('querystring');
 const discord = require('discord.js');
 const client = new discord.Client();
-const TagCommand = require('commands/tag_coomand');
+
+//const TagCommand = require('./commands/tag_command');
 
 const commands = [
   { command: '!help', get help() { return `\`${this.command}\` _応えられるコマンド一覧を出すよ_`; }  },
@@ -31,6 +32,8 @@ const emojis = [
   { name: 'とろとろスリックスター', code: 'moltenslickster' },
   { name: 'ふさふさスリックスター', code: 'longhairslickster' }
 ];
+
+
 
 function getCustomEmojiMessage(code) {
   return client.emojis.find( "name", code ).toString() + " " +  `\`:${code}:\``;
@@ -92,19 +95,23 @@ client.login( process.env.DISCORD_BOT_TOKEN );
 
 
 function getMessage(context){
+  
+  // ヘルプタグ
   if (context.match(/^\!help/)){
   // ↑ command に委譲したい
     return commands.map(command => command.help);
   }
   
+  // タグ一覧
   if (context.match(/^\!tags/)){
     return ["```", ...tags.map(o => o.tag) ,"```"].join("\n");
   }
   
-  /// ↓ タグ別読解
+  // タグの返答
   const m = context.match(/^\!tag\s+(?<arg>\S+)/);
   if (m) {
     const arg = m.groups.arg;
+    
     if (!arg) {
       return 'なんのこと？'
     }
@@ -132,6 +139,8 @@ function getMessage(context){
 
     return 'なんのこと？';
   }
+  
+  // 絵文字の返答
   const e = context.match(/^\!emoji\s+(?<arg>\S+)/);
   if (e) {
     const arg = e.groups.arg;

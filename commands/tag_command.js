@@ -15,22 +15,30 @@ module.export = class TagCommand {
     }
     
     // tagと完全一致検索する
-    for(const entry of this.dictionary) {
-      if (e == arg) {
-        return url;
-      }
+    const exact = this.exact_match(arg);
+    if (exact !== undefined) {
+      return exact[this.answer];
     }
 
     // 逆に、tagの部分文字列にマッチする。
-    const choice = this.dictionary.filter(o => o.tag.match(arg))
+    const choice = this.partial_match(arg)
     if (choice.length === 1) {
-      const suggestedURL = choice[0].url;
-      return ["もしかして、これ？", "```", ...choice.map(o => o.tag), "```", suggestedURL].join("\n");
-    }
-    if (choice.length > 0) {
-      return ["複数あるよ。聞き直してね。", "```", ...choice.map(o => o.tag), "```"].join("\n");
+      const suggested = choice[0][this.answer];
+      return ["もしかして、これ？", "```", ...choice.map(o => o[this.keyword]), "```", suggested].join("\n");
     }
 
-    return 'なんのこと？';
+    if (choice.length > 0) {
+      return ["複数あるよ。聞き直してね。", "```", ...choice.map(o => o[this.keyword]), "```"].join("\n");
+    }
+    
+    return 'なんのこと？'
+  }
+
+  exact_match(arg) {
+    return this.dictionary.find(o => o[this.keyword] === arg);
+  }
+
+  partial_match(arg) {
+    return this.dictionary.filter(o => o[this.keyword].match(arg));
   }
 }
