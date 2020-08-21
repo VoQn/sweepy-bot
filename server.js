@@ -117,7 +117,7 @@ http
 
 client.on("ready", message => {
   console.log("Bot準備完了～");
-  client.user.setPresence({ game: { name: "人生" } });
+  client.user.setPresence("みんなからの !help ", { type: 'WATCHING' });
 });
 
 client.on("message", message => {
