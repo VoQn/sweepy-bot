@@ -117,21 +117,26 @@ http
 
 client.on("ready", message => {
   console.log("Bot準備完了～");
-  client.user.setPresence("みんなからの !help ", { type: 'WATCHING' });
+  client.user.setPresence("みんなからの !help ", { type: "WATCHING" });
 });
 
 client.on("message", message => {
   if (message.author.id == client.user.id || message.author.bot) {
     return;
   }
-  if (message.isMemberMentioned(client.user)) {
+  if (
+    message.mentions.has(client.user, {
+      ignoreRoles: true,
+      ignoreEveryone: true
+    })
+  ) {
     sendReply(message, "人生を満喫中さ、わかるだろ？");
     return;
   }
 
   const msg = getMessage(message.content);
   // 空メッセージを送らないようにする
-  if(msg && msg.length > 0) {
+  if (msg && msg.length > 0) {
     sendMsg(message.channel.id, msg);
   }
   return;
