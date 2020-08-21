@@ -4,9 +4,9 @@ const discord = require('discord.js');
 const client = new discord.Client();
 
 const commands = [
-  { command: '!help', text: '応えられるコマンド一覧を出すよ',  },
-  { command: '!tags', text: '使えるタグ一覧を出すよ' },
-  { command: '!tag', text: '応えられる範囲で答えるよ' },
+  { command: '!help', get help() { return `\`${this.command}\` _で、応えられるコマンド一覧を出すよ_`; }  },
+  { command: '!tags', get help() { return `\`${this.command}\` _使えるタグ一覧を出すよ_`; } },
+  { command: '!tag', get help() { return `\`${this.command} <スペース> <タグ名> \`_応えられる範囲で答えるよ_`; } },
 ];
 
 const tags = [
@@ -18,7 +18,6 @@ const tags = [
   { tag: '液体の比重', url: 'https://gyazo.com/7d5e226199facb9bb0e5b852d2210df1' },
   { tag: '移動チューブ', url: 'https://gyazo.com/161b5e104c43e12aeef3ddc36cfa04fb' },
   { tag: '液体クーラー', url: 'https://gyazo.com/06375d94aea03932592895cfc064dd1d' },
-  { tag: 'テスト', url: 'なんか文字' },
 ];
 
 http.createServer(function(req, res){
@@ -79,9 +78,7 @@ client.login( process.env.DISCORD_BOT_TOKEN );
 function getMessage(context){
   if (context.match(/^\!help/)){
   // ↑ command に委譲したい
-    return `\`!help\` で出来るコマンド一覧を出すよ
-\`!tags\` で使えるタグ一覧が出るよ
-\`!tag <半角スペース> <タグ名>\` で応えられる範囲で答えるよ`;
+    return commands.map(command => command.help);
   }
   
   if (context.match(/^\!tags/)){
@@ -94,12 +91,14 @@ function getMessage(context){
     return 'もうちょっとヒントちょうだい (2文字以上欲しがっています)';
   }
   if (m && m.groups.arg) {
+    // tagと完全一致検索する
     for(const { tag, url } of tags) {
       if (tag == m.groups.arg) {
         return url;
       }
     }
     
+    // 逆に、tagの部分文字列にマッチする。
     const choice = tags.filter(o => o.tag.match(m.groups.arg))
     if (choice.length === 1) {
       const suggestedURL = choice[0].url;
