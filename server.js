@@ -40,11 +40,11 @@ client.on('message', message =>{
     return;
   }
   if(message.isMemberMentioned(client.user)){
-    sendReply(message, "人生を満喫中さ。わかるだろ？");
+    sendReply(message, "人生を満喫中さ、わかるだろ？");
     return;
   }
-  if (message.content.match(/にゃ～ん|にゃーん/)){
-    let text = "にゃ～ん";
+  if (message.content.match(/\!tag\s液体/)){
+    let text = "https://gyazo.com/19017bac9164b8dd1160d2590187591c";
     sendMsg(message.channel.id, text);
     return;
   }
