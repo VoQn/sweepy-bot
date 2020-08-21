@@ -22,8 +22,15 @@ const tags = [
 ];
 
 const emojis = [
-  { name: 'ハッチ', get code() { return client.emojis.find( "name", "hatch" ).toString() + ' `:hatch:`' } },
-]
+  { name: 'セイジハッチ', code: 'sagehatch' },
+  { name: 'ハッチ', code: 'hatch'},
+  { name: 'ピップ', code: 'pip'},
+  { name: 'スリックスター', code: 'slickster' },
+];
+
+function getCustomEmojiMessage(code) {
+  return client.emojis.find( "name", code ).toString() + " " +  `\`:${code}:\``;
+}
 
 http.createServer(function(req, res){
   if (req.method == 'POST'){
@@ -116,7 +123,7 @@ function getMessage(context){
       return ["もしかして、これ？", "```", ...choice.map(o => o.tag), "```", suggestedURL].join("\n");
     }
     if (choice.length > 0) {
-      return ["複数あるよ。聞き直してね", "```", ...choice.map(o => o.tag), "```"].join("\n");
+      return ["複数あるよ。聞き直してね。", "```", ...choice.map(o => o.tag), "```"].join("\n");
     }
 
     return 'なんのこと？';
@@ -131,22 +138,22 @@ function getMessage(context){
     if (arg.length < 2) {
       return 'もうちょっとヒントちょうだい (2文字以上欲しがっています)';
     }
-    
-    // 
+
+    // 完全一致
     for(const { name, code } of emojis) {
       if (name == arg) {
-        return code;
+        return getCustomEmojiMessage(code);
       }
     }
 
     // 逆に、emojiの部分文字列にマッチする。
     const choice = emojis.filter(o => o.name.match(arg))
     if (choice.length === 1) {
-      const suggested = choice[0].code;
+      const suggested = getCustomEmojiMessage(choice[0].code);
       return ["もしかして、これ？", "```", ...choice.map(o => o.name), "```", suggested].join("\n");
     }
     if (choice.length > 0) {
-      return ["複数あるよ。聞き直してね", "```", ...choice.map(o => o.name), "```"].join("\n");
+      return ["複数あるよ。聞き直してね。", "```", ...choice.map(o => o.name), "```"].join("\n");
     }
 
     return 'なんのこと？';
