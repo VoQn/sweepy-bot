@@ -43,7 +43,13 @@ client.on('message', message =>{
     sendReply(message, "人生を満喫中さ、わかるだろ？");
     return;
   }
-  if (message.content.match(/\!tag\s液体/)){
+  if (message.content.match(/^\!tags$/)){
+    let text = "```\n" +
+    "液体の水圧" + 
+    "```";
+    return;
+  }
+  if (message.content.match(/^\!tag\s液体の水圧/)){
     let text = "https://gyazo.com/19017bac9164b8dd1160d2590187591c";
     sendMsg(message.channel.id, text);
     return;
