@@ -1,9 +1,6 @@
 {
-  "//1": "describes your app and its dependencies",
-  "//2": "https://docs.npmjs.com/files/package.json",
-  "//3": "updating this file will download and update your packages",
-  "name": "sweepy bot",
-  "version": "0.0.1",
+  "name": "sweepy-bot",
+  "version": "1.0.0",
   "description": "A simple Discord chat bot about Oxygen Not Included",
   "main": "server.js",
   "scripts": {

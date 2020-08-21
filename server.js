@@ -3,7 +3,7 @@ const querystring = require('querystring');
 const discord = require('discord.js');
 const client = new discord.Client();
 
-//const TagCommand = require('./commands/tag_command');
+const TagCommand = require('./commands/tag_command');
 
 const commands = [
   { command: '!help', get help() { return `\`${this.command}\` _応えられるコマンド一覧を出すよ_`; }  },
@@ -111,6 +111,7 @@ function getMessage(context){
   const m = context.match(/^\!tag\s+(?<arg>\S+)/);
   if (m) {
     const arg = m.groups.arg;
+    let cmd = new TagCommand(tags, 'tag', 'url');
     
     if (!arg) {
       return 'なんのこと？'
