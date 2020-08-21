@@ -123,6 +123,20 @@ client.on("ready", message => {
   });
 });
 
+// 新しく誰かがサーバーに入った時に挨拶する
+client.on('guildMemberAdd', member => {
+  // Send the message to a designated channel on a server:
+  const channel = member.guild.channels.cache.find(ch => ch.name === 'member-log');
+  // Do nothing if the channel wasn't found on this server
+  if (!channel) return;
+  // Send the message, mentioning the member
+  channel.send(`ようこそ ${member} 非公式日本語ディスコードサーバーへ！
+まずはこの #welcome チャンネルで自己紹介してみてね！
+
+**サーバーに入りたての時はまだ色んなチャンネルを見ることは出来ません。**
+_'承認済み' のロールが与えられたら、インフォメーション以外のカテゴリも読めるようになります。_`);
+});
+
 client.on("message", message => {
   if (message.author.id == client.user.id || message.author.bot) {
     return;
