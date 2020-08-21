@@ -3,8 +3,6 @@ const querystring = require('querystring');
 const discord = require('discord.js');
 const client = new discord.Client();
 
-const TagCommand = require('./commands/tag_command');
-
 const commands = [
   { command: '!help', get help() { return `\`${this.command}\` _応えられるコマンド一覧を出すよ_`; }  },
   { command: '!tags', get help() { return `\`${this.command}\` _使えるタグ一覧を出すよ_`; } },
@@ -23,6 +21,9 @@ const tags = [
   { tag: '液体クーラー', url: 'https://gyazo.com/06375d94aea03932592895cfc064dd1d' },
 ];
 
+const TagCommand = require('./commands/tag_command');
+const tagCommand = new TagCommand(tags, 'tag', 'url');
+
 const emojis = [
   { name: 'セイジハッチ', code: 'sagehatch' },
   { name: 'ハッチ', code: 'hatch'},
@@ -31,8 +32,9 @@ const emojis = [
   { name: 'スリックスター', code: 'slickster'},
   { name: 'とろとろスリックスター', code: 'moltenslickster' },
   { name: 'ふさふさスリックスター', code: 'longhairslickster' }
-];
-
+].map(({name, code}) => { name, code:  })
+;
+const emojiCommand = new TagCommand(emojis, 'name', 'code');
 
 
 function getCustomEmojiMessage(code) {
@@ -110,41 +112,15 @@ function getMessage(context){
   // タグの返答
   const m = context.match(/^\!tag\s+(?<arg>\S+)/);
   if (m) {
-    const arg = m.groups.arg;
-    let cmd = new TagCommand(tags, 'tag', 'url');
-    
-    if (!arg) {
-      return 'なんのこと？'
-    }
-
-    if (arg.length < 2) {
-      return 'もうちょっとヒントちょうだい (2文字以上欲しがっています)';
-    }
-    
-    // tagと完全一致検索する
-    for(const { tag, url } of tags) {
-      if (tag == arg) {
-        return url;
-      }
-    }
-
-    // 逆に、tagの部分文字列にマッチする。
-    const choice = tags.filter(o => o.tag.match(arg))
-    if (choice.length === 1) {
-      const suggestedURL = choice[0].url;
-      return ["もしかして、これ？", "```", ...choice.map(o => o.tag), "```", suggestedURL].join("\n");
-    }
-    if (choice.length > 0) {
-      return ["複数あるよ。聞き直してね。", "```", ...choice.map(o => o.tag), "```"].join("\n");
-    }
-
-    return 'なんのこと？';
+    return tagCommand.getMessage(m.groups.arg);
   }
   
   // 絵文字の返答
   const e = context.match(/^\!emoji\s+(?<arg>\S+)/);
   if (e) {
     const arg = e.groups.arg;
+    // return emojiCommand.getMessage(arg);
+
     if (!arg) {
       return 'なんのこと？'
     }

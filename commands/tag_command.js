@@ -1,4 +1,4 @@
-module.export = class TagCommand {
+class TagCommand {
   constructor(dictionary, keyword, answer) {
     this.dictionary = dictionary;
     this.keyword = keyword;
@@ -42,3 +42,4 @@ module.export = class TagCommand {
     return this.dictionary.filter(o => o[this.keyword].match(arg));
   }
 }
+module.exports = TagCommand;
