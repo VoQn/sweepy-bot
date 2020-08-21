@@ -4,9 +4,9 @@ const discord = require('discord.js');
 const client = new discord.Client();
 
 const commands = [
-  { command: '!help', get help() { return `\`${this.command}\` _で、応えられるコマンド一覧を出すよ_`; }  },
+  { command: '!help', get help() { return `\`${this.command}\` _応えられるコマンド一覧を出すよ_`; }  },
   { command: '!tags', get help() { return `\`${this.command}\` _使えるタグ一覧を出すよ_`; } },
-  { command: '!tag', get help() { return `\`${this.command} <スペース> <タグ名> \`_応えられる範囲で答えるよ_`; } },
+  { command: '!tag', get help() { return `\`${this.command} <スペース> <タグ名> \` _応えられる範囲で答えるよ_`; } },
 ];
 
 const tags = [
@@ -86,20 +86,26 @@ function getMessage(context){
   }
   
   /// ↓ タグ別読解
-  const m = context.match(/^\!tag\s(?<arg>\S+)/)
-  if (m && m.groups.arg.length < 2) {
-    return 'もうちょっとヒントちょうだい (2文字以上欲しがっています)';
-  }
-  if (m && m.groups.arg) {
+  const m = context.match(/^\!tag\s+(?<arg>\S+)/)
+  if (m) {
+    const arg = m.groups.arg;
+    if (!arg) {
+      return 'なんのこと？'
+    }
+
+    if (arg.length < 2) {
+      return 'もうちょっとヒントちょうだい (2文字以上欲しがっています)';
+    }
+    
     // tagと完全一致検索する
     for(const { tag, url } of tags) {
-      if (tag == m.groups.arg) {
+      if (tag == arg) {
         return url;
       }
     }
-    
+
     // 逆に、tagの部分文字列にマッチする。
-    const choice = tags.filter(o => o.tag.match(m.groups.arg))
+    const choice = tags.filter(o => o.tag.match(arg))
     if (choice.length === 1) {
       const suggestedURL = choice[0].url;
       return ["もしかして、これ？", "```", ...choice.map(o => o.tag), "```", suggestedURL].join("\n");
@@ -107,7 +113,7 @@ function getMessage(context){
     if (choice.length > 0) {
       return ["複数あるよ。聞き直してね", "```", ...choice.map(o => o.tag), "```"].join("\n");
     }
-    
+
     return 'なんのこと？';
   }
 }
