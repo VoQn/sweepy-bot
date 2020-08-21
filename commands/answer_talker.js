@@ -1,4 +1,4 @@
-class TagCommand {
+class AnswerTalker {
   constructor(dictionary, keyword, answer, answerConverter) {
     this.dictionary = dictionary; // e.g. [{ tag: 'a', url: 'hoge'}, ...]
     this.keyword = keyword; // e.g. 'tag'
@@ -32,10 +32,10 @@ class TagCommand {
     const choice = this.partial_match(arg)
     if (choice.length === 1) {
       const answer = choice[0][this.answer];
+      const suggested = this.answerConverter(answer);
       if(answer === arg){
-        return this.answerConverter(answer);
+        return suggested;
       } else {
-        const suggested = this.answerConverter(choice[0][this.answer]);
         return ["もしかして、これ？", "```", ...choice.map(o => o[this.keyword]), "```", suggested].join("\n");
       }
     }
@@ -54,5 +54,9 @@ class TagCommand {
   partial_match(arg) {
     return this.dictionary.filter(o => o[this.keyword].match(arg));
   }
+  
+  choice_to_keyword(choice) {
+    
+  }
 }
-module.exports = TagCommand;
+module.exports = AnswerTalker;
