@@ -2,6 +2,7 @@ const http = require('http');
 const querystring = require('querystring');
 const discord = require('discord.js');
 const client = new discord.Client();
+const TagCommand = require('./commands/tag_command');
 
 const commands = [
   { command: '!help', get help() { return `\`${this.command}\` _応えられるコマンド一覧を出すよ_`; }  },
@@ -20,8 +21,6 @@ const tags = [
   { tag: '移動チューブ', url: 'https://gyazo.com/161b5e104c43e12aeef3ddc36cfa04fb' },
   { tag: '液体クーラー', url: 'https://gyazo.com/06375d94aea03932592895cfc064dd1d' },
 ];
-
-const TagCommand = require('./commands/tag_command');
 const tagCommand = new TagCommand(tags, 'tag', 'url');
 
 const emojis = [
@@ -32,10 +31,9 @@ const emojis = [
   { name: 'スリックスター', code: 'slickster'},
   { name: 'とろとろスリックスター', code: 'moltenslickster' },
   { name: 'ふさふさスリックスター', code: 'longhairslickster' }
-].map(({name, code}) => { name, code:  })
+]
 ;
-const emojiCommand = new TagCommand(emojis, 'name', 'code');
-
+const emojiCommand = new TagCommand(emojis, 'name', 'code', getCustomEmojiMessage);
 
 function getCustomEmojiMessage(code) {
   return client.emojis.find( "name", code ).toString() + " " +  `\`:${code}:\``;
@@ -118,38 +116,7 @@ function getMessage(context){
   // 絵文字の返答
   const e = context.match(/^\!emoji\s+(?<arg>\S+)/);
   if (e) {
-    const arg = e.groups.arg;
-    // return emojiCommand.getMessage(arg);
-
-    if (!arg) {
-      return 'なんのこと？'
-    }
-
-    if (arg.length < 2) {
-      return 'もうちょっとヒントちょうだい (2文字以上欲しがっています)';
-    }
-    
-    for(const { name, code } of emojis) {
-      if (name == arg) {
-        return getCustomEmojiMessage(code);
-      }
-    }
-
-    // 逆に、emojiの部分文字列にマッチする。
-    const choice = emojis.filter(o => o.name.match(arg))
-    if (choice.length === 1) {
-      const code = choice[0].code;
-      if(code === arg){
-        return getCustomEmojiMessage(code);
-      } else {
-        const suggested = getCustomEmojiMessage(code);
-        return ["もしかして、これ？", "```", ...choice.map(o => o.name), "```", suggested].join("\n");
-      }
-    }
-    if (choice.length > 1) {
-      return ["複数あるよ。聞き直してね。", "```", ...choice.map(o => o.name), "```"].join("\n");
-    }
-    return 'なんのこと？';
+    return emojiCommand.getMessage(e.groups.arg);
   }
 }
 
