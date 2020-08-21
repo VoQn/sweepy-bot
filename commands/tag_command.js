@@ -9,7 +9,11 @@ class TagCommand {
     }
   }
   
-  getMessage(arg) {
+  getKeywords() {
+     return ["```", ...this.dictionary.map(o => o[this.keyword]) ,"```"].join("\n");
+  }
+  
+  getAnswer(arg) {
     if (!arg) {
       return 'なんのこと？'
     }

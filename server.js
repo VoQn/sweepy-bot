@@ -23,20 +23,13 @@ const tags = [
 ];
 const tagCommand = new TagCommand(tags, 'tag', 'url');
 
-const emojis = [
-  { name: 'セイジハッチ', code: 'sagehatch' },
-  { name: 'ハッチ', code: 'hatch'},
-  { name: 'ピップ', code: 'pip'},
-  { name: 'ポークシェル', code: 'pokeshell'},
-  { name: 'スリックスター', code: 'slickster'},
-  { name: 'とろとろスリックスター', code: 'moltenslickster' },
-  { name: 'ふさふさスリックスター', code: 'longhairslickster' }
-]
-;
+const emojis2 = require('./emoji.json');
+const emojis = Object.entries(emojis2).map(([code,name]) => { return { name, code } });
+
 const emojiCommand = new TagCommand(emojis, 'name', 'code', getCustomEmojiMessage);
 
 function getCustomEmojiMessage(code) {
-  return client.emojis.find( "name", code ).toString() + " " +  `\`:${code}:\``;
+  return client.emojis.find(emoji => emoji.name === code).toString() + " " +  `\`:${code}:\``;
 }
 
 http.createServer(function(req, res){
@@ -104,19 +97,19 @@ function getMessage(context){
   
   // タグ一覧
   if (context.match(/^\!tags/)){
-    return ["```", ...tags.map(o => o.tag) ,"```"].join("\n");
+    return tagCommand.getKeywords();
   }
   
   // タグの返答
   const m = context.match(/^\!tag\s+(?<arg>\S+)/);
   if (m) {
-    return tagCommand.getMessage(m.groups.arg);
+    return tagCommand.getAnswer(m.groups.arg);
   }
   
   // 絵文字の返答
   const e = context.match(/^\!emoji\s+(?<arg>\S+)/);
   if (e) {
-    return emojiCommand.getMessage(e.groups.arg);
+    return emojiCommand.getAnswer(e.groups.arg);
   }
 }
 

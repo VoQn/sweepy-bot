@@ -1,9 +1,14 @@
 {
   "hatch": "ハッチ",
   "sagehatch": "セイジハッチ",
+  "stonehatch": "",
+  "smoothhatch": "つるつるハッチ",
+  
   "pip": "ピップ",
   "pokeshell": "ポークシェル",
   "slickster": "スリックスター",
   "moltenslickster": "とろとろスリックスター",
-  "longhairslickster": "ふさふさスリックスター"
+  "longhairslickster": "ふさふさスリックスター",
+  "puft": "パフ",
+  "squeakypuft": "やかましパフ"
 }
