@@ -25,7 +25,10 @@ const emojis = [
   { name: 'セイジハッチ', code: 'sagehatch' },
   { name: 'ハッチ', code: 'hatch'},
   { name: 'ピップ', code: 'pip'},
-  { name: 'スリックスター', code: 'slickster' },
+  { name: 'ポークシェル', code: 'pokeshell'},
+  { name: 'スリックスター', code: 'slickster'},
+  { name: 'とろとろスリックスター', code: 'moltenslickster' },
+  { name: 'ふさふさスリックスター', code: 'longhairslickster' }
 ];
 
 function getCustomEmojiMessage(code) {
@@ -138,8 +141,7 @@ function getMessage(context){
     if (arg.length < 2) {
       return 'もうちょっとヒントちょうだい (2文字以上欲しがっています)';
     }
-
-    // 完全一致
+    
     for(const { name, code } of emojis) {
       if (name == arg) {
         return getCustomEmojiMessage(code);
@@ -149,13 +151,17 @@ function getMessage(context){
     // 逆に、emojiの部分文字列にマッチする。
     const choice = emojis.filter(o => o.name.match(arg))
     if (choice.length === 1) {
-      const suggested = getCustomEmojiMessage(choice[0].code);
-      return ["もしかして、これ？", "```", ...choice.map(o => o.name), "```", suggested].join("\n");
+      const code = choice[0].code;
+      if(code === arg){
+        return getCustomEmojiMessage(code);
+      } else {
+        const suggested = getCustomEmojiMessage(code);
+        return ["もしかして、これ？", "```", ...choice.map(o => o.name), "```", suggested].join("\n");
+      }
     }
-    if (choice.length > 0) {
+    if (choice.length > 1) {
       return ["複数あるよ。聞き直してね。", "```", ...choice.map(o => o.name), "```"].join("\n");
     }
-
     return 'なんのこと？';
   }
 }
