@@ -44,7 +44,7 @@ client.on('message', message =>{
     return;
   }
   if (message.content.match(/^\!help/)){
-    let text = "`!help` で出来るコマンド一覧を出すよ" + 
+    let text = "`!help` で出来るコマンド一覧を出すよ\n" + 
         "`!tags` で使えるタグ一覧が出るよ\n" +
         "`!tag <半角スペース> <タグ名>` で応えられる範囲で答えるよ";
     sendMsg(message.channel.id, text);
@@ -53,6 +53,7 @@ client.on('message', message =>{
   if (message.content.match(/^\!tags/)){
     let text = "```\n" +
     "酸素\n" +
+    "作物の株数\n" +
     "液体の水圧\n" + 
     "```";
     sendMsg(message.channel.id, text);
@@ -65,6 +66,11 @@ client.on('message', message =>{
   }
   if (message.content.match(/^\!tag\s酸素/)){
     let text = "https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d";
+    sendMsg(message.channel.id, text);
+    return;
+  }
+  if (message.content.match(/^\!tag\s作物の株数/)){
+    let text = "https://gyazo.com/703af5dc05131d973eedf3f6280232f6";
     sendMsg(message.channel.id, text);
     return;
   }
