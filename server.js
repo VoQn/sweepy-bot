@@ -204,7 +204,12 @@ function getMessage(context) {
   }
   
   // emoji-echo
-  const test = 
+  const test = context.match(/^\!emoji-echo\s+(?<arg>[A-Za-z0-9]+)/);
+  if (test) {
+    return test.groups.arg.map(c => {
+      return `:regional_indicator_${c.toLowerCase}:`
+    }).join(' ');
+  }
 }
 
 function sendReply(message, text) {
