@@ -3,6 +3,12 @@ const querystring = require('querystring');
 const discord = require('discord.js');
 const client = new discord.Client();
 
+const commands = [
+  { command: '!help', text: '応えられるコマンド一覧を出すよ' },
+  { command: '!tags', text: '使えるタグ一覧を出すよ' },
+  { command: '!tag', text: '応えられる範囲で答えるよ' }
+];
+
 const tags = [
   { tag: '酸素と人数', url: 'https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d' },
   { tag: '作物の株数', url: 'https://gyazo.com/703af5dc05131d973eedf3f6280232f6' },
@@ -67,15 +73,22 @@ client.on('message', message =>{
     sendMsg(message.channel.id, text);
     return;
   }
-  const m = message.content.match(/^\!tag\s(?<arg>\w+)/)
-  if (m) {
+  const m = message.content.match(/^\!tag\s(?<arg>\S+)/)
+  if (m && m.groups.arg) {
     for(const { tag, url } of tags) {
       if (tag == m.groups.arg) {
         sendMsg(message.channel.id, url);
         return;
       }
     }
-    sendMsg('なんのこと？');
+    const choice = tags.map(o => o.tag).filter(tag => tag.match(m.groups.arg))
+    if (choice.length > 0) {
+      const text = ["複数あるよ。聞き直してね", "```", ...choice, "```"].join("\n")
+      sendMsg(message.channel.id, text);
+      return;
+    }
+    
+    sendMsg(message.channel.id, 'なんのこと？');
     return;
   }
 });
