@@ -22,21 +22,23 @@ class AnswerTalker {
       return 'もうちょっとヒントちょうだい (2文字以上欲しがっています)';
     }
     
-    // tagと完全一致検索する
+    // keywordと完全一致検索する
     const exact = this.exact_match(arg);
     if (exact !== undefined) {
       return this.answerConverter(exact[this.answer]);
     }
 
-    // 逆に、tagの部分文字列にマッチする。
-    const choice = this.partial_match(arg)
+    // keywordと部分一致検索する
+    const choice = this.partial_match(arg);
     if (choice.length === 1) {
+      const keyword = choice[0][this.keyword];
       const answer = choice[0][this.answer];
       const suggested = this.answerConverter(answer);
+
       if(answer === arg){
         return suggested;
       } else {
-        return ["もしかして、これ？", "```", ...choice.map(o => o[this.keyword]), "```", suggested].join("\n");
+        return ["もしかして、これ？", "```", keyword, "```", suggested].join("\n");
       }
     }
 
@@ -53,10 +55,6 @@ class AnswerTalker {
 
   partial_match(arg) {
     return this.dictionary.filter(o => o[this.keyword].match(arg));
-  }
-  
-  choice_to_keyword(choice) {
-    
   }
 }
 module.exports = AnswerTalker;
