@@ -32,7 +32,7 @@ http.createServer(function(req, res){
 
 client.on('ready', message =>{
   console.log('Bot準備完了～');
-  client.user.setPresence({ game: { name: 'げーむ' } });
+  client.user.setPresence({ game: { name: '人生' } });
 });
 
 client.on('message', message =>{
@@ -40,7 +40,7 @@ client.on('message', message =>{
     return;
   }
   if(message.isMemberMentioned(client.user)){
-    sendReply(message, "呼びましたか？");
+    sendReply(message, "人生を満喫中さ。わかるだろ？");
     return;
   }
   if (message.content.match(/にゃ～ん|にゃーん/)){
