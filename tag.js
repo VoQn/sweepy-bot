@@ -1,6 +1,6 @@
 export class Tag {
   constructor(title, url) {
-    this.title = title;
+    this.tag = title;
     this.url = url;
   }
 }

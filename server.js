@@ -2,6 +2,7 @@ const http = require('http');
 const querystring = require('querystring');
 const discord = require('discord.js');
 const client = new discord.Client();
+const Tag = require('./tag');
 
 const commands = [
   { command: '!help', text: '応えられるコマンド一覧を出すよ' },
@@ -10,7 +11,8 @@ const commands = [
 ];
 
 const tags = [
-  { tag: '酸素と人数', url: 'https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d' },
+  new Tag('酸素と人数', 'https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d'),
+  // { tag: '酸素と人数', url: 'https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d' },
   { tag: '作物の株数', url: 'https://gyazo.com/703af5dc05131d973eedf3f6280232f6' },
   { tag: '作物の適温', url: 'https://gyazo.com/9bc68e5a03f78600a18e63c82dcbecd6' },
   { tag: '気体の比重', url: 'https://gyazo.com/539b75221b72c0defc184ea84db0c7f9' },
@@ -53,6 +55,7 @@ client.on('ready', message =>{
 });
 
 client.on('message', message =>{
+  
   if (message.author.id == client.user.id || message.author.bot){
     return;
   }
@@ -60,47 +63,10 @@ client.on('message', message =>{
     sendReply(message, "人生を満喫中さ、わかるだろ？");
     return;
   }
-  if (message.content.match(/^\!help/)){
-    let text = "`!help` で出来るコマンド一覧を出すよ\n" + 
-        "`!tags` で使えるタグ一覧が出るよ\n" +
-        "`!tag <半角スペース> <タグ名>` で応えられる範囲で答えるよ";
-    sendMsg(message.channel.id, text);
-    return;
-  }
-  if (message.content.match(/^\!tags/)){
-    const text = ["```", ...tags.map(o => o.tag) ,"```"].join("\n")
-
-    sendMsg(message.channel.id, text);
-    return;
-  }
-  const m = message.content.match(/^\!tag\s(?<arg>\S+)/)
-  if (m && m.groups.arg.length < 2) {
-    sendMsg(message.channel.id, 'もうちょっとヒントちょうだい (2文字以上欲しがっています)');
-    return;
-  }
-  if (m && m.groups.arg) {
-    for(const { tag, url } of tags) {
-      if (tag == m.groups.arg) {
-        sendMsg(message.channel.id, url);
-        return;
-      }
-    }
-    const choice = tags.filter(o => o.tag.match(m.groups.arg))
-    if (choice.length === 1) {
-      const suggestedURL = choice[0].url;
-      const text = ["もしかして、これ？", "```", ...choice.map(o => o.tag), "```", suggestedURL].join("\n");
-      sendMsg(message.channel.id, text);
-      return;
-    }
-    if (choice.length > 0) {
-      const text = ["複数あるよ。聞き直してね", "```", ...choice.map(o => o.tag), "```"].join("\n");
-      sendMsg(message.channel.id, text);
-      return;
-    }
-    
-    sendMsg(message.channel.id, 'なんのこと？');
-    return;
-  }
+  
+  const msg = getMessage(message.content);
+  sendMsg(message.channel.id, msg);
+  return;
 });
 
 if(process.env.DISCORD_BOT_TOKEN == undefined){
@@ -111,11 +77,12 @@ if(process.env.DISCORD_BOT_TOKEN == undefined){
 client.login( process.env.DISCORD_BOT_TOKEN );
 
 function getMessage(context){
-    if (context.match(/^\!help/)){
+  if (context.match(/^\!help/)){
+  // ↑ command に委譲したい
     return "`!help` で出来るコマンド一覧を出すよ\n" + 
-        "`!tags` で使えるタグ一覧が出るよ\n" +
-        "`!tag <半角スペース> <タグ名>` で応えられる範囲で答えるよ";
-    }
+           "`!tags` で使えるタグ一覧が出るよ\n" +
+           "`!tag <半角スペース> <タグ名>` で応えられる範囲で答えるよ";
+  }
   
   if (context.match(/^\!tags/)){
     return ["```", ...tags.map(o => o.tag) ,"```"].join("\n");
@@ -135,13 +102,14 @@ function getMessage(context){
     const choice = tags.filter(o => o.tag.match(m.groups.arg))
     if (choice.length === 1) {
       const suggestedURL = choice[0].url;
-      return text = ["もしかして、これ？", "```", ...choice.map(o => o.tag), "```", suggestedURL].join("\n");
+      return ["もしかして、これ？", "```", ...choice.map(o => o.tag), "```", suggestedURL].join("\n");
     }
     if (choice.length > 0) {
       return ["複数あるよ。聞き直してね", "```", ...choice.map(o => o.tag), "```"].join("\n");
     }
     
     return 'なんのこと？';
+  }
 }
 
 function sendReply(message, text){
