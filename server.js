@@ -43,14 +43,28 @@ client.on('message', message =>{
     sendReply(message, "人生を満喫中さ、わかるだろ？");
     return;
   }
-  if (message.content.match(/^\!tags$/)){
+  if (message.content.match(/^\!help/)){
+    let text = "`!help` で出来るコマンド一覧を出すよ" + 
+        "`!tags` で使えるタグ一覧が出るよ\n" +
+        "`!tag <半角スペース> <タグ名>` で応えられる範囲で答えるよ";
+    sendMsg(message.channel.id, text);
+    return;
+  }
+  if (message.content.match(/^\!tags/)){
     let text = "```\n" +
-    "液体の水圧" + 
+    "酸素\n" +
+    "液体の水圧\n" + 
     "```";
+    sendMsg(message.channel.id, text);
     return;
   }
   if (message.content.match(/^\!tag\s液体の水圧/)){
     let text = "https://gyazo.com/19017bac9164b8dd1160d2590187591c";
+    sendMsg(message.channel.id, text);
+    return;
+  }
+  if (message.content.match(/^\!tag\s酸素/)){
+    let text = "https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d";
     sendMsg(message.channel.id, text);
     return;
   }
