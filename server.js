@@ -6,19 +6,21 @@ const client = new discord.Client();
 const commands = [
   { command: '!help', text: '応えられるコマンド一覧を出すよ' },
   { command: '!tags', text: '使えるタグ一覧を出すよ' },
-  { command: '!tag', text: '応えられる範囲で答えるよ' }
+  { command: '!tag', text: '応えられる範囲で答えるよ' },
 ];
 
-const tags = [
-  { tag: '酸素と人数', url: 'https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d' },
-  { tag: '作物の株数', url: 'https://gyazo.com/703af5dc05131d973eedf3f6280232f6' },
-  { tag: '作物の適温', url: 'https://gyazo.com/9bc68e5a03f78600a18e63c82dcbecd6' },
-  { tag: '気体の比重', url: 'https://gyazo.com/539b75221b72c0defc184ea84db0c7f9' },
-  { tag: '液体の水圧', url: 'https://gyazo.com/19017bac9164b8dd1160d2590187591c' },
-  { tag: '液体の比重', url: 'https://gyazo.com/7d5e226199facb9bb0e5b852d2210df1' },
-  { tag: '移動チューブ', url: 'https://gyazo.com/161b5e104c43e12aeef3ddc36cfa04fb' },
-  { tag: '液体クーラー', url: 'https://gyazo.com/06375d94aea03932592895cfc064dd1d' },
-]
+const tags = require('')
+
+// const tags = [
+//   { tag: '酸素と人数', url: 'https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d' },
+//   { tag: '作物の株数', url: 'https://gyazo.com/703af5dc05131d973eedf3f6280232f6' },
+//   { tag: '作物の適温', url: 'https://gyazo.com/9bc68e5a03f78600a18e63c82dcbecd6' },
+//   { tag: '気体の比重', url: 'https://gyazo.com/539b75221b72c0defc184ea84db0c7f9' },
+//   { tag: '液体の水圧', url: 'https://gyazo.com/19017bac9164b8dd1160d2590187591c' },
+//   { tag: '液体の比重', url: 'https://gyazo.com/7d5e226199facb9bb0e5b852d2210df1' },
+//   { tag: '移動チューブ', url: 'https://gyazo.com/161b5e104c43e12aeef3ddc36cfa04fb' },
+//   { tag: '液体クーラー', url: 'https://gyazo.com/06375d94aea03932592895cfc064dd1d' },
+// ];
 
 http.createServer(function(req, res){
   if (req.method == 'POST'){
@@ -74,6 +76,10 @@ client.on('message', message =>{
     return;
   }
   const m = message.content.match(/^\!tag\s(?<arg>\S+)/)
+  if (m && m.groups.arg.length < 2) {
+    sendMsg(message.channel.id, 'もうちょっとヒントちょうだい (2文字以上欲しがっています)');
+    return;
+  }
   if (m && m.groups.arg) {
     for(const { tag, url } of tags) {
       if (tag == m.groups.arg) {
@@ -81,9 +87,15 @@ client.on('message', message =>{
         return;
       }
     }
-    const choice = tags.map(o => o.tag).filter(tag => tag.match(m.groups.arg))
+    const choice = tags.filter(o => o.tag.match(m.groups.arg))
+    if (choice.length === 1) {
+      const suggestedURL = choice[0].url; // ← ここに”もしかしてこれか？”なURLを返す
+      const text = ["もしかして、これ？", "```", ...choice.map(o => o.tag), "```", suggestedURL].join("\n");
+      sendMsg(message.channel.id, text);
+      return;
+    }
     if (choice.length > 0) {
-      const text = ["複数あるよ。聞き直してね", "```", ...choice, "```"].join("\n")
+      const text = ["複数あるよ。聞き直してね", "```", ...choice.map(o => o.tag), "```"].join("\n");
       sendMsg(message.channel.id, text);
       return;
     }
