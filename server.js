@@ -7,6 +7,7 @@ const commands = [
   { command: '!help', get help() { return `\`${this.command}\` _応えられるコマンド一覧を出すよ_`; }  },
   { command: '!tags', get help() { return `\`${this.command}\` _使えるタグ一覧を出すよ_`; } },
   { command: '!tag', get help() { return `\`${this.command} <スペース> <タグ名> \` _応えられる範囲で答えるよ_`; } },
+  { command: '!emoji', get help() { return `\`${this.command} <スペース> <絵文字>\` _あるなら絵文字コード答えるよ_`} }
 ];
 
 const tags = [
@@ -19,6 +20,10 @@ const tags = [
   { tag: '移動チューブ', url: 'https://gyazo.com/161b5e104c43e12aeef3ddc36cfa04fb' },
   { tag: '液体クーラー', url: 'https://gyazo.com/06375d94aea03932592895cfc064dd1d' },
 ];
+
+const emojis = [
+  { name: 'ハッチ', get code() { return client.emojis.find( "name", "hatch" ).toString() + ' `:hatch:`' } },
+]
 
 http.createServer(function(req, res){
   if (req.method == 'POST'){
@@ -86,7 +91,7 @@ function getMessage(context){
   }
   
   /// ↓ タグ別読解
-  const m = context.match(/^\!tag\s+(?<arg>\S+)/)
+  const m = context.match(/^\!tag\s+(?<arg>\S+)/);
   if (m) {
     const arg = m.groups.arg;
     if (!arg) {
@@ -112,6 +117,36 @@ function getMessage(context){
     }
     if (choice.length > 0) {
       return ["複数あるよ。聞き直してね", "```", ...choice.map(o => o.tag), "```"].join("\n");
+    }
+
+    return 'なんのこと？';
+  }
+  const e = context.match(/^\!emoji\s+(?<arg>\S+)/);
+  if (e) {
+    const arg = e.groups.arg;
+    if (!arg) {
+      return 'なんのこと？'
+    }
+
+    if (arg.length < 2) {
+      return 'もうちょっとヒントちょうだい (2文字以上欲しがっています)';
+    }
+    
+    // 
+    for(const { name, code } of emojis) {
+      if (name == arg) {
+        return code;
+      }
+    }
+
+    // 逆に、emojiの部分文字列にマッチする。
+    const choice = emojis.filter(o => o.name.match(arg))
+    if (choice.length === 1) {
+      const suggested = choice[0].code;
+      return ["もしかして、これ？", "```", ...choice.map(o => o.name), "```", suggested].join("\n");
+    }
+    if (choice.length > 0) {
+      return ["複数あるよ。聞き直してね", "```", ...choice.map(o => o.name), "```"].join("\n");
     }
 
     return 'なんのこと？';
