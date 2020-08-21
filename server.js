@@ -2,17 +2,15 @@ const http = require('http');
 const querystring = require('querystring');
 const discord = require('discord.js');
 const client = new discord.Client();
-const Tag = require('./tag');
 
 const commands = [
-  { command: '!help', text: '応えられるコマンド一覧を出すよ' },
+  { command: '!help', text: '応えられるコマンド一覧を出すよ',  },
   { command: '!tags', text: '使えるタグ一覧を出すよ' },
   { command: '!tag', text: '応えられる範囲で答えるよ' },
 ];
 
 const tags = [
-  new Tag('酸素と人数', 'https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d'),
-  // { tag: '酸素と人数', url: 'https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d' },
+  { tag: '酸素と人数', url: 'https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d' },
   { tag: '作物の株数', url: 'https://gyazo.com/703af5dc05131d973eedf3f6280232f6' },
   { tag: '作物の適温', url: 'https://gyazo.com/9bc68e5a03f78600a18e63c82dcbecd6' },
   { tag: '気体の比重', url: 'https://gyazo.com/539b75221b72c0defc184ea84db0c7f9' },
@@ -20,6 +18,7 @@ const tags = [
   { tag: '液体の比重', url: 'https://gyazo.com/7d5e226199facb9bb0e5b852d2210df1' },
   { tag: '移動チューブ', url: 'https://gyazo.com/161b5e104c43e12aeef3ddc36cfa04fb' },
   { tag: '液体クーラー', url: 'https://gyazo.com/06375d94aea03932592895cfc064dd1d' },
+  { tag: 'テスト', url: 'なんか文字' },
 ];
 
 http.createServer(function(req, res){
@@ -76,18 +75,20 @@ if(process.env.DISCORD_BOT_TOKEN == undefined){
 
 client.login( process.env.DISCORD_BOT_TOKEN );
 
+
 function getMessage(context){
   if (context.match(/^\!help/)){
   // ↑ command に委譲したい
-    return "`!help` で出来るコマンド一覧を出すよ\n" + 
-           "`!tags` で使えるタグ一覧が出るよ\n" +
-           "`!tag <半角スペース> <タグ名>` で応えられる範囲で答えるよ";
+    return `\`!help\` で出来るコマンド一覧を出すよ
+\`!tags\` で使えるタグ一覧が出るよ
+\`!tag <半角スペース> <タグ名>\` で応えられる範囲で答えるよ`;
   }
   
   if (context.match(/^\!tags/)){
     return ["```", ...tags.map(o => o.tag) ,"```"].join("\n");
   }
   
+  /// ↓ タグ別読解
   const m = context.match(/^\!tag\s(?<arg>\S+)/)
   if (m && m.groups.arg.length < 2) {
     return 'もうちょっとヒントちょうだい (2文字以上欲しがっています)';
