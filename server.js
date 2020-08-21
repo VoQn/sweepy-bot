@@ -2,6 +2,7 @@ const http = require('http');
 const querystring = require('querystring');
 const discord = require('discord.js');
 const client = new discord.Client();
+const TagCommand = require('commands/tag_coomand');
 
 const commands = [
   { command: '!help', get help() { return `\`${this.command}\` _応えられるコマンド一覧を出すよ_`; }  },
