@@ -111,8 +111,12 @@ http
         console.log("post:" + dataObject.type);
         if (dataObject.type == "wake") {
           console.log("Woke up in post");
-          if(!client.readtTimestamp) {
+
+          // 死んでいたら再度ログイン
+          if (!client.readyTimestamp) {
+            console.log("client is dead, try restart...");
             client.destroy();
+            // 暫定の雑コード
             const TOKEN = process.env.DISCORD_BOT_TOKEN;
             client.login(TOKEN);
           }
@@ -237,8 +241,8 @@ function sendMsg(channelId, text, option = {}) {
     .catch(console.error);
 }
 
-client.on("shardError", error => {
-  console.error("A websocket connection encountered an error:", error);
+client.on("debug", d => {
+  console.debug(d);
 });
 
 if (process.env) {
@@ -250,13 +254,5 @@ if (process.env) {
 
   console.log("Discord クライアントをログインさせます...");
 
-  client
-    .login(TOKEN)
-    .then(result => {
-      console.log("ログイン出来ました。");
-    })
-    .catch(err => {
-      console.debug('エラー？');
-      console.error(err);
-    });
+  client.login(TOKEN);
 }
