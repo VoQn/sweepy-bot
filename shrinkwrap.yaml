@@ -3,6 +3,8 @@ dependencies:
   discord.js: 12.3.1
   express: 4.17.1
   querystring: 0.2.0
+devDependencies:
+  typescript: 4.0.2
 packages:
   /@discordjs/collection/0.1.6:
     dev: false
@@ -468,6 +470,13 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==
+  /typescript/4.0.2:
+    dev: true
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-e4ERvRV2wb+rRZ/IQeb3jm2VxBsirQLpQhdxplZ2MEzGvDkkMmPglecnNDfSUBivMjP93vRbngYYDQqQ/78bcQ==
   /unpipe/1.0.0:
     dev: false
     engines:
@@ -503,3 +512,4 @@ specifiers:
   discord.js: ^12.3.1
   express: ^4.17.1
   querystring: ^0.2.0
+  typescript: ^4.0.2
