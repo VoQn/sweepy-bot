@@ -36,6 +36,14 @@ const commands = [
     get help() {
       return `\`${this.command} <スペース> <絵文字>\` _あるなら絵文字コード答えるよ_`;
     }
+  },
+  {
+    command: "!emoji-echo",
+    get help() {
+      return `\`${this.command} <スペース> <アルファベット>\` ${emojinate(
+        "emoji"
+      )} _に変換するよ_`;
+    }
   }
 ];
 
