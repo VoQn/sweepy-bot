@@ -6,7 +6,7 @@ GlitchでDiscordBotを作るためのベースです。
 
 [誰でも作れる！Discord Bot（基礎編）](https://note.com/exteoi/n/nf1c37cb26c41)をお読みください。
 
-## ほんちゃん TODO
+## ほんちゃん WANTS!
 
 - 基盤
   - typescript化
@@ -26,15 +26,21 @@ GlitchでDiscordBotを作るためのベースです。
     - `!emojinate [アルファベット + ! + ?]` EMOJIにしてくれる。一部の記号も使える。
     - `!role` 可能なら自己申告で「配信者」とか「Modder」のロールを付与
     - `!critter [日本語名/英語名]` 生き物の細かい生存条件等
-    - `!plant [日本語名/英語名]` 作物の細かい生育条件等
+    - `!plant [https://gyazo.com/40046ca4b7ad9e395cc43a74ce85ae0d日本語名/英語名]` 作物の細かい生育条件等
     - `!refinery-temp [製錬対象] [冷却液]` 精錬する金属と冷却液の組み合わせで、一回で何度冷却液の温度が上がるか
+    - `!aquatuner [物質名]` 14℃で何DTU変わるか (10kg * SHC * 14K)を返す。
+    - `!turbine [温度]@[intake]` タービンの諸元を返す
+      - 通過熱量: (入力水蒸気温度-95)[K] * 水SHC * 0.4kg * intake 
+      - 発熱量: 4kDTU + 通過熱量 * 0.1
+      - 熱消去量: 通過熱量 - 発熱量
+      - 発電量: 通過熱量 / {(200-95) * 水SHC * 2kg} * 850W
   - (自分の)おはようからおやすみまで暮らしを見つめる機能
     - herokuのダウンタイムに合わせて、おはようとおやすみのメッセージを投稿する
   - ボイスchで配信がはじまったら、#配信告知で何か言う
   - ゲームのupdate情報 RSSを自動投稿
     - https://store.steampowered.com/feeds/newshub/app/457140/?cc=JP&l=japanese&snr=1_2108_9__1601
   - embedメッセージに対応して、見た目を超リッチに。
-    - https://qiita.com/nedew/items/4e0c20c1a89e983a6992
+    - [Discord.jsでembed (埋め込みメッセージ) を扱う - Qiita](https://qiita.com/nedew/items/4e0c20c1a89e983a6992)
 
 # 注意
 
