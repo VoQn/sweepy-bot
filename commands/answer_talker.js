@@ -14,12 +14,13 @@ class AnswerTalker {
   }
   
   getAnswer(arg) {
+    const defaultAnswer = ':thinking: なんのこと？';
     if (!arg) {
-      return 'なんのこと？'
+      return defaultAnswer;
     }
 
     if (arg.length < 2) {
-      return 'もうちょっとヒントちょうだい (2文字以上欲しがっています)';
+      return ':thinking: もうちょっとヒントちょうだい (2文字以上欲しがっています)';
     }
     
     // keywordと完全一致検索する
@@ -38,7 +39,7 @@ class AnswerTalker {
       if(answer === arg){
         return suggested;
       } else {
-        return ["もしかして、これ？", "```", keyword, "```", suggested].join("\n");
+        return [":bulb: もしかして、これ？", "```", keyword, "```", suggested].join("\n");
       }
     }
 
@@ -46,7 +47,7 @@ class AnswerTalker {
       return ["複数あるよ。聞き直してね。", "```", ...choice.map(o => o[this.keyword]), "```"].join("\n");
     }
     
-    return 'なんのこと？'
+    return defaultAnswer;
   }
 
   exact_match(arg) {
