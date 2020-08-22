@@ -1,4 +1,4 @@
-Elements,熱伝導率,比熱容量,装飾値%,オーバーヒート+,相,モル質量(比重),最低温度,最高温度
+Elements,conductivity,shc,decor,overheat,phase,molarMass,lowTemp,highTemp
 Abyssalite,0,4,,200,固体,341.76,,3421.85
 Algae,2,0.2,,,固体,4,,125
 Aluminum,205,0.91,,,固体,55.845,,660.3
