@@ -111,12 +111,22 @@ http
         console.log("post:" + dataObject.type);
         if (dataObject.type == "wake") {
           console.log("Woke up in post");
+          if(!client.readtTimestamp) {
+            client.destroy();
+            const TOKEN = process.env.DISCORD_BOT_TOKEN;
+            client.login(TOKEN);
+          }
           res.end();
           return;
         }
         res.end();
       });
     } else if (req.method == "GET") {
+      if (client.readyTimestamp) {
+        console.log("I'm alive:" + client.readyTimestamp);
+      } else {
+        console.log("I'm dead");
+      }
       res.writeHead(200, { "Content-Type": "text/plain" });
       res.end("Discord Bot is active now\n");
     }
@@ -245,5 +255,8 @@ if (process.env) {
     .then(result => {
       console.log("ログイン出来ました。");
     })
-    .catch(console.error);
+    .catch(err => {
+      console.debug('エラー？');
+      console.error(err);
+    });
 }
