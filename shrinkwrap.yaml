@@ -1,5 +1,4 @@
 dependencies:
-  csv-parse: 4.12.0
   discord.js: 12.3.1
   express: 4.17.1
   querystring: 0.2.0
@@ -100,10 +99,6 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==
-  /csv-parse/4.12.0:
-    dev: false
-    resolution:
-      integrity: sha512-wPQl3H79vWLPI8cgKFcQXl0NBgYYEqVnT1i6/So7OjMpsI540oD7p93r3w6fDSyPvwkTepG05F69/7AViX2lXg==
   /debug/2.6.9:
     dependencies:
       ms: 2.0.0
@@ -508,7 +503,6 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  csv-parse: ^4.12.0
   discord.js: ^12.3.1
   express: ^4.17.1
   querystring: ^0.2.0
