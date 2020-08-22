@@ -256,5 +256,5 @@ if (process.env) {
 
   console.log("Discord クライアントをログインさせます...");
 
-  client.login(TOKEN);
+  client.login(TOKEN).catch(console.debug);
 }
