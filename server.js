@@ -177,16 +177,18 @@ client.on("message", message => {
   return;
 });
 
-if (process.env.DISCORD_BOT_TOKEN == undefined) {
-  console.log("DISCORD_BOT_TOKENが設定されていません。");
-  process.exit(0);
-}
+client.on("shardError", error => {
+  console.error('A websocket connection encountered an error:', error);
+});
 
-console.log("ログインしてみます");
-client
-  .login(process.env.DISCORD_BOT_TOKEN)
-  .then(console.log('ログインは出来ました'))
-  .catch(console.error);
+if (process.env) {
+  const TOKEN = process.env.DISCORD_BOT_TOKEN;
+  if (TOKEN == null || TOKEN.length < 1) {
+    console.log("DISCORD_BOT_TOKENが設定されていません。");
+    process.exit(0);
+  }
+  client.login(TOKEN);
+}
 
 function getMessage(context) {
   // ヘルプタグ
