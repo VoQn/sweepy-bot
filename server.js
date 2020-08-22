@@ -131,7 +131,7 @@ http
   .listen(3000);
 
 client.on("ready", message => {
-  console.log(`Bot準備完了 ${message}`);
+  console.log(`Bot準備完了`);
   client.user.setPresence({
     activity: { name: "皆さんからの !help ", type: "WATCHING" },
     status: "online"
@@ -234,9 +234,10 @@ function sendMsg(channelId, text, option = {}) {
     .catch(console.error);
 }
 
-client.on("debug", d => {
-  console.debug(d);
-});
+// ログインしてこなくなったら確認する
+// client.on("debug", d => {
+//   console.debug(d);
+// });
 
 if (process.env) {
   const TOKEN = process.env.DISCORD_BOT_TOKEN;
