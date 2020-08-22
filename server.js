@@ -4,18 +4,12 @@ const discord = require("discord.js");
 const client = new discord.Client();
 const AnswerTalker = require("./commands/answer_talker");
 const emojinate = require("./libs/emojinate");
-const parse = require('csv-parse/lib/sync');
-const fs = require('fs');
 
-fs.open('./elements.csv', 'r', (err,fd) => {
-  if (err) throw err;
+const parse = require("csv-parse/lib/sync");
+const fs = require("fs");
 
-  
-  
-  fs.close(fd, (err) => {
-    if (err) throw err;
-  });
-});
+const elementsfile = fs.readFileSync("./elements.csv");
+const elements = parse(elementsfile.toString(), { columns: true, skip_empty_lines: true });
 
 const commands = [
   {
@@ -128,6 +122,7 @@ http
   })
   .listen(3000);
 
+
 client.on("ready", message => {
   console.log("Bot準備完了～");
   client.user.setPresence({
@@ -146,7 +141,7 @@ client.on("guildMemberAdd", member => {
   if (!channel) {
     return;
   }
-  
+
   const text = `${emojinate("welcome")}
 ようこそ ${member} 非公式日本語ディスコードサーバーへ！
 まずはこの #welcome チャンネルで自己紹介してみてね！
@@ -216,7 +211,7 @@ function getMessage(context) {
   if (e) {
     return emojiCommand.getAnswer(e.groups.arg);
   }
-  
+
   // emoji-echo
   const test = context.match(/^\!emoji-echo\s+(?<arg>[A-Za-z0-9]+)/);
   if (test) {
