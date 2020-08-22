@@ -29,8 +29,8 @@ GlitchでDiscordBotを作るためのベースです。
     - `!plant [https://gyazo.com/40046ca4b7ad9e395cc43a74ce85ae0d日本語名/英語名]` 作物の細かい生育条件等
     - `!refinery-temp [製錬対象] [冷却液]` 精錬する金属と冷却液の組み合わせで、一回で何度冷却液の温度が上がるか
     - `!aquatuner [物質名]` 14℃で何DTU変わるか (10kg * SHC * 14K)を返す。
-    - `!regulator [物質名]` -１４Kで何DTU変わるか (1kg * SHC * 14K)を返す。
-    - `!weezewhote [気体名]`
+    - `!regulator [気体名]` -１４Kで何DTU変わるか (1kg * SHC * 14K)を返す。
+    - `!weezewhote [気体名]` -5Kで何DTU変わるか （1kg * SHC * 5K）を返す
     - `!turbine [温度]@[intake]` タービンの諸元を返す
       - 水蒸気から除去した熱量: (入力水蒸気温度-95)[K] * 水SHC * 0.4kg * intake 
       - 発熱量: 4kDTU + 水蒸気から除去した熱量 * 0.1
@@ -49,6 +49,11 @@ GlitchでDiscordBotを作るためのベースです。
     - https://store.steampowered.com/feeds/newshub/app/457140/?cc=JP&l=japanese&snr=1_2108_9__1601
   - embedメッセージに対応して、見た目を超リッチに。
     - [Discord.jsでembed (埋め込みメッセージ) を扱う - Qiita](https://qiita.com/nedew/items/4e0c20c1a89e983a6992)
+  - 英語日本語翻訳辞書を持っときたい
+    - 各 commands で利用できる形の辞書がほしい
+    - debug name も出してほしい
+      - サンドボックスモードだと名前が違う
+        
 
 # 注意
 
