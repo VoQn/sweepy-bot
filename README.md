@@ -17,7 +17,6 @@ GlitchでDiscordBotを作るためのベースです。
     - dynoより可愛さをアピール
   - welcomeで自己紹介した人にのみ「認証済み」ロールを付ける
   - コマンド別にソース分けて追加を容易にしておく
-  - 長文の詳しいヘルプなんかは `spoiler` で囲っておく
   - コマンド機能
     - `!cheetsheet` チートシートを返すコマンド。 
       - `!cheetsheet` のみの場合は呼び出せる一覧。 
@@ -31,6 +30,8 @@ GlitchでDiscordBotを作るためのベースです。
   - ボイスchで配信がはじまったら、#配信告知で何か言う
   - ゲームのupdate情報 RSSを自動投稿
     - https://store.steampowered.com/feeds/newshub/app/457140/?cc=JP&l=japanese&snr=1_2108_9__1601
+  - embedメッセージに対応して、見た目を超リッチに。
+    - https://qiita.com/nedew/items/4e0c20c1a89e983a6992
 
 # 注意
 
