@@ -107,7 +107,8 @@ http
           res.end("No post data");
           return;
         }
-        var dataObject = querystring.parse(data);
+        const dataObject = querystring.parse(data);
+        console.group("Server Requested");
         console.log("post:" + dataObject.type);
         if (dataObject.type == "wake") {
           console.log("Woke up in post");
@@ -117,9 +118,10 @@ http
             console.log("but I'm dead");
           }
           res.end();
-          return;
+        } else {
+          res.end();
         }
-        res.end();
+        console.groupEnd();
       });
     } else if (req.method == "GET") {
       res.writeHead(200, { "Content-Type": "text/plain" });
