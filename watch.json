@@ -1,3 +1,15 @@
 {
-  "throttle": 10000
+  "install": {
+    "include": [
+      "^package.json$"
+    ]
+  },
+  "restart": {
+    "include": [
+      "\\.js$",
+      "\\.json$",
+      "\\.csv$"
+    ]
+  },
+  "throttle": 60000
 }
