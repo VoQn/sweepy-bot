@@ -207,7 +207,9 @@ function getMessage(context) {
   const test = context.match(/^\!emoji-echo\s+(?<arg>[A-Za-z0-9]+)/);
   if (test) {
     const args = test.groups.arg;
-    return args;
+    return Array.prototype.map.call(args, c => {
+      return `:regional_indicator_${c.toLowerCase()}:`;
+    }).join(' ');
   }
 }
 
@@ -220,7 +222,7 @@ function sendReply(message, text) {
 
 function sendMsg(channelId, text, option = {}) {
   client.channels
-    .get(channelId)
+    .resolve(channelId)
     .send(text, option)
     .then(console.log("メッセージ送信: " + text + JSON.stringify(option)))
     .catch(console.error);
