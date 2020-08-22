@@ -177,10 +177,6 @@ client.on("message", message => {
   return;
 });
 
-client.on("shardError", error => {
-  console.error("A websocket connection encountered an error:", error);
-});
-
 function getMessage(context) {
   // ヘルプタグ
   if (context.match(/^\!help/)) {
@@ -230,6 +226,11 @@ function sendMsg(channelId, text, option = {}) {
     .then(console.log("メッセージ送信: " + text + JSON.stringify(option)))
     .catch(console.error);
 }
+
+
+client.on("shardError", error => {
+  console.error("A websocket connection encountered an error:", error);
+});
 
 if (process.env) {
   const TOKEN = process.env.DISCORD_BOT_TOKEN;
