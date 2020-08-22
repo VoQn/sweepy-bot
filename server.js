@@ -81,9 +81,11 @@ const tags = [
     url: "https://gyazo.com/06375d94aea03932592895cfc064dd1d"
   }
 ];
+const cheetsheets0 = require("./data/cheetsheet.json");
+const cheetsheets = Object.entries(cheetsheets0).map(())
 const tagCommand = new AnswerTalker(tags, "tag", "url");
 
-const emojis2 = require("./emoji.json");
+const emojis2 = require("./data/emoji.json");
 const emojis = Object.entries(emojis2).map(([code, name]) => {
   return { name, code };
 });
@@ -195,7 +197,11 @@ client.on("message", message => {
 function getMessage(context) {
   // ヘルプタグ
   if (context.match(/^\!help/)) {
-    return commands.map(command => command.help);
+    let msg = `${emojinate("About")}\n`;
+    commands.forEach(c => {
+      msg += `${c.help}\n`;
+    });
+    return msg;
   }
 
   // タグ一覧
