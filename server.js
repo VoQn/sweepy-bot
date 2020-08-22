@@ -134,9 +134,10 @@ client.on("guildMemberAdd", member => {
     return;
   }
   
-  const text = `ようこそ ${member} 非公式日本語ディスコードサーバーへ！
+  const text = `${emojinate("welcome")}
+ようこそ ${member} 非公式日本語ディスコードサーバーへ！
 まずはこの #welcome チャンネルで自己紹介してみてね！
-
+${emojinate("caution")}
 **サーバーに入りたての時は、まだ色んなチャンネルを見ることは出来ません。**
 _'承認済み' のロールが与えられたら、インフォメーション以外のカテゴリも読めるようになります。_`;
 
@@ -206,10 +207,7 @@ function getMessage(context) {
   // emoji-echo
   const test = context.match(/^\!emoji-echo\s+(?<arg>[A-Za-z0-9]+)/);
   if (test) {
-    const args = test.groups.arg;
-    return Array.prototype.map.call(args, c => {
-      return `:regional_indicator_${c.toLowerCase()}:`;
-    }).join(' ');
+    return emojinate(test.groups.arg);
   }
 }
 
@@ -226,4 +224,15 @@ function sendMsg(channelId, text, option = {}) {
     .send(text, option)
     .then(console.log("メッセージ送信: " + text + JSON.stringify(option)))
     .catch(console.error);
+}
+
+function emojinate(word) {
+  const regex = /(?<word>[A-Za-z]+)/;
+  const result = word.match(regex);
+  if (result) {
+    return Array.prototype.map.call(result.groups.word, c => {
+      return `:regional_indicator_${c.toLowerCase()}:`;
+    }).join(' ');
+  }
+  return word;
 }

@@ -44,7 +44,7 @@ class AnswerTalker {
     }
 
     if (choice.length > 0) {
-      return ["複数あるよ。聞き直してね。", "```", ...choice.map(o => o[this.keyword]), "```"].join("\n");
+      return [":thinking: 複数あるよ。聞き直してね。", "```", ...choice.map(o => o[this.keyword]), "```"].join("\n");
     }
     
     return defaultAnswer;
