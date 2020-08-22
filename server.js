@@ -111,14 +111,10 @@ http
         console.log("post:" + dataObject.type);
         if (dataObject.type == "wake") {
           console.log("Woke up in post");
-
-          // 死んでいたら再度ログイン
-          if (!client.readyTimestamp) {
-            console.log("client is dead, try restart...");
-            client.destroy();
-            // 暫定の雑コード
-            const TOKEN = process.env.DISCORD_BOT_TOKEN;
-            client.login(TOKEN);
+          if (client.readyTimestamp) {
+            console.log("yay, and I'm alive since:" + client.readyTimestamp);
+          } else {
+            console.log("but I'm dead");
           }
           res.end();
           return;
@@ -126,11 +122,6 @@ http
         res.end();
       });
     } else if (req.method == "GET") {
-      if (client.readyTimestamp) {
-        console.log("I'm alive:" + client.readyTimestamp);
-      } else {
-        console.log("I'm dead");
-      }
       res.writeHead(200, { "Content-Type": "text/plain" });
       res.end("Discord Bot is active now\n");
     }
