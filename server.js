@@ -178,17 +178,8 @@ client.on("message", message => {
 });
 
 client.on("shardError", error => {
-  console.error('A websocket connection encountered an error:', error);
+  console.error("A websocket connection encountered an error:", error);
 });
-
-if (process.env) {
-  const TOKEN = process.env.DISCORD_BOT_TOKEN;
-  if (TOKEN == null || TOKEN.length < 1) {
-    console.log("DISCORD_BOT_TOKENが設定されていません。");
-    process.exit(0);
-  }
-  client.login(TOKEN);
-}
 
 function getMessage(context) {
   // ヘルプタグ
@@ -237,5 +228,20 @@ function sendMsg(channelId, text, option = {}) {
     .resolve(channelId)
     .send(text, option)
     .then(console.log("メッセージ送信: " + text + JSON.stringify(option)))
+    .catch(console.error);
+}
+
+if (process.env) {
+  const TOKEN = process.env.DISCORD_BOT_TOKEN;
+  if (TOKEN == null || TOKEN.length < 1) {
+    console.log("DISCORD_BOT_TOKENが設定されていません。");
+    process.exit(0);
+  }
+
+  console.log("Discord クライアントをログインさせます...");
+
+  client
+    .login(TOKEN)
+    .then(console.log)
     .catch(console.error);
 }
