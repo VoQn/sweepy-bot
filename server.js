@@ -3,6 +3,19 @@ const querystring = require("querystring");
 const discord = require("discord.js");
 const client = new discord.Client();
 const AnswerTalker = require("./commands/answer_talker");
+const emojinate = require("./libs/emojinate");
+const parse = require('csv-parse/lib/sync');
+const fs = require('fs');
+
+fs.open('./elements.csv', 'r', (err,fd) => {
+  if (err) throw err;
+
+  
+  
+  fs.close(fd, (err) => {
+    if (err) throw err;
+  });
+});
 
 const commands = [
   {
@@ -224,15 +237,4 @@ function sendMsg(channelId, text, option = {}) {
     .send(text, option)
     .then(console.log("メッセージ送信: " + text + JSON.stringify(option)))
     .catch(console.error);
-}
-
-function emojinate(word) {
-  const regex = /(?<word>[A-Za-z]+)/;
-  const result = word.match(regex);
-  if (result) {
-    return Array.prototype.map.call(result.groups.word, c => {
-      return `:regional_indicator_${c.toLowerCase()}:`;
-    }).join(' ');
-  }
-  return word;
 }
