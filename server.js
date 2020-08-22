@@ -124,7 +124,7 @@ http
 
 
 client.on("ready", message => {
-  console.log("Bot準備完了～");
+  console.log("Bot準備完了");
   client.user.setPresence({
     activity: { name: "皆さんからの !help ", type: "WATCHING" },
     status: "online"
