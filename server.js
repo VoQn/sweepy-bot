@@ -5,11 +5,11 @@ const client = new discord.Client();
 const AnswerTalker = require("./commands/answer_talker");
 const emojinate = require("./libs/emojinate");
 
-const parse = require("csv-parse/lib/sync");
-const fs = require("fs");
+// const parse = require("csv-parse/lib/sync");
+// const fs = require("fs");
 
-const elementsfile = fs.readFileSync("./elements.csv");
-const elements = parse(elementsfile.toString(), { columns: true, skip_empty_lines: true });
+// const elementsfile = fs.readFileSync("./elements.csv");
+// const elements = parse(elementsfile.toString(), { columns: true, skip_empty_lines: true });
 
 const commands = [
   {
