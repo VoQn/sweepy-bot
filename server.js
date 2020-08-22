@@ -20,15 +20,15 @@ const commands = [
     }
   },
   {
-    command: "!tags",
+    command: "!cheetsheets",
     get help() {
-      return `\`${this.command}\` _使えるタグ一覧を出すよ_`;
+      return `\`${this.command}\` _チートシート一覧を出すよ_`;
     }
   },
   {
-    command: "!tag",
+    command: "!cheetsheet",
     get help() {
-      return `\`${this.command} <スペース> <タグ名> \` _応えられる範囲で答えるよ_`;
+      return `\`${this.command} <スペース> <キーワード> \` _応えられる範囲で答えるよ_`;
     }
   },
   {
@@ -81,9 +81,8 @@ const tags = [
     url: "https://gyazo.com/06375d94aea03932592895cfc064dd1d"
   }
 ];
-const cheetsheets0 = require("./data/cheetsheet.json");
-const cheetsheets = Object.entries(cheetsheets0).map(())
-const tagCommand = new AnswerTalker(tags, "tag", "url");
+const cheetsheets = require("./data/cheetsheet.json");
+const cheetsheetCommand = new AnswerTalker(Object.values(cheetsheets), "name", "url");
 
 const emojis2 = require("./data/emoji.json");
 const emojis = Object.entries(emojis2).map(([code, name]) => {
@@ -205,14 +204,14 @@ function getMessage(context) {
   }
 
   // タグ一覧
-  if (context.match(/^\!tags/)) {
-    return tagCommand.getKeywords();
+  if (context.match(/^\!cheetsheets/)) {
+    return cheetsheetCommand.getKeywords();
   }
 
   // タグの返答
-  const m = context.match(/^\!tag\s+(?<arg>\S+)/);
+  const m = context.match(/^\!cheetsheet\s+(?<arg>\S+)/);
   if (m) {
-    return tagCommand.getAnswer(m.groups.arg);
+    return cheetsheetCommand.getAnswer(m.groups.arg);
   }
 
   // 絵文字一覧
