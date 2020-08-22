@@ -1,9 +1,10 @@
 const http = require("http");
 const querystring = require("querystring");
-const discord = require("discord.js");
-const client = new discord.Client();
+const Discord = require("discord.js");
 const AnswerTalker = require("./commands/answer_talker");
 const emojinate = require("./libs/emojinate");
+
+const client = new Discord.Client();
 
 // const parse = require("csv-parse/lib/sync");
 // const fs = require("fs");
@@ -122,8 +123,7 @@ http
   })
   .listen(3000);
 
-
-client.on("ready", message => {
+client.once("ready", message => {
   console.log("Bot準備完了");
   client.user.setPresence({
     activity: { name: "皆さんからの !help ", type: "WATCHING" },
@@ -182,7 +182,11 @@ if (process.env.DISCORD_BOT_TOKEN == undefined) {
   process.exit(0);
 }
 
-client.login(process.env.DISCORD_BOT_TOKEN);
+console.log("ログインしてみます");
+client
+  .login(process.env.DISCORD_BOT_TOKEN)
+  .then(console.log('ログインは出来ました'))
+  .catch(console.error);
 
 function getMessage(context) {
   // ヘルプタグ
