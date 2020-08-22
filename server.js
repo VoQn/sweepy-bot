@@ -123,8 +123,8 @@ http
   })
   .listen(3000);
 
-client.once("ready", message => {
-  console.log("Bot準備完了");
+client.on("ready", message => {
+  console.log(`Bot準備完了 ${message}`);
   client.user.setPresence({
     activity: { name: "皆さんからの !help ", type: "WATCHING" },
     status: "online"
@@ -227,7 +227,6 @@ function sendMsg(channelId, text, option = {}) {
     .catch(console.error);
 }
 
-
 client.on("shardError", error => {
   console.error("A websocket connection encountered an error:", error);
 });
@@ -243,6 +242,8 @@ if (process.env) {
 
   client
     .login(TOKEN)
-    .then(console.log)
+    .then(result => {
+      console.log("ログイン出来ました。");
+    })
     .catch(console.error);
 }
