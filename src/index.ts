@@ -4,7 +4,7 @@ import { Client, ChannelResolvable, TextChannel, Message, MessageOptions, GuildC
 import { AnswerTalker, Dictionary, Entry } from './answer_talker';
 import { emojinate } from './emojinate';
 import cheetsheets from '../data/cheetsheet.json';
-import emoji from '../data/emoji.json';
+import emojis from '../data/emoji.json';
 
 const client = new Client();
 
@@ -45,23 +45,23 @@ const commands = [
 
 const cheetsheetCommand = new AnswerTalker(Object.values(cheetsheets), 'name', 'url');
 
-const emojis = Object.entries(emoji).map(([code, name]) => {
+const emojis2 = Object.entries(emojis).map(([code, name]) => {
   return { name, code };
 });
 
 const emojiCommand = new AnswerTalker(
-  emojis as Dictionary,
+  emojis2 as Dictionary,
   'name',
   'code',
   getCustomEmojiMessage,
 );
 
 function getCustomEmojiMessage(code: string): string {
-  return (
-    client.emojis.cache.find(emoji => emoji.name === code).toString() +
-    ' ' +
-    `\`:${code}:\``
-  );
+  const emoji = client.emojis.cache.find(e => e.name === code);
+  if (emoji) {
+    return `${emoji} \`:${code}\``;
+  }
+  return '';
 }
 
 http
