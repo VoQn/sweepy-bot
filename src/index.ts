@@ -43,11 +43,11 @@ const commands = [
 ];
 
 // tslint:disable-next-line: no-require-imports
-const cheetsheets = require('./data/cheetsheet.json');
+const cheetsheets = require('../data/cheetsheet.json');
 const cheetsheetCommand = new AnswerTalker(Object.values(cheetsheets), 'name', 'url');
 
 // tslint:disable-next-line: no-require-imports
-const emojis2 = require('./data/emoji.json');
+const emojis2 = require('../data/emoji.json');
 const emojis = Object.entries(emojis2).map(([code, name]) => {
   return { name, code };
 });
