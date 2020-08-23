@@ -23,6 +23,7 @@ export type Decor = {
 };
 
 export interface CritterInfoBase extends HasId, HasName<CritterName> {
+  imageURL: string;
   livableTemp: LivableTemp;
   decor: Decor;
   caloriesNeeded: number;
@@ -35,7 +36,7 @@ export interface CritterInfo extends CritterInfoBase {
   baseTypeName: ID;
 }
 
-export type FamiliyCritterInfo = Partial<CritterInfoBase> & HasId & HasName<CritterName>;
+export type FamiliyCritterInfo = Partial<CritterInfoBase> & HasId & { name: CritterName, imageURL: string };
 
 export class Critter implements CritterInfo {
   public static readonly table: Map<ID, Critter> = new Map<ID, Critter>();
@@ -136,12 +137,11 @@ export class Critter implements CritterInfo {
     return `:${code}:`;
   }
 
-  public getLivableTemp(unit: TemparetureUnit = 'Celsius'): { lower: number, upper: number } {
-    const temp = this.livableTemp;
-    return {
-      lower: convertKelvinTemp(temp.lower, unit),
-      upper: convertKelvinTemp(temp.upper, unit),
-    };
+  public get imageURL(): string {
+    if (!this.isBaseType && this.override?.imageURL) {
+      return this.override.imageURL;
+    }
+    return this.origin.imageURL;
   }
 
   public get livableTemp(): LivableTemp {
