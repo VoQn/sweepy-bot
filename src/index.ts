@@ -191,7 +191,7 @@ function getMessage(context: string): string {
   }
 
   // emoji-echo
-  const test = context.match(/^\!emoji-echo\s+(?<arg>\W+)/);
+  const test = context.match(/^\!emoji-echo\s+(?<arg>.+)$/);
   if (test) {
     return emojinate(test.groups.arg);
   }
