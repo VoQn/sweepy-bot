@@ -135,7 +135,7 @@ export class Critter implements CritterInfo {
   public get emojiName(): string {
     return this.name.en.toLowerCase().replace(/\s+/, '');
   }
-  
+
   public get emojiCode(): string {
     return `:${this.emojiName}:`;
   }
