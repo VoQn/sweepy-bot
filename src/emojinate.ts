@@ -1,5 +1,5 @@
 
-const numberEmojis: Array<string> = [
+const numberEmojis: string[] = [
   ':zero:',
   ':one:',
   ':two:',
@@ -10,34 +10,34 @@ const numberEmojis: Array<string> = [
   ':seven:',
   ':eight:',
   ':nine:',
-  ':keycap_ten:'
+  ':keycap_ten:',
 ];
 
 const punctuationEmojis = {
   '!': ':exclamation:',
   '?': ':question:',
   '!!': ':bangbang:',
-  '!?': ':interrobang:'
+  '!?': ':interrobang:',
 };
 
-export const trimByRegexp = (regexp: RegExp, text: string): Array<string> => {
+export const trimByRegexp = (regexp: RegExp, text: string): string[] => {
   const test = text.match(regexp);
   if (test != null) {
     const word = test[0];
     return [
       word,
-      text.substr(word.length)
-    ]
+      text.substr(word.length),
+    ];
   }
   return null;
-}
+};
 
 export const emojinateLine = (text: string): string => {
   let result: string = '';
   let rest = text;
-  let isRemain = () => rest.length > 0;
+  const isRemain = () => rest.length > 0;
   while (isRemain()) {
-    let test: Array<string> = null;
+    let test: string[] = null;
 
     // :ten:
     test = trimByRegexp(/^10/, rest);
@@ -50,7 +50,7 @@ export const emojinateLine = (text: string): string => {
     // numbers
     test = trimByRegexp(/^[0-9]/, rest);
     if (test) {
-      result += numberEmojis[parseInt(test[0])];
+      result += numberEmojis[parseInt(test[0], 10)];
       rest = test[1];
       continue;
     }
@@ -74,7 +74,7 @@ export const emojinateLine = (text: string): string => {
     // space
     test = trimByRegexp(/^[^\S\n]+/, rest);
     if (test) {
-      result += ' '; 
+      result += ' ';
       rest = test[1];
       continue;
     }

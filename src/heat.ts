@@ -1,13 +1,13 @@
 export type TemparetureUnit = 'Kelvin' | 'Celsius' | 'Fahrenheit';
 
 const decimalShift = (x: number, p: number) => {
-  const xs = ("" + x).split("e");
-  return +(xs[0] + "e" + (xs[1] ? (+xs[1] + p) : p));
+  const xs = ('' + x).split('e');
+  return +(xs[0] + 'e' + (xs[1] ? (+xs[1] + p) : p));
 };
 
 const round = (x: number, p: number) => {
   return decimalShift(Math.round(decimalShift(x, p)), -p);
-}
+};
 
 export const convertKelvinTemp = (temp: number, unit: TemparetureUnit = 'Celsius') => {
   switch (unit) {

@@ -1,4 +1,4 @@
-import { convertKelvinTemp } from "./heat";
+import { convertKelvinTemp } from './heat';
 
 describe('heat', () => {
   describe('convertKelvinTemp', () => {
