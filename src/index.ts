@@ -1,9 +1,11 @@
 import http from 'http';
 import querystring from 'querystring';
-import { Client, ChannelResolvable, TextChannel, Message, MessageOptions, GuildChannel } from 'discord.js';
+import { Client, ChannelResolvable, TextChannel, Message, MessageOptions, GuildChannel, MessageEmbed, MessageEmbedOptions } from 'discord.js';
 import { AnswerTalker, Dictionary, Entry } from './answer_talker';
 import { emojinate } from './emojinate';
-// import cheetsheets from './data/cheetsheet.json';
+import cheetsheets from '../data/cheetsheet.json';
+import emojis from '../data/emoji.json';
+import { Critter } from './critter';
 
 const client = new Client();
 
@@ -40,31 +42,33 @@ const commands = [
       )} _に変換するよ_`;
     },
   },
+  {
+    command: '!critter',
+    get help(): string {
+      return `\`${this.command}\` <スペース> <動物の名前>\` _知ってる動物の詳細を教えるよ_`;
+    },
+  },
 ];
 
-// tslint:disable-next-line: no-require-imports
-const cheetsheets = require('../data/cheetsheet.json');
 const cheetsheetCommand = new AnswerTalker(Object.values(cheetsheets), 'name', 'url');
 
-// tslint:disable-next-line: no-require-imports
-const emojis2 = require('../data/emoji.json');
-const emojis = Object.entries(emojis2).map(([code, name]) => {
+const emojis2 = Object.entries(emojis).map(([code, name]) => {
   return { name, code };
 });
 
 const emojiCommand = new AnswerTalker(
-  emojis as Dictionary,
+  emojis2 as Dictionary,
   'name',
   'code',
   getCustomEmojiMessage,
 );
 
 function getCustomEmojiMessage(code: string): string {
-  return (
-    client.emojis.cache.find(emoji => emoji.name === code).toString() +
-    ' ' +
-    `\`:${code}:\``
-  );
+  const emoji = client.emojis.cache.find(e => e.name === code);
+  if (emoji) {
+    return `${emoji} \`:${code}\``;
+  }
+  return '';
 }
 
 http
@@ -158,7 +162,7 @@ client.on('message', message => {
   return;
 });
 
-function getMessage(context: string): string {
+function getMessage(context: string): any {
   // ヘルプタグ
   if (context.match(/^\!help/)) {
     let msg = `${emojinate('About')}\n`;
@@ -194,6 +198,27 @@ function getMessage(context: string): string {
   const test = context.match(/^\!emoji-echo\s+(?<arg>.+)$/);
   if (test) {
     return emojinate(test.groups.arg);
+  }
+
+  const critterName = context.match(/^\!critter\s+(?<arg>.+)$/);
+  if (critterName) {
+    const critter = Critter.findByName(test.groups.arg[0]);
+    const emoji = client.emojis.cache.get(critter.emojiCode);
+    const emojiDeco = client.emojis.cache.get(':decord:');
+    const embedData: MessageEmbedOptions = {
+      title: `**${critter.name.en}** ${critter.name.ja}`,
+      color: 0x0099FF,
+      fields: [
+        { name: `:secret: 内部名`, value: `\`${critter.id}\``, inline: true },
+        { name: `${emoji} Emoji Code`, value: `\`:${critter.emojiCode}\``, inline: true },
+        { name: ':thermometer: Livable Temp', value: `${critter.livableTemp.lower}℃ 〜 ${critter.livableTemp.upper}℃`, inline: true },
+        { name: `${emojiDeco} 装飾値`, value: `${critter.decor.value} (半径 ${critter.decor.radius})`, inline: true },
+        { name: `カロリー消費`, value: `${critter.caloriesNeeded} (cal/s)`, inline: true },
+        { name: ':heart: HP', value: `${critter.hitPoint}`, inline: true },
+        { name: ':u6e80: Space Required', value: critter.spaceRequired != null ? `${critter.spaceRequired}` : 'N/A', inline: true },
+      ],
+    };
+    return { embed: embedData };
   }
 }
 

@@ -2,8 +2,6 @@ import Discord, { PresenceData, Message } from 'discord.js';
 import { SweepyBot } from './sweepy-bot';
 
 export class SweepyDock {
-  private client: Discord.Client;
-  private sweepy: SweepyBot;
 
   constructor(client: Discord.Client) {
     this.client = client;
@@ -12,6 +10,8 @@ export class SweepyDock {
     this.client.once('ready', () => this.onReady());
     this.client.on('message', (message: Discord.Message) => this.onMessage(message));
   }
+  private client: Discord.Client;
+  private sweepy: SweepyBot;
 
   async start(token: string): Promise<string> {
     return this.client.login(token);
