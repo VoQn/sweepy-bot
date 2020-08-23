@@ -45,7 +45,7 @@ const commands = [
   {
     command: '!critter',
     get help(): string {
-      return `\`${this.command}\` <スペース> <動物の名前>\` _知ってる動物の詳細を教えるよ_`;
+      return `\`${this.command} <スペース> <動物の名前>\` _知ってる動物の詳細を教えるよ_`;
     },
   },
 ];
@@ -66,7 +66,7 @@ const emojiCommand = new AnswerTalker(
 function getCustomEmojiMessage(code: string): string {
   const emoji = client.emojis.cache.find(e => e.name === code);
   if (emoji) {
-    return `${emoji} \`:${code}\``;
+    return `${emoji} \`:${code}:\``;
   }
   return '';
 }
@@ -202,9 +202,12 @@ function getMessage(context: string): any {
 
   const critterName = context.match(/^\!critter\s+(?<arg>.+)$/);
   if (critterName) {
-    const critter = Critter.findByName(test.groups.arg[0]);
-    const emoji = client.emojis.cache.get(critter.emojiCode);
-    const emojiDeco = client.emojis.cache.get(':decord:');
+    const critter = Critter.findByName(test.groups.arg);
+    if (critter == null) {
+      return 'まだその動物は知らないや……';
+    }
+    const emoji = client.emojis.cache.find(c => critter.emojiName === c.name);
+    const emojiDeco = client.emojis.cache.find(c => 'decord' === c.name);
     const embedData: MessageEmbedOptions = {
       title: `**${critter.name.en}** ${critter.name.ja}`,
       color: 0x0099FF,
