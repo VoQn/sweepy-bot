@@ -55,8 +55,8 @@ Glitch で DiscordBot を作るためのベースです。
     - 各 commands で利用できる形の辞書がほしい
     - debug name も出してほしい
       - サンドボックスモードだと名前が違ったりするのを教えてほしい
-
         - 天然ガスでも Natural Gas でもなく Methane でないと出てこないとか
+        - これのことですか？ [内部データで名前が違う動植物一覧 - OxygenNotIncluded Advanced Notes](https://scrapbox.io/OxygenNotIncluded/%E5%86%85%E9%83%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A7%E5%90%8D%E5%89%8D%E3%81%8C%E9%81%95%E3%81%86%E5%8B%95%E6%A4%8D%E7%89%A9%E4%B8%80%E8%A6%A7)
 
 # 注意
 
