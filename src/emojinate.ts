@@ -42,6 +42,9 @@ export const emojinateLine = (text: string): string => {
     // :ten:
     test = trimByRegexp(/^10/, rest);
     if (test) {
+      if (result.length > 0) {
+        result += ' ';
+      }
       result += numberEmojis[9];
       rest = test[1];
       continue;
@@ -50,6 +53,9 @@ export const emojinateLine = (text: string): string => {
     // numbers
     test = trimByRegexp(/^[0-9]/, rest);
     if (test) {
+      if (result.length > 0) {
+        result += ' ';
+      }
       result += numberEmojis[parseInt(test[0], 10)];
       rest = test[1];
       continue;
@@ -58,6 +64,9 @@ export const emojinateLine = (text: string): string => {
     // punctuation
     test = trimByRegexp(/^(\?|\!(\!|\?)?)/, rest);
     if (test) {
+      if (result.length > 0) {
+        result += ' ';
+      }
       result += punctuationEmojis[test[0] as ('!' | '?' | '!!' | '!?')];
       rest = test[1];
       continue;
@@ -66,6 +75,9 @@ export const emojinateLine = (text: string): string => {
     // alphabet
     test = trimByRegexp(/^[a-zA-Z]/, rest);
     if (test) {
+      if (result.length > 0) {
+        result += ' ';
+      }
       result += `:regional_indicator_${test[0].toLowerCase()}:`;
       rest = test[1];
       continue;
@@ -74,6 +86,9 @@ export const emojinateLine = (text: string): string => {
     // space
     test = trimByRegexp(/^[^\S\n]+/, rest);
     if (test) {
+      if (result.length > 0) {
+        result += ' ';
+      }
       result += ' ';
       rest = test[1];
       continue;
