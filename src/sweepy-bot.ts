@@ -9,11 +9,11 @@ export class SweepyBot {
     },
   };
 
-  private commands: Array<Command>;
-
   constructor() {
     this.commands = [];
   }
+
+  private commands: Array<Command>;
 
   registerCommand(command: Command): void {
     this.commands.push(command);

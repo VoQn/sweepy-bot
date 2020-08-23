@@ -1,85 +1,139 @@
-import { CritterInfo, CritterInfoBase } from './critter-info';
 import { TemparetureUnit, convertKelvinTemp } from '../heat';
+export type ID = string;
+
+export type HasId = {
+  id: ID;
+};
+
+export type CritterName = {
+  en: string;
+  ja: string;
+};
+
+export type HasName<N> = { name: N };
+
+export type LivableTemp = {
+  lower: number;
+  upper: number;
+};
+
+export type Decor = {
+  radius: number;
+  value: number;
+};
+
+export interface CritterInfoBase extends HasId, HasName<CritterName> {
+  livableTemp: LivableTemp;
+  decor: Decor;
+  caloriesNeeded: number;
+  hitPoint: number;
+  spaceRequired?: number;
+}
+
+export interface CritterInfo extends CritterInfoBase {
+  isBaseType: boolean;
+  baseTypeName: ID;
+}
+
+export type FamiliyCritterInfo = Partial<CritterInfoBase> & HasId & HasName<CritterName>;
 
 export class Critter implements CritterInfo {
-  public static readonly all: Critter[] = [];
+  public static readonly table: Map<ID, Critter> = new Map<ID, Critter>();
 
-  isBaseType: boolean;
-  baseTypeName: string;
-  name: {
-    internal: string;
-    en: string;
-    ja: string;
-  };
-  livableTemp: {
-    lower: number;
-    upper: number;
-  };
-  hitPoint: number;
-  caloriesNeeded: number;
-  spaceRequired?: number;
+  public readonly isBaseType: boolean;
+  public readonly baseTypeName: ID;
+  public readonly id: ID;
+  public readonly name: CritterName;
 
-  constructor(origin: CritterInfoBase, override?: Partial<CritterInfoBase>) {
-    this.isBaseType = override == null || Object.keys(override).length < 1;
-    this.baseTypeName = origin.name.internal;
-    this.name = origin.name;
-    this.livableTemp = origin.livableTemp;
-    this.hitPoint = origin.hitPoint;
-    this.caloriesNeeded = origin.caloriesNeeded;
-    this.spaceRequired = origin.spaceRequired;
+  private origin: CritterInfoBase;
+  private override?: FamiliyCritterInfo;
 
-    if (override?.name) {
-      this.name = override.name;
-    }
-
-    if (override?.livableTemp) {
-      this.livableTemp = override.livableTemp;
-    }
-
-    if (override?.hitPoint != null) {
-      this.hitPoint = override.hitPoint;
-    }
-
-    if (override?.caloriesNeeded != null) {
-      this.caloriesNeeded = override.caloriesNeeded;
-    }
-
-    if (override?.spaceRequired != null) {
-      this.spaceRequired = override.spaceRequired;
-    }
-
-    if (!Critter.all.find(critter => critter.name.internal === this.name.internal)) {
-      Critter.all.push(this);
-    }
-  }
-
-  public static findByName(query: string | RegExp, language?: 'en' | 'ja'): Critter {
-    const result = this.all.find(critter => {
-      switch (language) {
-        case 'ja':
-          return critter.name.ja.match(query);
-        case 'en':
-          const name = critter.name.en;
-          if (typeof query === 'string') {
-            return new Intl.Collator('en', { sensitivity: 'accent' }).compare(name, query) === 0;
-          }
-          return critter.name.en.match(query);
-        default:
-          return critter.name.internal.match(query);
+  public static findByName(query: string | RegExp): Critter {
+    let lang: 'en' | 'ja' = 'en';
+    if (typeof query === 'string') {
+      if (/^[\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcf]+$/.test(query)) {
+        // たぶん日本語で検索してる
+        lang = 'ja';
+      } else if (/^[a-zA-Z]+.?$/.test(query)) {
+        // たぶん英語で探してる
+        lang = 'en';
+        if (this.table.has(query)) {
+          return this.table.get(query);
+        }
       }
-    });
-    if (result) {
-      return result;
     }
-    return null;
+    const pattern = typeof query !== 'string' ? query : new RegExp(query.replace(/[^\S\n]/, '\\s?'), 'i');
+    const matched: Critter[] = [];
+    for (const [_id, critter] of this.table) {
+      if (critter.name[lang].replace(/[^\S\n]+/, '').match(pattern)) {
+        matched.push(critter);
+      }
+    }
+    if (matched.length === 0) {
+      return null;
+    }
+    const sort = (a: Critter, b: Critter): number => {
+      if (a.isBaseType && b.isBaseType) {
+        return a.id.length - b.id.length;
+      }
+      if (b.isBaseType) {
+        return 1;
+      }
+      if (a.isBaseType) {
+        return -1;
+      }
+      return 0;
+    };
+    return matched.sort(sort)[0];
   }
 
-  public static getEmojiCode(critter: Critter): string {
+  public static register(origin: CritterInfoBase, override?: FamiliyCritterInfo): Critter {
+    const id = override?.id || origin.id;
+    const cache = this.table.get(id);
+    if (cache) {
+      return cache;
+    }
+    const critter = new Critter(origin, override);
+    this.table.set(id, critter);
+    return critter;
+  }
+
+  public static getEmojiCode(critter: string | Critter): string {
+    if (typeof critter === 'string') {
+      return this.findByName(critter)?.emojiCode;
+    }
     return critter.emojiCode;
   }
 
-  get emojiCode(): string {
-    return `:${this.name.en.replace(/\s+/, '').toLowerCase}:`;
+  private constructor(origin: CritterInfoBase, override?: FamiliyCritterInfo) {
+    const isBaseType = override == null || Object.keys(override).length < 1;
+    this.isBaseType = isBaseType;
+    this.baseTypeName = origin.id;
+
+    if (isBaseType) {
+      this.id = origin.id;
+      this.name = origin.name;
+    } else {
+      this.id = override.id;
+      this.name = override.name;
+    }
+
+    this.origin = origin;
+    this.override = override;
+
+    if (isBaseType) {
+      this.id = origin.id;
+      this.name = origin.name;
+      return;
+    }
+
+    this.id = override.id;
+    this.name = override.name;
+  }
+
+  public get emojiCode(): string {
+    const code = this.name.en.toLowerCase().replace(/\s+/, '');
+    return `:${code}:`;
   }
 
   public getLivableTemp(unit: TemparetureUnit = 'Celsius'): { lower: number, upper: number } {
@@ -88,5 +142,40 @@ export class Critter implements CritterInfo {
       lower: convertKelvinTemp(temp.lower, unit),
       upper: convertKelvinTemp(temp.upper, unit),
     };
+  }
+
+  public get livableTemp(): LivableTemp {
+    if (!this.isBaseType && this.override?.livableTemp) {
+      return this.override.livableTemp;
+    }
+    return this.origin.livableTemp;
+  }
+
+  public get decor(): Decor {
+    if (!this.isBaseType && this.override?.decor) {
+      return this.override.decor;
+    }
+    return this.origin.decor;
+  }
+
+  public get caloriesNeeded(): number {
+    if (!this.isBaseType && this.override?.caloriesNeeded != null) {
+      return this.override.caloriesNeeded;
+    }
+    return this.origin.caloriesNeeded;
+  }
+
+  public get hitPoint(): number {
+    if (!this.isBaseType && this.override.hitPoint != null) {
+      return this.override.hitPoint;
+    }
+    return this.origin.hitPoint;
+  }
+
+  public get spaceRequired(): number | null {
+    if (!this.spaceRequired && this.override?.spaceRequired != null) {
+      return this.override.spaceRequired;
+    }
+    return this.origin.spaceRequired;
   }
 }
