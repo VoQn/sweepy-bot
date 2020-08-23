@@ -159,6 +159,7 @@ function getMessage(context: string): string | object {
   if (context.match(/^\!help/)) {
     let msg = `${emojinate('About')}\n`;
     commands.forEach(c => {
+      console.info(c);
       msg += `${c.help}\n`;
     });
     return msg;
