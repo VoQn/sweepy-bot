@@ -6,47 +6,34 @@ import { emojinate } from './emojinate';
 import cheetsheets from '../data/cheetsheet.json';
 import emojis from '../data/emoji.json';
 import { Critter } from './critter';
+import { json } from 'express';
 
 const client = new Client();
 
 const commands = [
   {
     command: '!help',
-    get help(): string {
-      return `\`${this.command}\` _応えられるコマンド一覧を出すよ_`;
-    },
+    help: '`!help` _応えられるコマンド一覧を出すよ_',
   },
   {
     command: '!cheetsheets',
-    get help(): string {
-      return `\`${this.command}\` _チートシート一覧を出すよ_`;
-    },
+    help: '`!cheetsheets` _チートシート一覧を出すよ_',
   },
   {
     command: '!cheetsheet',
-    get help(): string {
-      return `\`${this.command} <スペース> <キーワード> \` _応えられる範囲で答えるよ_`;
-    },
-  },
-  {
-    command: '!emoji',
-    get help(): string {
-      return `\`${this.command} <スペース> <絵文字>\` _あるなら絵文字コード答えるよ_`;
-    },
-  },
-  {
-    command: '!emoji-echo',
-    get help(): string {
-      return `\`${this.command} <スペース> <アルファベット>\` ${emojinate(
-        'emoji',
-      )} _に変換するよ_`;
-    },
+    help: '`!cheetsheet <スペース> <キーワード>` _あったらチートシート出すよ_',
   },
   {
     command: '!critter',
-    get help(): string {
-      return `\`${this.command} <スペース> <動物の名前>\` _知ってる動物の詳細を教えるよ_`;
-    },
+    help: '`!critter <スペース> <動物の名前>` _知ってる動物の詳細を教えるよ_',
+  },
+  {
+    command: '!emoji',
+    help: '`!emoji <スペース> <絵文字>` _あるなら絵文字コード答えるよ_',
+  },
+  {
+    command: '!emoji-echo',
+    help: `\`!emoji-echo <スペース> <アルファベット>\` ${emojinate('emoji')} _に変換するよ_`,
   },
 ];
 
@@ -156,13 +143,15 @@ client.on('message', message => {
 
   const msg = getMessage(message.content);
   // 空メッセージを送らないようにする
-  if (msg && msg.length > 0) {
-    sendMsg(message.channel.id, msg);
+  if (typeof msg === 'string') {
+    if (msg && msg.length > 0) {
+      sendMsg(message.channel.id, msg);
+    }
   }
   return;
 });
 
-function getMessage(context: string): any {
+function getMessage(context: string): string | object {
   // ヘルプタグ
   if (context.match(/^\!help/)) {
     let msg = `${emojinate('About')}\n`;
@@ -225,21 +214,23 @@ function getMessage(context: string): any {
   }
 }
 
-function sendReply(message: Message, text: string): void {
+function sendReply(message: Message, content: any): void {
   message
-    .reply(text)
+    .reply(content)
     .then((_result: Message) => {
-      console.log('リプライ送信: ' + text);
+      const stringfiedContent = (typeof content === 'string') ? content : JSON.stringify(content);
+      console.log('リプライ送信: ' + stringfiedContent);
     })
     .catch(console.error);
 }
 
-function sendMsg(channelId: ChannelResolvable, text: string, option: MessageOptions = {}): void {
+function sendMsg(channelId: ChannelResolvable, content: any, option: MessageOptions = {}): void {
   (client.channels
     .resolve(channelId) as TextChannel)
-    .send(text, option)
+    .send(content, option)
     .then((_result: Message) => {
-      console.log('メッセージ送信: ' + text + JSON.stringify(option));
+      const stringfiedContent = (typeof content === 'string') ? content : JSON.stringify(content);
+      console.log('メッセージ送信: ' + stringfiedContent + JSON.stringify(option));
     })
     .catch(console.error);
 }
