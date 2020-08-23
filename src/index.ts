@@ -146,6 +146,10 @@ client.on('message', message => {
     if (msg && msg.length > 0) {
       sendMsg(message.channel.id, msg);
     }
+  } else {
+    if (msg != null && Object.keys(msg).length > 0) {
+      sendMsg(message.channel.id, msg);
+    }
   }
   return;
 });
