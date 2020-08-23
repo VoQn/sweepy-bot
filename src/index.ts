@@ -1,39 +1,40 @@
 import http from 'http';
 import querystring from 'querystring';
-import { Client, ChannelResolvable, TextChannel, Message, MessageOptions } from 'discord.js';
-// import AnswerTalker from '../commands/answer_talker';
+import { Client, ChannelResolvable, TextChannel, Message, MessageOptions, GuildChannel } from 'discord.js';
+import { AnswerTalker, Dictionary, Entry } from './answer_talker';
 import { emojinate } from './emojinate';
+// import cheetsheets from './data/cheetsheet.json';
 
 const client = new Client();
 
 const commands = [
   {
     command: '!help',
-    get help() {
+    get help(): string {
       return `\`${this.command}\` _応えられるコマンド一覧を出すよ_`;
     },
   },
   {
     command: '!cheetsheets',
-    get help() {
+    get help(): string {
       return `\`${this.command}\` _チートシート一覧を出すよ_`;
     },
   },
   {
     command: '!cheetsheet',
-    get help() {
+    get help(): string {
       return `\`${this.command} <スペース> <キーワード> \` _応えられる範囲で答えるよ_`;
     },
   },
   {
     command: '!emoji',
-    get help() {
+    get help(): string {
       return `\`${this.command} <スペース> <絵文字>\` _あるなら絵文字コード答えるよ_`;
     },
   },
   {
     command: '!emoji-echo',
-    get help() {
+    get help(): string {
       return `\`${this.command} <スペース> <アルファベット>\` ${emojinate(
         'emoji',
       )} _に変換するよ_`;
@@ -41,37 +42,39 @@ const commands = [
   },
 ];
 
+// tslint:disable-next-line: no-require-imports
 const cheetsheets = require('./data/cheetsheet.json');
-// const cheetsheetCommand = new AnswerTalker(Object.values(cheetsheets), 'name', 'url');
+const cheetsheetCommand = new AnswerTalker(Object.values(cheetsheets), 'name', 'url');
 
+// tslint:disable-next-line: no-require-imports
 const emojis2 = require('./data/emoji.json');
 const emojis = Object.entries(emojis2).map(([code, name]) => {
   return { name, code };
 });
 
-// const emojiCommand = new AnswerTalker(
-//   emojis,
-//   'name',
-//   'code',
-//   getCustomEmojiMessage,
-// );
+const emojiCommand = new AnswerTalker(
+  emojis as Dictionary,
+  'name',
+  'code',
+  getCustomEmojiMessage,
+);
 
-// function getCustomEmojiMessage(code) {
-//   return (
-//     client.emojis.find(emoji => emoji.name === code).toString() +
-//     ' ' +
-//     `\`:${code}:\``
-//   );
-// }
+function getCustomEmojiMessage(code: string): string {
+  return (
+    client.emojis.cache.find(emoji => emoji.name === code).toString() +
+    ' ' +
+    `\`:${code}:\``
+  );
+}
 
 http
-  .createServer(function (req, res) {
-    if (req.method == 'POST') {
+  .createServer((req, res) => {
+    if (req.method === 'POST') {
       let data = '';
-      req.on('data', function (chunk) {
+      req.on('data', (chunk) => {
         data += chunk;
       });
-      req.on('end', function () {
+      req.on('end', () => {
         if (!data) {
           res.end('No post data');
           return;
@@ -79,7 +82,7 @@ http
         const dataObject = querystring.parse(data);
         console.group('Server Requested');
         console.log('post:' + dataObject.type);
-        if (dataObject.type == 'wake') {
+        if (dataObject.type === 'wake') {
           console.log('Woke up in post');
           if (client.readyTimestamp) {
             console.log('yay, and I\'m alive since:' + client.readyTimestamp);
@@ -92,29 +95,29 @@ http
         }
         console.groupEnd();
       });
-    } else if (req.method == 'GET') {
+    } else if (req.method === 'GET') {
       res.writeHead(200, { 'Content-Type': 'text/plain' });
       res.end('Discord Bot is active now\n');
     }
   })
   .listen(3000);
 
-// client.on('ready', message => {
-//   console.log(`Bot準備完了`);
-//   client.user.setPresence({
-//     activity: { name: '皆さんからの !help ', type: 'WATCHING' },
-//     status: 'online',
-//   });
-// });
+client.on('ready', () => {
+  console.log(`Bot準備完了`);
+  client.user.setPresence({
+    activity: { name: '皆さんからの !help ', type: 'WATCHING' },
+    status: 'online',
+  });
+});
 
 // 新しく誰かがサーバーに入った時に挨拶する
 client.on('guildMemberAdd', member => {
   // send the message to a designated channel on a server:
-  const channel = member.guild.channels.cache.find(
-    ch => ch.name === 'member-log',
+  const channel: GuildChannel = member.guild.channels.cache.find(
+    ch => ch.name === 'welcome',
   );
   // do nothing if the channel wasn't found on this server
-  if (!channel) {
+  if (!channel || channel.type !== 'text') {
     return;
   }
 
@@ -125,14 +128,16 @@ ${emojinate('caution')}
 **サーバーに入りたての時は、まだ色んなチャンネルを見ることは出来ません。**
 _'承認済み' のロールが与えられたら、インフォメーション以外のカテゴリも読めるようになります。_`;
 
-  channel
+  (channel as TextChannel)
     .send(text)
-    .then(console.log('メッセージ送信: ' + text + JSON.stringify({})))
+    .then(() => {
+      console.log('メッセージ送信: ' + text + JSON.stringify({}));
+    })
     .catch(console.error);
 });
 
 client.on('message', message => {
-  if (message.author.id == client.user.id || message.author.bot) {
+  if (message.author.id === client.user.id || message.author.bot) {
     return;
   }
   if (
@@ -153,44 +158,44 @@ client.on('message', message => {
   return;
 });
 
-// function getMessage(context) {
-//   // ヘルプタグ
-//   if (context.match(/^\!help/)) {
-//     let msg = `${emojinate('About')}\n`;
-//     commands.forEach(c => {
-//       msg += `${c.help}\n`;
-//     });
-//     return msg;
-//   }
+function getMessage(context: string): string {
+  // ヘルプタグ
+  if (context.match(/^\!help/)) {
+    let msg = `${emojinate('About')}\n`;
+    commands.forEach(c => {
+      msg += `${c.help}\n`;
+    });
+    return msg;
+  }
 
-//   // タグ一覧
-//   if (context.match(/^\!cheetsheets/)) {
-//     return cheetsheetCommand.getKeywords();
-//   }
+  // タグ一覧
+  if (context.match(/^\!cheetsheets/)) {
+    return cheetsheetCommand.getKeywords();
+  }
 
-//   // タグの返答
-//   const m = context.match(/^\!cheetsheet\s+(?<arg>\S+)/);
-//   if (m) {
-//     return cheetsheetCommand.getAnswer(m.groups.arg);
-//   }
+  // タグの返答
+  const m = context.match(/^\!cheetsheet\s+(?<arg>\S+)/);
+  if (m) {
+    return cheetsheetCommand.getAnswer(m.groups.arg);
+  }
 
-//   // 絵文字一覧
-//   if (context.match(/^\!emoji$/)) {
-//     return emojiCommand.getKeywords();
-//   }
+  // 絵文字一覧
+  if (context.match(/^\!emoji$/)) {
+    return emojiCommand.getKeywords();
+  }
 
-//   // 絵文字の返答
-//   const e = context.match(/^\!emoji\s+(?<arg>\S+)/);
-//   if (e) {
-//     return emojiCommand.getAnswer(e.groups.arg);
-//   }
+  // 絵文字の返答
+  const e = context.match(/^\!emoji\s+(?<arg>\S+)/);
+  if (e) {
+    return emojiCommand.getAnswer(e.groups.arg);
+  }
 
-//   // emoji-echo
-//   const test = context.match(/^\!emoji-echo\s+(?<arg>[A-Za-z0-9]+)/);
-//   if (test) {
-//     return emojinate(test.groups.arg);
-//   }
-// }
+  // emoji-echo
+  const test = context.match(/^\!emoji-echo\s+(?<arg>[A-Za-z0-9]+)/);
+  if (test) {
+    return emojinate(test.groups.arg);
+  }
+}
 
 function sendReply(message: Message, text: string): void {
   message
@@ -225,5 +230,7 @@ if (process.env) {
 
   console.log('Discord クライアントをログインさせます...');
 
-  client.login(TOKEN).catch(console.debug);
+  client.login(TOKEN).catch((e) => {
+    console.log(e);
+  });
 }
