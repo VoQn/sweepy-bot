@@ -6,7 +6,6 @@ import { emojinate } from './emojinate';
 import cheetsheets from '../data/cheetsheet.json';
 import emojis from '../data/emoji.json';
 import { Critter } from './critter';
-import { json } from 'express';
 
 const client = new Client();
 
