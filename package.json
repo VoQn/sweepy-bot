@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "build": "./node_modules/.bin/tsc",
+    "test": "jest",
     "start": "node ./dist/server.js"
   },
   "dependencies": {
@@ -31,5 +32,22 @@
     "node",
     "glitch",
     "express"
-  ]
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "**/src/**/*.test.ts"
+    ]
+  }
 }
