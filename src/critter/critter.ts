@@ -132,9 +132,12 @@ export class Critter implements CritterInfo {
     this.name = override.name;
   }
 
+  public get emojiName(): string {
+    return this.name.en.toLowerCase().replace(/\s+/, '');
+  }
+  
   public get emojiCode(): string {
-    const code = this.name.en.toLowerCase().replace(/\s+/, '');
-    return `:${code}:`;
+    return `:${this.emojiName}:`;
   }
 
   public get imageURL(): string {
