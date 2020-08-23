@@ -3,7 +3,8 @@ import querystring from 'querystring';
 import { Client, ChannelResolvable, TextChannel, Message, MessageOptions, GuildChannel } from 'discord.js';
 import { AnswerTalker, Dictionary, Entry } from './answer_talker';
 import { emojinate } from './emojinate';
-// import cheetsheets from './data/cheetsheet.json';
+import cheetsheets from '../data/cheetsheet.json';
+import emoji from '../data/emoji.json';
 
 const client = new Client();
 
@@ -42,13 +43,9 @@ const commands = [
   },
 ];
 
-// tslint:disable-next-line: no-require-imports
-const cheetsheets = require('../data/cheetsheet.json');
 const cheetsheetCommand = new AnswerTalker(Object.values(cheetsheets), 'name', 'url');
 
-// tslint:disable-next-line: no-require-imports
-const emojis2 = require('../data/emoji.json');
-const emojis = Object.entries(emojis2).map(([code, name]) => {
+const emojis = Object.entries(emoji).map(([code, name]) => {
   return { name, code };
 });
 
