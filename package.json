@@ -5,9 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "clean": "rm -rf ./dist",
-    "compile": "tsc",
     "start:server": "node ./dist/index.js",
-    "build": "run-s clean compile",
+    "build": "tsc",
     "test": "jest",
     "start": "run-s build start:server"
   },
