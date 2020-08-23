@@ -91,3 +91,7 @@ export const emojinateLine = (text: string): string => {
   }
   return result;
 };
+
+export const emojinate = (text: string) => {
+  return text.split(/\n/).map(emojinateLine).join('\n');
+};
