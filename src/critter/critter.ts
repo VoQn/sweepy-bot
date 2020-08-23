@@ -1,24 +1,5 @@
-import { TemparetureUnit, convertKelvinTemp } from './heat';
-
-interface CritterInfoBase {
-  name: {
-    internal: string;
-    en: string;
-    ja: string;
-  };
-  livableTemp: {
-    lower: number;
-    upper: number;
-  };
-  hitPoint: number;
-  caloriesNeeded: number;
-  spaceRequired?: number;
-}
-
-export interface CritterInfo extends CritterInfoBase {
-  isBaseType: boolean;
-  baseTypeName: string;
-}
+import { CritterInfo, CritterInfoBase } from './critter-info';
+import { TemparetureUnit, convertKelvinTemp } from '../heat';
 
 export class Critter implements CritterInfo {
   public static readonly all: Critter[] = [];
@@ -109,51 +90,3 @@ export class Critter implements CritterInfo {
     };
   }
 }
-
-const hatch: Critter = new Critter({
-  name: {
-    internal: 'hatch',
-    en: 'Hatch',
-    ja: 'ハッチ',
-  },
-  livableTemp: {
-    lower: 243.15,
-    upper: 343.15,
-  },
-  hitPoint: 25,
-  caloriesNeeded: -1.17,
-  spaceRequired: 12,
-});
-
-const sageHatch: Critter = new Critter(hatch, {
-  name: {
-    internal: 'hatchveggie',
-    en: 'Sage Hatch',
-    ja: 'セイジハッチ',
-  },
-});
-
-const stoneHatch: Critter = new Critter(hatch, {
-  name: {
-    internal: 'hatchhard',
-    en: 'Stone Hatch',
-    ja: 'ごつごつハッチ',
-  },
-  hitPoint: 200,
-});
-
-const smoothHatch: Critter = new Critter(hatch, {
-  name: {
-    internal: 'hatchmetal',
-    en: 'Smooth Hatch',
-    ja: 'つるつるハッチ',
-  },
-  hitPoint: 400,
-});
-
-export const critters = {
-  hatch,
-  sageHatch,
-  stoneHatch,
-  smoothHatch,
-};
