@@ -176,7 +176,7 @@ export class Critter implements CritterInfo {
   }
 
   public get spaceRequired(): number | null {
-    if (!this.spaceRequired && this.override?.spaceRequired != null) {
+    if (!this.isBaseType && this.override?.spaceRequired != null) {
       return this.override.spaceRequired;
     }
     return this.origin.spaceRequired;

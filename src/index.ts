@@ -154,7 +154,12 @@ client.on('message', message => {
   return;
 });
 
-function getMessage(context: string): string | object {
+type Response = {
+  content: string;
+  option?: MessageOptions;
+}
+
+function getMessage(context: string): Response {
   // ヘルプタグ
   if (context.match(/^\!help/)) {
     let msg = `${emojinate('About')}\n`;
@@ -162,42 +167,42 @@ function getMessage(context: string): string | object {
       console.info(c);
       msg += `${c.help}\n`;
     });
-    return msg;
+    return { content: msg, options: {} };
   }
 
   // タグ一覧
   if (context.match(/^\!cheetsheets/)) {
-    return cheetsheetCommand.getKeywords();
+    return { content: cheetsheetCommand.getKeywords(), options: { }};
   }
 
   // タグの返答
   const m = context.match(/^\!cheetsheet\s+(?<arg>\S+)/);
   if (m) {
-    return cheetsheetCommand.getAnswer(m.groups.arg);
+    return { content: cheetsheetCommand.getAnswer(m.groups.arg), options: { }};
   }
 
   // 絵文字一覧
   if (context.match(/^\!emoji$/)) {
-    return emojiCommand.getKeywords();
+    return { content: emojiCommand.getKeywords(), options: { }};
   }
 
   // 絵文字の返答
   const e = context.match(/^\!emoji\s+(?<arg>\S+)/);
   if (e) {
-    return emojiCommand.getAnswer(e.groups.arg);
+    return { content: emojiCommand.getAnswer(e.groups.arg), options: { }};
   }
 
   // emoji-echo
   const test = context.match(/^\!emoji-echo\s+(?<arg>.+)$/);
   if (test) {
-    return emojinate(test.groups.arg);
+    return { content: emojinate(test.groups.arg), options: {}};
   }
 
   const critterName = context.match(/^\!critter\s+(?<arg>.+)$/);
   if (critterName)  {
-    const critter = Critter.findByName(critterName.groups.arg);
+    const critter = Critter.findByName(critterName.groups.arg[0]);
     if (critter == null) {
-      return 'まだその動物は知らないや……';
+      return { content: }'まだその動物は知らないや……', options: { }};
     }
     const emoji = client.emojis.cache.find(c => critter.emojiName === c.name);
     const emojiDeco = client.emojis.cache.find(c => 'decord' === c.name);
@@ -214,7 +219,7 @@ function getMessage(context: string): string | object {
         { name: ':u6e80: Space Required', value: critter.spaceRequired != null ? `${critter.spaceRequired}` : 'N/A', inline: true },
       ],
     };
-    return { embed: embedData };
+    return { content: `${cri}`, { embed: embedData };
   }
 }
 
