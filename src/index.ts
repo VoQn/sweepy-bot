@@ -166,7 +166,7 @@ function getMessage(context: string): Response {
   }
 
   // チートシート一覧
-  if (context.match(/^\!cheatsheet\s+$/)) {
+  if (context.match(/^\!cheatsheet\s?$/)) {
     return { content: cheatsheetCommand.getKeywords(), options: {} };
   }
 
