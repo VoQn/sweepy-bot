@@ -1,7 +1,8 @@
 import http from 'http';
 import querystring from 'querystring';
-import { Client, ChannelResolvable, TextChannel, Message, MessageOptions, GuildChannel, MessageEmbed, MessageEmbedOptions } from 'discord.js';
-import { AnswerTalker, Dictionary, Entry } from './answer_talker';
+// tslint:disable-next-line: max-line-length
+import { Client, ChannelResolvable, TextChannel, Message, MessageOptions, GuildChannel, MessageEmbedOptions, Collection, GuildEmoji, Emoji } from 'discord.js';
+import { AnswerTalker, Dictionary } from './answer_talker';
 import { emojinate } from './emojinate';
 import cheetsheets from '../data/cheetsheet.json';
 import emojis from '../data/emoji.json';
@@ -48,6 +49,10 @@ const emojiCommand = new AnswerTalker(
   'code',
   getCustomEmojiMessage,
 );
+
+const getCustomEmoji = (cache: Collection<string, GuildEmoji>, name: string): Emoji => {
+  return cache.find(v => v.name === name);
+};
 
 function getCustomEmojiMessage(code: string): string {
   const emoji = client.emojis.cache.find(e => e.name === code);
@@ -197,14 +202,59 @@ function getMessage(context: string): Response {
 
   const critterName = context.match(/^\!critter\s+(?<arg>.+)$/);
   if (critterName) {
+    const findEmoji = (name: string) => {
+      return getCustomEmoji(client.emojis.cache, name);
+    };
     const critter = Critter.findByName(critterName.groups.arg);
     if (critter == null) {
-      const sadEmoji = client.emojis.cache.find(c => c.name === 'sadsweepy');
-      return { content: `${sadEmoji} まだその動物は知らないや……`, options: {} };
+      return {
+        content: `${findEmoji('sadsweepy')} _まだその動物は知らないや……_`,
+        options: {},
+      };
     }
-    const emoji = client.emojis.cache.find(c => critter.emojiName === c.name);
-    const emojiDeco = client.emojis.cache.find(c => 'decord' === c.name);
-    const emojiCal = client.emojis.cache.find(c => 'calories' === c.name);
+    const fields = [
+      {
+        name: 'DataBase Link (_oni-db.com_)',
+        value: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${critter.id})を見てね`,
+      },
+      {
+        name: `:secret: 内部名`,
+        value: `\`${critter.id}\``,
+        inline: true,
+      },
+      {
+        name: `${findEmoji(critter.emojiName)} Emoji`,
+        value: `\`${critter.emojiCode}\``,
+        inline: true,
+      },
+      {
+        name: `${findEmoji('oni_thermometer')} 生存可能体温`,
+        value: `**${critter.livableTemp.lower} 〜 ${critter.livableTemp.upper}** _(℃)_`,
+        inline: true,
+      },
+      {
+        name: `${findEmoji('decord')} 装飾値`,
+        value: `**${critter.decor.value}** _(半径 **${critter.decor.radius}** タイル)_`,
+        inline: true,
+      },
+      {
+        name: `${findEmoji('calories')} カロリー消費`,
+        value: `**${critter.caloriesNeeded}** _(cal/s)_`,
+        inline: true,
+      },
+      {
+        name: ':heart: HP',
+        value: `**${critter.hitPoint}**`,
+        inline: true,
+      },
+    ];
+    if (critter.spaceRequired != null) {
+      fields.push({
+        name: ':u6e80: 過密判定',
+        value: critter.spaceRequired != null ? `**${critter.spaceRequired}** _タイル_` : 'N/A',
+        inline: true,
+      });
+    }
     const embedData: MessageEmbedOptions = {
       author: {
         name: critter.name.ja,
@@ -215,54 +265,14 @@ function getMessage(context: string): Response {
       color: 0x0099FF,
       thumbnail: { url: critter.imageURL },
       description: `_${critter.flavorText.ja || critter.flavorText.en}_`,
-      fields: [
-        {
-          name: 'DataBase Link (_oni-db.com_)',
-          value: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${critter.id})を見てね`,
-        },
-        {
-          name: `:secret: 内部名`,
-          value: `\`${critter.id}\``,
-          inline: true,
-        },
-        {
-          name: `${emoji} Emoji`,
-          value: `\`${critter.emojiCode}\``,
-          inline: true,
-        },
-        {
-          name: ':thermometer: 生存可能体温',
-          value: `**${critter.livableTemp.lower} 〜 ${critter.livableTemp.upper}** _(℃)_`,
-          inline: true,
-        },
-        {
-          name: `${emojiDeco} 装飾値`,
-          value: `**${critter.decor.value}** _(半径 **${critter.decor.radius}** タイル)_`,
-          inline: true,
-        },
-        {
-          name: `${emojiCal} カロリー消費`,
-          value: `**${critter.caloriesNeeded}** _(cal/s)_`,
-          inline: true,
-        },
-        {
-          name: ':heart: HP',
-          value: `**${critter.hitPoint}**`,
-          inline: true,
-        },
-        {
-          name: ':u6e80: 過密判定',
-          value: critter.spaceRequired != null ? `**${critter.spaceRequired}** _タイル_` : 'N/A',
-          inline: true,
-        },
-      ],
+      fields,
       footer: {
         text: 'Sweepy Bot',
         iconURL: client.user.avatarURL(),
       },
       timestamp: new Date(),
     };
-    return { content: `:bulb: **${critter.name.ja}** は知ってるよ`, options: { embed: embedData } };
+    return { content: `:bulb: _**${critter.name.ja}** は知ってるよ_`, options: { embed: embedData } };
   }
 }
 
@@ -270,8 +280,7 @@ function sendReply(message: Message, content: string): void {
   message
     .reply(content)
     .then((_result: Message) => {
-      const stringfiedContent = (typeof content === 'string') ? content : JSON.stringify(content);
-      console.log('リプライ送信: ' + stringfiedContent);
+      console.log('リプライ送信: ' + content);
     })
     .catch(console.error);
 }
@@ -281,8 +290,7 @@ function sendMsg(channelId: ChannelResolvable, content: string, options: Message
     .resolve(channelId) as TextChannel)
     .send(content, options)
     .then((_result: Message) => {
-      const stringfiedContent = (typeof content === 'string') ? content : JSON.stringify(content);
-      console.log('メッセージ送信: ' + stringfiedContent + JSON.stringify(options));
+      console.log('メッセージ送信: ' + content + ' ' + JSON.stringify(options));
     })
     .catch(console.error);
 }
