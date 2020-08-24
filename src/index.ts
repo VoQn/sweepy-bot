@@ -234,7 +234,7 @@ function getMessage(context: string): Response {
       },
       {
         name: `${findEmoji('decord')} 装飾値`,
-        value: `**${critter.decor.value}** 半径 **${critter.decor.radius}** _タイル)_`,
+        value: `**${critter.decor.value}** 半径 **${critter.decor.radius}** _タイル_`,
         inline: true,
       },
       {
