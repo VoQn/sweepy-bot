@@ -77,6 +77,14 @@ pnpm test # テスト
       - サンドボックスモードだと名前が違ったりするのを教えてほしい
         - 天然ガスでも Natural Gas でもなく Methane でないと出てこないとか
         - これのことですか？ [内部データで名前が違う動植物一覧 - OxygenNotIncluded Advanced Notes](https://scrapbox.io/OxygenNotIncluded/%E5%86%85%E9%83%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A7%E5%90%8D%E5%89%8D%E3%81%8C%E9%81%95%E3%81%86%E5%8B%95%E6%A4%8D%E7%89%A9%E4%B8%80%E8%A6%A7)
+        
+  - コマンドの解決を `^\!(?<command>\S+)[^\S\n]+(?<args>.+)$` もしくは `^\!(?<command>\S+)` で行い、argsのパースはそれぞれのコマンドに移譲する
+  - Logger の作成
+    - 実行環境では console.error や console.info を直に使うな (by VoQn)
+    - process.env とかを読んで 基本 .log ファイルに書き込みはしつつ、ロガーが 「 console に出すべきかどうか決める」
+  - CommandResolver
+    - `Map<string, Command>.get()` でよさげ
+  - `!help` も、 `!help <コマンド名>` で絞り込みたい
 
 # 注意
 
