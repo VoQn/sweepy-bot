@@ -1,7 +1,7 @@
 import http from 'http';
 import querystring from 'querystring';
 // tslint:disable-next-line: max-line-length
-import { Client, ChannelResolvable, TextChannel, Message, MessageOptions, GuildChannel, MessageEmbedOptions, Collection, GuildEmoji, Emoji } from 'discord.js';
+import { Client, ChannelResolvable, TextChannel, Message, MessageOptions, GuildChannel, MessageEmbedOptions, Collection, GuildEmoji, Emoji, MessageEmbed } from 'discord.js';
 import { AnswerTalker, Dictionary } from './answer_talker';
 import { emojinate } from './emojinate';
 import cheetsheets from '../data/cheetsheet.json';
@@ -13,27 +13,27 @@ const client = new Client();
 const commands = [
   {
     command: '!help',
-    help: '`!help` _応えられるコマンド一覧を出すよ_',
+    help: '```!help``` _応えられるコマンド一覧を出すよ_',
   },
   {
     command: '!cheetsheets',
-    help: '`!cheetsheets` _チートシート一覧を出すよ_',
+    help: '```!cheetsheets``` _チートシート一覧を出すよ_',
   },
   {
     command: '!cheetsheet',
-    help: '`!cheetsheet <スペース> <キーワード>` _あったらチートシート出すよ_',
+    help: '```!cheetsheet <スペース> <キーワード>``` _あったらチートシート出すよ_',
   },
   {
     command: '!critter',
-    help: '`!critter <スペース> <動物の名前>` _知ってる動物の詳細を教えるよ_',
+    help: '```!critter <スペース> <動物の名前>``` _知ってる動物の詳細を教えるよ_',
   },
   {
     command: '!emoji',
-    help: '`!emoji <スペース> <絵文字>` _あるなら絵文字コード答えるよ_',
+    help: '```!emoji <スペース> <絵文字>``` _あるなら絵文字コード答えるよ_',
   },
   {
     command: '!emoji-echo',
-    help: `\`!emoji-echo <スペース> <アルファベット>\` ${emojinate('emoji')} _に変換するよ_`,
+    help: `\`\`\`!emoji-echo <スペース> <アルファベット>\`\`\` ${emojinate('emoji')} _に変換するよ_`,
   },
 ];
 
@@ -162,14 +162,31 @@ type Response = {
   options?: MessageOptions;
 };
 
+const findEmoji = (name: string) => {
+  return getCustomEmoji(client.emojis.cache, name);
+};
+
 function getMessage(context: string): Response {
   // ヘルプタグ
   if (context.match(/^\!help/)) {
-    let msg = `${emojinate('About')}\n`;
-    commands.forEach(c => {
-      msg += `${c.help}\n`;
+    const content = `:information_source:  ${findEmoji('sweepy')} _が答えるよ_`;
+    const sweepyIcon = client.user.avatarURL();
+    const fields = commands.map(c => {
+      return {
+        name: `:arrow_forward: \`${c.command}\` コマンド`,
+        value: c.help,
+      };
     });
-    return { content: msg, options: {} };
+    let embed = new MessageEmbed()
+      .setColor(0xfc6600)
+      .setAuthor('Sweepy Bot', sweepyIcon)
+      .setTitle('Sweepy Bot Command')
+      .setThumbnail(sweepyIcon)
+      .setDescription(`${emojinate('About')}\nテキストチャットのログを読んで、行頭の \`!\` で始まる各コマンドに応答します。\n`)
+      .addFields(fields)
+      .setFooter('Sweepy Bot', sweepyIcon)
+      .setTimestamp();
+    return { content, options: { embed } };
   }
 
   // タグ一覧
@@ -202,10 +219,14 @@ function getMessage(context: string): Response {
 
   const critterName = context.match(/^\!critter\s+(?<arg>.+)$/);
   if (critterName) {
-    const findEmoji = (name: string) => {
-      return getCustomEmoji(client.emojis.cache, name);
-    };
-    const critter = Critter.findByName(critterName.groups.arg);
+    const matched = critterName.groups.arg;
+    if (matched.length < 2) {
+      return {
+        content: `${findEmoji('sadsweepy')} _**2文字以上で聞いてね**_`,
+        options: {},
+      };
+    }
+    const critter = Critter.findByName(matched);
     if (critter == null) {
       return {
         content: `${findEmoji('sadsweepy')} _まだその動物は知らないや……_`,
@@ -217,6 +238,7 @@ function getMessage(context: string): Response {
         name: 'DataBase Link (_oni-db.com_)',
         value: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${critter.id})を見てね`,
       },
+      { name: '\u200B', value: '\u200B' },
       {
         name: `:secret: 内部名`,
         value: `\`${critter.id}\``,
