@@ -160,7 +160,6 @@ export const pip: Critter = Critter.register({
   imageURL: 'https://oni-db.com/static/media/squirrel.cec15472.png',
   flavorText: {
     en: 'Pips are pesky, nonhostile critters that subsist on the branches of Arbor Trees.\n' +
-      '\n' +
       'They are known to bury Seeds in the ground whenever they can find a suitable area with enough space.',
   },
   name: {
@@ -185,7 +184,6 @@ export const poleShell: Critter = Critter.register({
   imageURL: 'https://oni-db.com/static/media/crab.49f7a55b.png',
   flavorText: {
     en: 'Pokeshells are nonhostile critters that eat Polluted Dirt and Rot Piles.\n' +
-      '\n' +
       'The shells they leave behind after molting can be crushed into Lime.',
   },
   name: {
@@ -203,6 +201,52 @@ export const poleShell: Critter = Critter.register({
   caloriesNeeded: 166.67,
   hitPoint: 25,
   spaceRequired: 12,
+});
+
+export const shoveVole = Critter.register({
+  id: 'mole',
+  imageURL: 'https://oni-db.com/static/media/mole.047061d6.png',
+  flavorText: {
+    en: 'Shove Voles are burrowing critters that eat the Regolith collected on terrestrial surfaces.\n' +
+      'They cannot burrow through Refined Metals.',
+  },
+  name: {
+    en: 'Shove Vole',
+    ja: 'ぐりぐりネズミ',
+  },
+  livableTemp: {
+    lower: -200,
+    upper: 500,
+  },
+  decor: {
+    radius: 1,
+    value: 0,
+  },
+  caloriesNeeded: 8000,
+  hitPoint: 25,
+});
+
+export const gassyMoo = Critter.register({
+  id: 'moo',
+  imageURL: 'https://oni-db.com/static/media/moo.64332eff.png',
+  flavorText: {
+    en: 'Moos are extraterrestrial critters that feed on Gas Grass and excrete Natural Gas.',
+  },
+  name: {
+    en: 'Gassy Moo',
+    ja: 'ぷすぷすモー',
+  },
+  livableTemp: {
+    lower: -200,
+    upper: 200,
+  },
+  decor: {
+    radius: 1,
+    value: 10,
+  },
+  caloriesNeeded: 333.33,
+  hitPoint: 25,
+  spaceRequired: 16,
 });
 
 export const drecko = Critter.register({
@@ -235,7 +279,6 @@ export const glossyDrecko = Critter.register(drecko, {
   imageURL: 'https://oni-db.com/static/media/dreckoplastic.8a5171c9.png',
   flavorText: {
     en: 'Glossy Dreckos are nonhostile critters that graze only on live Mealwood Plants.\n' +
-      '\n' +
       'Their backsides are covered in bioplastic scales that only grow in Hydrogen climates.',
   },
   name: {
@@ -245,5 +288,66 @@ export const glossyDrecko = Critter.register(drecko, {
   livableTemp: {
     lower: 5,
     upper: 80,
+  },
+});
+
+export const slickster = Critter.register({
+  id: 'oilfloater',
+  imageURL: 'https://oni-assistant.com/assets/elements/oilfloater-edf4ba0749925568d5dddb3de4121a67655211d0088baa4115f425b8b0344c19.png',
+  flavorText: {
+    en: 'Slicksters are slimy critters that consume Carbon Dioxide and exude Crude Oil.',
+  },
+  name: {
+    en: 'Slickster',
+    ja: 'スリックスター',
+  },
+  livableTemp: {
+    lower: 35,
+    upper: 160,
+  },
+  decor: {
+    radius: 2,
+    value: 15,
+  },
+  caloriesNeeded: 200,
+  hitPoint: 25,
+  spaceRequired: 12,
+});
+
+export const moltenSlickster = Critter.register(slickster, {
+  id: 'oilfloaterhightemp',
+  imageURL: 'https://oni-assistant.com/assets/elements/oilfloaterhightemp-5aaf984823606cdb18452bc94373edadcfc471bd627ec21e3ec5488f3cd2113c.png',
+  flavorText: {
+    en: 'Molten Slicksters are slimy critters that consume Carbon Dioxide and exude Petroleum.',
+  },
+  name: {
+    en: 'Molten Slickster',
+    ja: 'とろとろスリックスター',
+  },
+  livableTemp: {
+    lower: 75,
+    upper: 270,
+  },
+});
+
+export const longhairSlickster = Critter.register(slickster, {
+  id: 'oilfloaterdecor',
+  // tslint:disable-next-line: max-line-length
+  imageURL: 'https://oni-assistant.com/assets/elements/oilfloaterdecor-0fe382ede364d89d9edc455a589338b6da3e82c5d0c3084bb5ab4322a47e3604.png',
+  flavorText: {
+    en: 'Longhair Slicksters are friendly critters that consume Oxygen and thrive in close contact with Duplicant companions.\n' +
+      'Longhairs have extremely beautiful and luxurious coats.',
+  },
+  name: {
+    en: 'Longhair Slickster',
+    ja: 'ふさふさスリックスター',
+  },
+  livableTemp: {
+    lower: -5,
+    upper: 90,
+  },
+  decor: {
+    radius: 7,
+    value: 50,
   },
 });
