@@ -211,10 +211,13 @@ function getMessage(context: string): Response {
       url: `https://oni-db.com/details/${critter.id}`,
       color: 0x0099FF,
       thumbnail: { url: critter.imageURL },
-      description: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${critter.id})を見てね`,
+      description: `_${critter.flavorText.ja || critter.flavorText.en}_`,
       fields: [
+        { name: 'DataBase Link (_oni-db.com_)', value: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${critter.id})を見てね` },
+        { name: '\u200B', value: '\u200B' },
         { name: `:secret: 内部名`, value: `\`${critter.id}\``, inline: true },
         { name: `${emoji} Emoji Code`, value: `\`${critter.emojiCode}\``, inline: true },
+        { name: '\u200B', value: '\u200B' },
         { name: ':thermometer: Livable Temp', value: `**${critter.livableTemp.lower} 〜 ${critter.livableTemp.upper}**_(℃)`, inline: true },
         { name: `${emojiDeco} 装飾値`, value: `**${critter.decor.value}** _(半径 ${critter.decor.radius})_`, inline: true },
         { name: `${emojiCal} カロリー消費`, value: `**${critter.caloriesNeeded}** _(cal/s)_`, inline: true },
@@ -227,7 +230,7 @@ function getMessage(context: string): Response {
       },
       timestamp: new Date(),
     };
-    return { content: `${critter.name.ja} は知ってるよ`, options: { embed: embedData } };
+    return { content: `:bulb: ${critter.name.ja} は知ってるよ`, options: { embed: embedData } };
   }
 }
 

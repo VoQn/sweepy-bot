@@ -24,6 +24,10 @@ export type Decor = {
 
 export interface CritterInfoBase extends HasId, HasName<CritterName> {
   imageURL: string;
+  flavorText: {
+    en: string,
+    ja?: string,
+  };
   livableTemp: LivableTemp;
   decor: Decor;
   caloriesNeeded: number;
@@ -145,6 +149,13 @@ export class Critter implements CritterInfo {
       return this.override.imageURL;
     }
     return this.origin.imageURL;
+  }
+
+  public get flavorText(): { en: string, ja?: string } {
+    if (!this.isBaseType && this.override?.flavorText) {
+      return this.override.flavorText;
+    }
+    return this.origin.flavorText;
   }
 
   public get livableTemp(): LivableTemp {
