@@ -28,7 +28,7 @@ const commands = [
   {
     command: '!emojinate',
     help: '```!emojinate <スペース> <文章>```\n' +
-    `_出来るだけ文章を ${emojinate('emoji')} _に変換するよ_\n` +
+    `_出来るだけ文章を_ ${emojinate('emoji')} _に変換するよ_\n` +
     '**Example**```!emojinate 今からliveやります!```',
   },
 ];
