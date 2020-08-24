@@ -12,24 +12,24 @@ const client = new Client();
 const commands = [
   {
     command: '!help',
-    help: '```!help```\n_応えられるコマンド一覧を出すよ_',
+    help: '_このコマンドだよ。応えられるコマンド一覧を出すよ_',
   },
   {
-    command: '!cheatsheet',
-    help: '```!cheatsheet <スペース> <キーワード>```\n_あったらチートシート出すよ_\n' +
-      '**Example**```!cheatsheet``` _何も指定してなかったらチートシート一覧を出すよ_\n' +
-      '```!cheatsheet 液体の比重```',
+    command: '!cheatsheet <スペース> <キーワード>',
+    help: '_何も指定してなかったらチートシート一覧を出すよ_\n' +
+      '_キーワードにマッチしたチートシート出すよ_\n' +
+      '**Example**\n' +
+      '```!cheatsheet 液体の比重```\n',
   },
   {
-    command: '!critter',
-    help: '```!critter <スペース> <動物の名前>```\n_知ってる動物の詳細を教えるよ_\n' +
-    '**Example**```!critter ハッチ```',
+    command: '!critter <スペース> <動物の名前>',
+    help: '_知ってる動物の詳細を教えるよ_\n' +
+    '**Example**```!critter ハッチ```\n',
   },
   {
-    command: '!emojinate',
-    help: '```!emojinate <スペース> <文章>```\n' +
-    `_出来るだけ文章を_ ${emojinate('emoji')} _に変換するよ_\n` +
-    '**Example**```!emojinate 今からliveやります!```',
+    command: '!emojinate <スペース> <ひとこと>',
+    help: `_出来るだけ_ ${emojinate('emoji')} _に変換するよ_\n` +
+    '**Example**```!emojinate 今からliveやります!```\n',
   },
 ];
 
@@ -150,16 +150,16 @@ function getMessage(context: string): Response {
     const sweepyIcon = client.user.avatarURL();
     const fields = commands.map(c => {
       return {
-        name: `:arrow_forward: \`${c.command}\` コマンド`,
+        name: `:arrow_forward: \`${c.command}\``,
         value: c.help,
       };
     });
     let embed = new MessageEmbed()
       .setColor(0xfc6600)
       .setAuthor('Sweepy Bot', sweepyIcon)
-      .setTitle('Sweepy Bot Command')
+      .setTitle(emojinate('about'))
       .setThumbnail(sweepyIcon)
-      .setDescription(`${emojinate('About')}\nテキストチャットのログを読んで、行頭の \`!\` で始まる各コマンドに応答します。\n`)
+      .setDescription('_テキストチャットのログを読んで、行頭の_ `!` _で始まる各コマンドに応答します。_')
       .addFields(fields)
       .setFooter('Sweepy Bot', sweepyIcon)
       .setTimestamp();
