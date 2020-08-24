@@ -1,4 +1,5 @@
 import { CommandInterface } from './command_interface';
+import { emojinate } from './emojinate';
 
 class EmojinateComand implements CommandInterface{
     name = 'Emojinate';
