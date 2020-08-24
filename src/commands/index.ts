@@ -1,1 +1,1 @@
-export * from './emojinateCommand';
+export * from './emojinate_command';

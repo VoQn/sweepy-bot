@@ -1,4 +1,4 @@
-export interface Command {
+export interface CommandInterface {
   name: string;
   pattern: RegExp;
   help: string;
