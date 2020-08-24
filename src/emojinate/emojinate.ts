@@ -1,4 +1,3 @@
-
 const numberEmojis: string[] = [
   ':zero:',
   ':one:',
