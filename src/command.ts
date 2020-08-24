@@ -3,4 +3,5 @@ export interface Command {
   pattern: RegExp;
   help: string;
   message: (args: string | Object) => string;
+  
 }
