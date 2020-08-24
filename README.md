@@ -19,7 +19,7 @@ nodenv rehash
 
 #### 「git クローンしたけどどうすればいいんだべ」
 ```
-pnpm i #依存関係インストール
+pnpm i --prefer-frozen-lockfile #依存関係インストール
 pnpm clean # dist とかクリア
 pnpx tslint --fix --project . # コミットする前にリントしてな
 pnpm test # テスト
