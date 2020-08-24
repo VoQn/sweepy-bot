@@ -11,25 +11,24 @@ const client = new Client();
 
 const commands = [
   {
-    command: '!help',
-    help: '_このコマンドだよ。応えられるコマンド一覧を出すよ_',
+    command: 'Help',
+    help: '_このコマンドだよ。応えられるコマンド一覧を出すよ_\n' +
+      '```!help```',
   },
   {
-    command: '!cheatsheet <スペース> <キーワード>',
-    help: '_何も指定してなかったらチートシート一覧を出すよ_\n' +
-      '_キーワードにマッチしたチートシート出すよ_\n' +
-      '**Example**\n' +
-      '```!cheatsheet 液体の比重```\n',
+    command: 'CheatSheet',
+    help: '_キーワードにマッチしたチートシート出すよ。何も指定してなかったらとりあえず一覧リストを出すよ_\n' +
+      '```!cheatsheet 液体の比重```',
   },
   {
-    command: '!critter <スペース> <動物の名前>',
-    help: '_知ってる動物の詳細を教えるよ_\n' +
-    '**Example**```!critter ハッチ```\n',
+    command: 'Critter',
+    help: '_知ってる動物の詳細を教えるよ。部分的でも連想は出来るよ_\n' +
+      '```!critter プリンス```',
   },
   {
-    command: '!emojinate <スペース> <ひとこと>',
+    command: 'Emojinate',
     help: `_出来るだけ_ ${emojinate('emoji')} _に変換するよ_\n` +
-    '**Example**```!emojinate 今からliveやります!```\n',
+      '```!emojinate 今からliveやります!```',
   },
 ];
 
@@ -150,7 +149,7 @@ function getMessage(context: string): Response {
     const sweepyIcon = client.user.avatarURL();
     const fields = commands.map(c => {
       return {
-        name: `:arrow_forward: \`${c.command}\``,
+        name: `:arrow_forward: ${c.command}`,
         value: c.help,
       };
     });
