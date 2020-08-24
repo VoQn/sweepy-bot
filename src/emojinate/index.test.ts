@@ -1,4 +1,4 @@
-import { trimByRegexp, emojinateLine } from './emojinate.ts';
+import { trimByRegexp, emojinateLine } from './emojinate';
 
 describe('emojinate', () => {
   describe('trimByRegexp', () => {
