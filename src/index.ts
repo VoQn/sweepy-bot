@@ -140,23 +140,18 @@ client.on('message', message => {
     return;
   }
 
-  const msg = getMessage(message.content);
+  const { content, options } = getMessage(message.content);
   // 空メッセージを送らないようにする
-  if (typeof msg === 'string') {
-    if (msg && msg.length > 0) {
-      sendMsg(message.channel.id, msg);
-    }
-  } else {
-    if (msg != null && Object.keys(msg).length > 0) {
-      sendMsg(message.channel.id, msg);
-    }
+  if (content && content.length > 0) {
+    sendMsg(message.channel.id, content, options);
   }
+  
   return;
 });
 
 type Response = {
   content: string;
-  option?: MessageOptions;
+  options?: MessageOptions;
 }
 
 function getMessage(context: string): Response {
@@ -200,9 +195,9 @@ function getMessage(context: string): Response {
 
   const critterName = context.match(/^\!critter\s+(?<arg>.+)$/);
   if (critterName)  {
-    const critter = Critter.findByName(critterName.groups.arg[0]);
+    const critter = Critter.findByName(critterName.groups.arg);
     if (critter == null) {
-      return { content: }'まだその動物は知らないや……', options: { }};
+      return { content: 'まだその動物は知らないや……', options: { }};
     }
     const emoji = client.emojis.cache.find(c => critter.emojiName === c.name);
     const emojiDeco = client.emojis.cache.find(c => 'decord' === c.name);
@@ -219,11 +214,11 @@ function getMessage(context: string): Response {
         { name: ':u6e80: Space Required', value: critter.spaceRequired != null ? `${critter.spaceRequired}` : 'N/A', inline: true },
       ],
     };
-    return { content: `${cri}`, { embed: embedData };
+    return { content: `${critter.name.ja} は知ってるよ`, options: { embed: embedData }};
   }
 }
 
-function sendReply(message: Message, content: any): void {
+function sendReply(message: Message, content: string): void {
   message
     .reply(content)
     .then((_result: Message) => {
@@ -233,13 +228,13 @@ function sendReply(message: Message, content: any): void {
     .catch(console.error);
 }
 
-function sendMsg(channelId: ChannelResolvable, content: any, option: MessageOptions = {}): void {
+function sendMsg(channelId: ChannelResolvable, content: string, options: MessageOptions = {}): void {
   (client.channels
     .resolve(channelId) as TextChannel)
-    .send(content, option)
+    .send(content, options)
     .then((_result: Message) => {
       const stringfiedContent = (typeof content === 'string') ? content : JSON.stringify(content);
-      console.log('メッセージ送信: ' + stringfiedContent + JSON.stringify(option));
+      console.log('メッセージ送信: ' + stringfiedContent + JSON.stringify(options));
     })
     .catch(console.error);
 }
