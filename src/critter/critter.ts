@@ -1,13 +1,18 @@
-import { TemparetureUnit, convertKelvinTemp } from '../heat';
 export type ID = string;
 
 export type HasId = {
+  /** ONIのゲーム内部で使われている内部登録名 */
   id: ID;
 };
 
 export type CritterName = {
   en: string;
-  ja: string;
+  ja?: string;
+};
+
+export type FlavorText = {
+  en: string;
+  ja?: string;
 };
 
 export type HasName<N> = { name: N };
@@ -17,30 +22,70 @@ export type LivableTemp = {
   upper: number;
 };
 
+/** 装飾値影響 */
 export type Decor = {
+  /** 装飾値加算がなされる範囲 (半径) */
   radius: number;
+  /** 範囲内で加算される装飾値 */
   value: number;
+};
+
+/**
+ * 周囲に与える光源影響
+ * (現在ではシャインバグ種のみ)
+ */
+export type LightEmitter = {
+  range: number;
+  lux: number;
 };
 
 export interface CritterInfoBase extends HasId, HasName<CritterName> {
   imageURL: string;
-  flavorText: {
-    en: string,
-    ja?: string,
-  };
+
+  /** フレーバーテキスト */
+  flavorText: FlavorText;
+
+  /** 生存可能な体温の範囲 (℃) */
   livableTemp: LivableTemp;
+
+  /** 装飾値影響 */
   decor: Decor;
+
+  /** 生存中消費されるカロリー (テイム時かつ幸福の状態を基準) (cal/sec) */
   caloriesNeeded: number;
+
+  /** 体力の最大値 (０になったら死亡) */
   hitPoint: number;
+
+  /** 過密判定される１匹あたりに必要な空間スペース (tile) */
   spaceRequired?: number;
+
+  /** 1匹あたり卵を産むペース (テイム時かつ幸福の状態を基準) (sec) */
+  layAnEgg?: number;
+
+  /** 卵から孵化するまでの長さ (sec) */
+  hatches?: number;
+
+  /** 孵化から寿命を迎えるまでの長さ (sec) */
+  lifeSpan?: number;
+
+  /** 周囲に与える光源影響 */
+  lightEmitter?: LightEmitter;
 }
+
+export type FamilyCritterRequired = {
+  id: ID;
+  name: CritterName,
+  imageURL: string,
+  flavorText: FlavorText;
+};
 
 export interface CritterInfo extends CritterInfoBase {
   isBaseType: boolean;
   baseTypeName: ID;
 }
 
-export type FamiliyCritterInfo = Partial<CritterInfoBase> & HasId & { name: CritterName, imageURL: string };
+export type FamiliyCritterInfo = Partial<CritterInfoBase> & FamilyCritterRequired;
 
 export class Critter implements CritterInfo {
   public static readonly table: Map<ID, Critter> = new Map<ID, Critter>();
@@ -50,7 +95,7 @@ export class Critter implements CritterInfo {
   public readonly id: ID;
   public readonly name: CritterName;
 
-  private origin: CritterInfoBase;
+  private base: CritterInfoBase;
   private override?: FamiliyCritterInfo;
 
   public static findByName(query: string | RegExp): Critter {
@@ -123,7 +168,7 @@ export class Critter implements CritterInfo {
       this.name = override.name;
     }
 
-    this.origin = origin;
+    this.base = origin;
     this.override = override;
 
     if (isBaseType) {
@@ -148,48 +193,76 @@ export class Critter implements CritterInfo {
     if (!this.isBaseType && this.override?.imageURL) {
       return this.override.imageURL;
     }
-    return this.origin.imageURL;
+    return this.base.imageURL;
   }
 
   public get flavorText(): { en: string, ja?: string } {
     if (!this.isBaseType && this.override?.flavorText) {
       return this.override.flavorText;
     }
-    return this.origin.flavorText;
+    return this.base.flavorText;
   }
 
   public get livableTemp(): LivableTemp {
     if (!this.isBaseType && this.override?.livableTemp) {
       return this.override.livableTemp;
     }
-    return this.origin.livableTemp;
+    return this.base.livableTemp;
   }
 
   public get decor(): Decor {
     if (!this.isBaseType && this.override?.decor) {
       return this.override.decor;
     }
-    return this.origin.decor;
+    return this.base.decor;
   }
 
   public get caloriesNeeded(): number {
     if (!this.isBaseType && this.override?.caloriesNeeded != null) {
       return this.override.caloriesNeeded;
     }
-    return this.origin.caloriesNeeded;
+    return this.base.caloriesNeeded;
   }
 
   public get hitPoint(): number {
     if (!this.isBaseType && this.override.hitPoint != null) {
       return this.override.hitPoint;
     }
-    return this.origin.hitPoint;
+    return this.base.hitPoint;
   }
 
   public get spaceRequired(): number | null {
     if (!this.isBaseType && this.override?.spaceRequired != null) {
       return this.override.spaceRequired;
     }
-    return this.origin.spaceRequired;
+    return this.base.spaceRequired;
+  }
+
+  public get layAnEgg(): number | null {
+    if (!this.isBaseType && this.override?.layAnEgg != null) {
+      return this.override.layAnEgg;
+    }
+    return this.base.layAnEgg;
+  }
+
+  public get hatches(): number | null {
+    if (!this.isBaseType && this.override?.hatches != null) {
+      return this.override.hatches;
+    }
+    return this.base.hatches;
+  }
+
+  public get lifeSpan(): number | null {
+    if (!this.isBaseType && this.override?.lifeSpan != null) {
+      return this.override.lifeSpan;
+    }
+    return this.base.lifeSpan;
+  }
+
+  public get lightEmitter(): LightEmitter | null {
+    if (!this.isBaseType && this.override?.lightEmitter != null) {
+      return this.override.lightEmitter;
+    }
+    return this.base.lightEmitter;
   }
 }

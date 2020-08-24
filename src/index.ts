@@ -234,7 +234,7 @@ function getMessage(context: string): Response {
       },
       {
         name: `${findEmoji('decord')} 装飾値`,
-        value: `**${critter.decor.value}** _(半径 **${critter.decor.radius}** タイル)_`,
+        value: `**${critter.decor.value}** 半径 **${critter.decor.radius}** _タイル)_`,
         inline: true,
       },
       {
@@ -251,7 +251,35 @@ function getMessage(context: string): Response {
     if (critter.spaceRequired != null) {
       fields.push({
         name: ':u6e80: 過密判定',
-        value: critter.spaceRequired != null ? `**${critter.spaceRequired}** _タイル_` : 'N/A',
+        value: `**${critter.spaceRequired}** _タイル_`,
+        inline: true,
+      });
+    }
+    if (critter.layAnEgg != null) {
+      fields.push({
+        name: ':egg: 産卵ペース',
+        value: `**${critter.layAnEgg / 600}** _サイクル_`,
+        inline: true,
+      });
+    }
+    if (critter.hatches != null) {
+      fields.push({
+        name: `${findEmoji('joydupe')} 孵化するまで`,
+        value: `**${critter.hatches / 600}** _サイクル_`,
+        inline: true,
+      });
+    }
+    if (critter.lifeSpan != null) {
+      fields.push({
+        name: `${findEmoji('grave')} 寿命`,
+        value: `**${critter.lifeSpan / 600}** _サイクル_`,
+        inline: true,
+      });
+    }
+    if (critter.lightEmitter != null) {
+      fields.push({
+        name: ':high_brightness: 光源効果',
+        value: `**${critter.lightEmitter.lux}** 半径 **${critter.lightEmitter.range}** _タイル_`,
         inline: true,
       });
     }

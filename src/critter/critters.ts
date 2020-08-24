@@ -44,6 +44,9 @@ export const hatch: Critter = Critter.register({
   hitPoint: 25,
   caloriesNeeded: 1170,
   spaceRequired: 12,
+  layAnEgg: 3600,
+  hatches: 12000,
+  lifeSpan: 60000,
 });
 
 export const sageHatch: Critter = Critter.register(hatch, {
@@ -105,6 +108,9 @@ export const puft: Critter = Critter.register({
   caloriesNeeded: 333.33,
   hitPoint: 25,
   spaceRequired: 16,
+  layAnEgg: 2700,
+  hatches: 9000,
+  lifeSpan: 45000,
 });
 
 export const puftPrince: Critter = Critter.register(puft, {
@@ -177,6 +183,9 @@ export const pip: Critter = Critter.register({
   caloriesNeeded: 166.67,
   hitPoint: 25,
   spaceRequired: 12,
+  layAnEgg: 3600,
+  hatches: 12000,
+  lifeSpan: 60000,
 });
 
 export const poleShell: Critter = Critter.register({
@@ -201,6 +210,9 @@ export const poleShell: Critter = Critter.register({
   caloriesNeeded: 166.67,
   hitPoint: 25,
   spaceRequired: 12,
+  layAnEgg: 3600,
+  hatches: 12000,
+  lifeSpan: 60000,
 });
 
 export const shoveVole = Critter.register({
@@ -224,6 +236,9 @@ export const shoveVole = Critter.register({
   },
   caloriesNeeded: 8000,
   hitPoint: 25,
+  layAnEgg: 3600,
+  hatches: 12000,
+  lifeSpan: 60000,
 });
 
 export const gassyMoo = Critter.register({
@@ -247,6 +262,7 @@ export const gassyMoo = Critter.register({
   caloriesNeeded: 333.33,
   hitPoint: 25,
   spaceRequired: 16,
+  lifeSpan: 45000,
 });
 
 export const drecko = Critter.register({
@@ -272,6 +288,9 @@ export const drecko = Critter.register({
   caloriesNeeded: 3330,
   hitPoint: 25,
   spaceRequired: 12,
+  layAnEgg: 5400,
+  hatches: 18000,
+  lifeSpan: 90000,
 });
 
 export const glossyDrecko = Critter.register(drecko, {
@@ -312,6 +331,9 @@ export const slickster = Critter.register({
   caloriesNeeded: 200,
   hitPoint: 25,
   spaceRequired: 12,
+  layAnEgg: 3600,
+  hatches: 12000,
+  lifeSpan: 60000,
 });
 
 export const moltenSlickster = Critter.register(slickster, {
@@ -350,4 +372,203 @@ export const longhairSlickster = Critter.register(slickster, {
     radius: 7,
     value: 50,
   },
+  layAnEgg: 5400,
+  hatches: 18000,
+  lifeSpan: 90000,
+});
+
+export const pacu = Critter.register({
+  id: 'pacu',
+  imageURL: 'https://oni-assistant.com/assets/elements/pacu-fa8d5c7f61c0cb2999b18bd695df51d0a5c40c0d69ce5bc94027de489c0ba11f.png',
+  flavorText: {
+    en: 'Pacus are aquatic creatures that cannot live outside of Water or Contaminated Water.\n' +
+      'Every organism in the known universe finds the Pacu extremely delicious.',
+  },
+  name: {
+    en: 'Pacu',
+    ja: 'パクー',
+  },
+  livableTemp: {
+    lower: -20,
+    upper: 80,
+  },
+  decor: {
+    radius: 1,
+    value: 10,
+  },
+  caloriesNeeded: 166.67,
+  hitPoint: 25,
+  spaceRequired: 8,
+  layAnEgg: 900,
+  hatches: 3000,
+  lifeSpan: 15000,
+});
+
+export const gulpFish = Critter.register(pacu, {
+  id: 'pacucleaner',
+  imageURL: 'https://oni-assistant.com/assets/elements/pacucleaner-21e4f8471460384a5380607e819711738452e5e71ca7cdf5aaef1856aace812f.png',
+  flavorText: {
+    en: 'Every organism in the known universe finds the Pacu extremely delicious.',
+  },
+  name: {
+    en: 'Gulp Fish',
+    ja: 'がぶ飲みフィッシュ',
+  },
+  livableTemp: {
+    lower: -50,
+    upper: 25,
+  },
+});
+
+export const tropicalPacu = Critter.register(pacu, {
+  id: 'pacutropical',
+  imageURL: 'https://oni-assistant.com/assets/elements/pacutropical-0c786e3ed85f8d9d2e42c5af9d45fecc6cf1d1bb27c0e44288a4368dfe5fa93b.png',
+  flavorText: {
+    en: 'Every organism in the known universe finds the Pacu extremely delicious.',
+  },
+  name: {
+    en: 'Tropical Pacu',
+    ja: '熱帯パクー',
+  },
+  livableTemp: {
+    lower: 10,
+    upper: 100,
+  },
+  decor: {
+    radius: 5,
+    value: 25,
+  },
+});
+
+export const shineBug = Critter.register({
+  id: 'lightbug',
+  imageURL: 'https://oni-assistant.com/assets/elements/lightbug-605a1ef77042284ad82c3d5e50e2abb693ceaedcee29366705c5999f6e7928a1.png',
+  flavorText: {
+    en: 'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
+  },
+  name: {
+    en: 'Shine Bug',
+    ja: 'シャインバグ',
+  },
+  livableTemp: {
+    lower: -20.15,
+    upper: 49.85,
+  },
+  decor: {
+    radius: 5,
+    value: 30,
+  },
+  caloriesNeeded: 66.67,
+  hitPoint: 5,
+  spaceRequired: 12,
+  layAnEgg: 3600,
+  hatches: 12000,
+  lifeSpan: 60000,
+});
+
+export const sunBug = Critter.register(shineBug, {
+  id: 'lightbugorange',
+  imageURL: 'https://oni-assistant.com/assets/elements/lightbugorange-6ceb9fc4c6faeb91e695f69b928536092b50a70ba4a450657ef37125f1828510.png',
+  flavorText: {
+    en: 'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+      'The light of the Sun morph has been turned orange through selective breeding.',
+  },
+  name: {
+    en: 'Sun Bug',
+    ja: '太陽バグ',
+  },
+  decor: {
+    radius: 7,
+    value: 50,
+  },
+});
+
+export const coralBug = Critter.register(shineBug, {
+  id: 'lightbugpink',
+  imageURL: 'https://oni-assistant.com/assets/elements/lightbugpink-1f57547a1156e465b9561cb5b1a711a92682e6be9cc026ecca9f6ea011e75988.png',
+  flavorText: {
+    en: 'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+      'The light of the Coral morph has been turned pink through selective breeding.',
+  },
+  name: {
+    en: 'Coral Bug',
+    ja: '珊瑚バグ',
+  },
+  decor: {
+    radius: 7,
+    value: 50,
+  },
+});
+
+export const royalBug = Critter.register(shineBug, {
+  id: 'lightbugpurple',
+  imageURL: 'https://oni-assistant.com/assets/elements/lightbugpurple-a546797c1be64f9cf0c8c02498c906d3c3c18d157c77e393701079d49c58f476.png',
+  flavorText: {
+    en: 'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+      'The light of the Royal morph has been turned purple through selective breeding.',
+  },
+  name: {
+    en: 'Royal Bug',
+    ja: 'ロイヤルバグ',
+  },
+  decor: {
+    radius: 7,
+    value: 50,
+  },
+});
+
+export const abyssBug = Critter.register(shineBug, {
+  id: 'lightbugblack',
+  imageURL: 'https://oni-assistant.com/assets/elements/lightbugblack-d0d01483be33464c7eb4b7be87e7c81a8a9e15b48327ce96883394bbaaeacf8c.png',
+  flavorText: {
+    en: 'This Shine Bug emits no Light, but it makes up for it by having an excellent personality.',
+  },
+  name: {
+    en: 'Abyss Bug',
+    ja: 'アビスバグ',
+  },
+  decor: {
+    radius: 7,
+    value: 80,
+  },
+  layAnEgg: 2700,
+  hatches: 9000,
+  lifeSpan: 45000,
+});
+
+export const azureBug = Critter.register(shineBug, {
+  id: 'lightbugblue',
+  imageURL: '',
+  flavorText: {
+    en: '',
+  },
+  name: {
+    en: 'Azure Bug',
+    ja: '青空バグ',
+  },
+  decor: {
+    radius: 7,
+    value: 50,
+  },
+});
+
+export const radiantBug = Critter.register(shineBug, {
+  id: 'lightbugcrystal',
+  // tslint:disable-next-line: max-line-length
+  imageURL: 'https://oni-assistant.com/assets/elements/lightbugcrystal-c8f4e64126ebdfdedde73dc153a7215e0549d553f12de93fb4500baa5593ffd6.png',
+  flavorText: {
+    en: 'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+      'The light of the Radiant morph has been amplified through selective breeding.',
+  },
+  name: {
+    en: 'Radiant Bug',
+    ja: '煌きバグ',
+  },
+  decor: {
+    radius: 8,
+    value: 200,
+  },
+  layAnEgg: 2700,
+  hatches: 9000,
+  lifeSpan: 45000,
 });
