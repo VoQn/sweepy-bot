@@ -1,7 +1,10 @@
 import { CommandInterface } from './command_interface';
 import { emojinate } from './emojinate';
 
-export class EmojinateComand implements CommandInterface{
+export type EmojinateCommand implements CommandInterface{
+}
+
+class EmojinateCommand implements CommandInterface{
     name = 'Emojinate';
     pattern = /^\!emojinate\s+(?<arg>.+)$/ms;
     help = ``_出来るだけ_ ${emojinate('emoji')} _に変換するよ_\n` +
@@ -10,3 +13,5 @@ export class EmojinateComand implements CommandInterface{
       return '';
     }
 }
+
+export const  : EmojinateCommand
