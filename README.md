@@ -6,6 +6,20 @@ Glitch で DiscordBot を作るためのベースです。
 
 [誰でも作れる！Discord Bot（基礎編）](https://note.com/exteoi/n/nf1c37cb26c41)をお読みください。
 
+## 開発する時は
+
+ローカル環境では `pnpm` をパッケージマネージャに使用してください。
+
+#### 「pnpm 持ってません」
+```
+npm install -g pnpm
+```
+
+#### 「git クローンしたけどどうすればいいんだべ」
+```
+pnpm
+```
+
 ## ほんちゃん WANTS!
 
 - 基盤
