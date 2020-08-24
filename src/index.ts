@@ -145,21 +145,20 @@ client.on('message', message => {
   if (content && content.length > 0) {
     sendMsg(message.channel.id, content, options);
   }
-  
+
   return;
 });
 
 type Response = {
   content: string;
   options?: MessageOptions;
-}
+};
 
 function getMessage(context: string): Response {
   // ヘルプタグ
   if (context.match(/^\!help/)) {
     let msg = `${emojinate('About')}\n`;
     commands.forEach(c => {
-      console.info(c);
       msg += `${c.help}\n`;
     });
     return { content: msg, options: {} };
@@ -167,54 +166,68 @@ function getMessage(context: string): Response {
 
   // タグ一覧
   if (context.match(/^\!cheetsheets/)) {
-    return { content: cheetsheetCommand.getKeywords(), options: { }};
+    return { content: cheetsheetCommand.getKeywords(), options: {} };
   }
 
   // タグの返答
   const m = context.match(/^\!cheetsheet\s+(?<arg>\S+)/);
   if (m) {
-    return { content: cheetsheetCommand.getAnswer(m.groups.arg), options: { }};
+    return { content: cheetsheetCommand.getAnswer(m.groups.arg), options: {} };
   }
 
   // 絵文字一覧
   if (context.match(/^\!emoji$/)) {
-    return { content: emojiCommand.getKeywords(), options: { }};
+    return { content: emojiCommand.getKeywords(), options: {} };
   }
 
   // 絵文字の返答
   const e = context.match(/^\!emoji\s+(?<arg>\S+)/);
   if (e) {
-    return { content: emojiCommand.getAnswer(e.groups.arg), options: { }};
+    return { content: emojiCommand.getAnswer(e.groups.arg), options: {} };
   }
 
   // emoji-echo
   const test = context.match(/^\!emoji-echo\s+(?<arg>.+)$/);
   if (test) {
-    return { content: emojinate(test.groups.arg), options: {}};
+    return { content: emojinate(test.groups.arg), options: {} };
   }
 
   const critterName = context.match(/^\!critter\s+(?<arg>.+)$/);
-  if (critterName)  {
+  if (critterName) {
     const critter = Critter.findByName(critterName.groups.arg);
     if (critter == null) {
-      return { content: 'まだその動物は知らないや……', options: { }};
+      const sadEmoji = client.emojis.cache.find(c => c.name === 'sadsweepy');
+      return { content: `${sadEmoji} まだその動物は知らないや……`, options: {} };
     }
     const emoji = client.emojis.cache.find(c => critter.emojiName === c.name);
     const emojiDeco = client.emojis.cache.find(c => 'decord' === c.name);
+    const emojiCal = client.emojis.cache.find(c => 'calories' === c.name);
     const embedData: MessageEmbedOptions = {
-      title: `**${critter.name.en}** ${critter.name.ja}`,
+      author: {
+        name: 'Critter Details',
+        iconURL: critter.imageURL,
+      },
+      title: `**${critter.name.ja}** _${critter.name.en}_`,
+      url: `https://oni-db.com/details/${critter.id}`,
       color: 0x0099FF,
+      thumbnail: { url: critter.imageURL },
+      description: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${critter.id})を見てね`,
       fields: [
         { name: `:secret: 内部名`, value: `\`${critter.id}\``, inline: true },
-        { name: `${emoji} Emoji Code`, value: `\`:${critter.emojiCode}\``, inline: true },
-        { name: ':thermometer: Livable Temp', value: `${critter.livableTemp.lower}℃ 〜 ${critter.livableTemp.upper}℃`, inline: true },
-        { name: `${emojiDeco} 装飾値`, value: `${critter.decor.value} (半径 ${critter.decor.radius})`, inline: true },
-        { name: `カロリー消費`, value: `${critter.caloriesNeeded} (cal/s)`, inline: true },
-        { name: ':heart: HP', value: `${critter.hitPoint}`, inline: true },
-        { name: ':u6e80: Space Required', value: critter.spaceRequired != null ? `${critter.spaceRequired}` : 'N/A', inline: true },
+        { name: `${emoji} Emoji Code`, value: `\`${critter.emojiCode}\``, inline: true },
+        { name: ':thermometer: Livable Temp', value: `**${critter.livableTemp.lower} 〜 ${critter.livableTemp.upper}**_(℃)`, inline: true },
+        { name: `${emojiDeco} 装飾値`, value: `**${critter.decor.value}** _(半径 ${critter.decor.radius})_`, inline: true },
+        { name: `${emojiCal} カロリー消費`, value: `**${critter.caloriesNeeded}** _(cal/s)_`, inline: true },
+        { name: ':heart: HP', value: `**${critter.hitPoint}**`, inline: true },
+        { name: ':u6e80: 過密判定', value: critter.spaceRequired != null ? `**${critter.spaceRequired}** _タイル_` : 'N/A', inline: true },
       ],
+      footer: {
+        text: 'Sweepy Bot',
+        iconURL: client.user.avatarURL(),
+      },
+      timestamp: new Date(),
     };
-    return { content: `${critter.name.ja} は知ってるよ`, options: { embed: embedData }};
+    return { content: `${critter.name.ja} は知ってるよ`, options: { embed: embedData } };
   }
 }
 
