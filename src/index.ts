@@ -200,18 +200,12 @@ function getMessage(context: string): Response {
     }
     const fields = [
       {
-        name: 'DataBase Link (_oni-db.com_)',
+        name: ':globe_with_meridians: DataBase Link (_oni-db.com_)',
         value: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${critter.id})を見てね`,
       },
-      { name: '\u200B', value: '\u200B' },
       {
         name: `:secret: 内部名`,
         value: `\`${critter.id}\``,
-        inline: true,
-      },
-      {
-        name: `${findEmoji(critter.emojiName)} Emoji`,
-        value: `\`${critter.emojiCode}\``,
         inline: true,
       },
       {
@@ -235,6 +229,14 @@ function getMessage(context: string): Response {
         inline: true,
       },
     ];
+    const critterEmoji = findEmoji(critter.emojiName);
+    if (critterEmoji) {
+      fields.splice(2, 0, {
+        name: `${critterEmoji} Emoji`,
+        value: `\`${critter.emojiCode}\``,
+        inline: true,
+      });
+    }
     if (critter.spaceRequired != null) {
       fields.push({
         name: ':u6e80: 過密判定',
