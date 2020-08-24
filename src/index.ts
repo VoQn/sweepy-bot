@@ -2,10 +2,9 @@ import http from 'http';
 import querystring from 'querystring';
 // tslint:disable-next-line: max-line-length
 import { Client, ChannelResolvable, TextChannel, Message, MessageOptions, GuildChannel, MessageEmbedOptions, Collection, GuildEmoji, Emoji, MessageEmbed } from 'discord.js';
-import { AnswerTalker, Dictionary } from './answer_talker';
+import { AnswerTalker } from './answer_talker';
 import { emojinate } from './emojinate';
-import cheetsheets from '../data/cheetsheet.json';
-import emojis from '../data/emoji.json';
+import cheatsheets from '../data/cheatsheet.json';
 import { Critter } from './critter';
 
 const client = new Client();
@@ -13,54 +12,32 @@ const client = new Client();
 const commands = [
   {
     command: '!help',
-    help: '```!help``` _応えられるコマンド一覧を出すよ_',
+    help: '```!help```\n_応えられるコマンド一覧を出すよ_',
   },
   {
-    command: '!cheetsheets',
-    help: '```!cheetsheets``` _チートシート一覧を出すよ_',
-  },
-  {
-    command: '!cheetsheet',
-    help: '```!cheetsheet <スペース> <キーワード>``` _あったらチートシート出すよ_',
+    command: '!cheatsheet',
+    help: '```!cheatsheet <スペース> <キーワード>```\n_あったらチートシート出すよ_\n' +
+      '**Example**```!cheatsheet``` _何も指定してなかったらチートシート一覧を出すよ_\n' +
+      '```!cheatsheet 液体の比重```',
   },
   {
     command: '!critter',
-    help: '```!critter <スペース> <動物の名前>``` _知ってる動物の詳細を教えるよ_',
+    help: '```!critter <スペース> <動物の名前>```\n_知ってる動物の詳細を教えるよ_\n' +
+    '**Example**```!critter ハッチ```',
   },
   {
-    command: '!emoji',
-    help: '```!emoji <スペース> <絵文字>``` _あるなら絵文字コード答えるよ_',
-  },
-  {
-    command: '!emoji-echo',
-    help: `\`\`\`!emoji-echo <スペース> <アルファベット>\`\`\` ${emojinate('emoji')} _に変換するよ_`,
+    command: '!emojinate',
+    help: '```!emojinate <スペース> <文章>```\n' +
+    `_出来るだけ文章を ${emojinate('emoji')} _に変換するよ_\n` +
+    '**Example**```!emojinate 今からliveやります!```',
   },
 ];
 
-const cheetsheetCommand = new AnswerTalker(Object.values(cheetsheets), 'name', 'url');
-
-const emojis2 = Object.entries(emojis).map(([code, name]) => {
-  return { name, code };
-});
-
-const emojiCommand = new AnswerTalker(
-  emojis2 as Dictionary,
-  'name',
-  'code',
-  getCustomEmojiMessage,
-);
+const cheatsheetCommand = new AnswerTalker(Object.values(cheatsheets), 'name', 'url');
 
 const getCustomEmoji = (cache: Collection<string, GuildEmoji>, name: string): Emoji => {
   return cache.find(v => v.name === name);
 };
-
-function getCustomEmojiMessage(code: string): string {
-  const emoji = client.emojis.cache.find(e => e.name === code);
-  if (emoji) {
-    return `${emoji} \`:${code}:\``;
-  }
-  return '';
-}
 
 http
   .createServer((req, res) => {
@@ -189,30 +166,19 @@ function getMessage(context: string): Response {
     return { content, options: { embed } };
   }
 
-  // タグ一覧
-  if (context.match(/^\!cheetsheets/)) {
-    return { content: cheetsheetCommand.getKeywords(), options: {} };
+  // チートシート一覧
+  if (context.match(/^\!cheatsheet\s+$/)) {
+    return { content: cheatsheetCommand.getKeywords(), options: {} };
   }
 
-  // タグの返答
-  const m = context.match(/^\!cheetsheet\s+(?<arg>\S+)/);
+  // チートシートの返答
+  const m = context.match(/^\!cheatsheet\s+(?<arg>\S+)/);
   if (m) {
-    return { content: cheetsheetCommand.getAnswer(m.groups.arg), options: {} };
-  }
-
-  // 絵文字一覧
-  if (context.match(/^\!emoji$/)) {
-    return { content: emojiCommand.getKeywords(), options: {} };
-  }
-
-  // 絵文字の返答
-  const e = context.match(/^\!emoji\s+(?<arg>\S+)/);
-  if (e) {
-    return { content: emojiCommand.getAnswer(e.groups.arg), options: {} };
+    return { content: cheatsheetCommand.getAnswer(m.groups.arg), options: {} };
   }
 
   // emoji-echo
-  const test = context.match(/^\!emoji-echo\s+(?<arg>.+)$/);
+  const test = context.match(/^\!emojinate\s+(?<arg>.+)$/);
   if (test) {
     return { content: emojinate(test.groups.arg), options: {} };
   }
