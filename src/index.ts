@@ -140,10 +140,13 @@ client.on('message', message => {
     return;
   }
 
-  const { content, options } = getMessage(message.content);
+  const msg = getMessage(message.content);
   // 空メッセージを送らないようにする
-  if (content && content.length > 0) {
-    sendMsg(message.channel.id, content, options);
+  if (msg == null) {
+    return;
+  }
+  if (msg.content && msg.content.length > 0) {
+    sendMsg(message.channel.id, msg.content, msg.options);
   }
 
   return;
