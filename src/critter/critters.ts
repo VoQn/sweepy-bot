@@ -461,9 +461,13 @@ export const shineBug = Critter.register({
   caloriesNeeded: 66.67,
   hitPoint: 5,
   spaceRequired: 12,
-  layAnEgg: 3600,
-  hatches: 12000,
-  lifeSpan: 60000,
+  layAnEgg: 900,
+  hatches: 3000,
+  lifeSpan: 15000,
+  lightEmitter: {
+    range: 5,
+    lux: 1800,
+  },
 });
 
 export const sunBug = Critter.register(shineBug, {
@@ -534,6 +538,7 @@ export const abyssBug = Critter.register(shineBug, {
   layAnEgg: 2700,
   hatches: 9000,
   lifeSpan: 45000,
+  lightEmitter: null,
 });
 
 export const azureBug = Critter.register(shineBug, {
