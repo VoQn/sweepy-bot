@@ -27,7 +27,8 @@
     "typescript": "^3.9.0"
   },
   "engines": {
-    "node": "12.x"
+    "node": "12.x",
+    "npm": "please_use_yarn_instead"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/sweepy-bot"
