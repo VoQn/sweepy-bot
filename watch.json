@@ -5,7 +5,12 @@
     ]
   },
   "restart": {
+    "exclude": [
+      "^dist/",
+      "\\.md$"
+    ],
     "include": [
+      "\\.ts$",
       "\\.js$",
       "\\.json$",
       "\\.csv$"
