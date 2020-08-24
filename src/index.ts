@@ -194,8 +194,8 @@ function getMessage(context: string): string | object {
   }
 
   const critterName = context.match(/^\!critter\s+(?<arg>.+)$/);
-  if (critterName) {
-    const critter = Critter.findByName(test.groups.arg);
+  if (critterName)  {
+    const critter = Critter.findByName(critterName.groups.arg);
     if (critter == null) {
       return 'まだその動物は知らないや……';
     }
