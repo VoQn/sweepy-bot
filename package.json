@@ -29,7 +29,7 @@
   },
   "engines": {
     "node": "12.x",
-    "pnpm": "^2.25.5"
+    "pnpm": "5.5.x"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/sweepy-bot"

@@ -11,13 +11,18 @@ Glitch で DiscordBot を作るためのベースです。
 ローカル環境では `pnpm` をパッケージマネージャに使用してください。
 
 #### 「pnpm 持ってません」
-```
+```sh
 npm install -g pnpm
+# nodenv 使ってるならこの後にこれも
+nodenv rehash
 ```
 
 #### 「git クローンしたけどどうすればいいんだべ」
 ```
-pnpm
+pnpm i #依存関係インストール
+pnpm clean # dist とかクリア
+pnpx tslint --fix --project . # コミットする前にリントしてな
+pnpm test # テスト
 ```
 
 ## ほんちゃん WANTS!
