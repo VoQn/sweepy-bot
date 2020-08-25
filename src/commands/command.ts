@@ -65,7 +65,7 @@ export class Command implements Command {
       return null;
     }
     const command = this.table.get(cmdName);
-    return command.exec(source, client);
+    return command.exec(test.args, client);
   }
 
   private constructor({ category, name, help, exec }: Command) {
