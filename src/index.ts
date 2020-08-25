@@ -163,14 +163,6 @@ const getMessage = (client: Client, context: string): Response => {
     return helpInfoEmbed(client);
   }
 
-  // チートシート一覧
-  if (context.match(/^\!cheatsheet\s?$/)) {
-    return {
-      content: cheatsheetCommand.getKeywords(),
-      options: {},
-    };
-  }
-
   // チートシートの返答
   const cheatsheetName = context.match(/^\!cheatsheet\s+(?<arg>\S+)/);
   if (cheatsheetName) {
