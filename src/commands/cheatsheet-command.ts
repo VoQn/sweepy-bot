@@ -12,6 +12,12 @@ export const CheatsheetCommand: Command = Command.register({
   help: {
     summery: '_キーワードにマッチしたチートシート出すよ。何も指定してなかったらとりあえず一覧リストを出すよ_\n' +
       '```!cheatsheet 液体の比重```',
+    description: '_キーワードにマッチしたチートシート出すよ。_\n' +
+    '```!cheatsheet 液体の比重```\n' +
+    '_何も指定してなかったらとりあえず一覧リストを出すよ_\n' +
+    '```!cheatsheet```\n' +
+    '_ぱっと思いつかなかったらあいまいなキーワードでもそれっぽいのは出せるよ_\n' +
+    '```!cheatsheet 比重```',
   },
   exec: (args: string, _client: Client): Response => {
     if (!args) {
