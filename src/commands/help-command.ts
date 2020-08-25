@@ -18,7 +18,7 @@ export const HelpCommand = Command.register({
     const emoji = (emojiName: string) => getCustomEmoji(emojiName, client);
 
     const sweepyEmoji = emoji('sweepy');
-    const dupethink = emoji('dupethink');
+    const thinkdupe = emoji('thinkdupe');
 
     let title = emojinate('about');
     let content = `:information_source:  ${sweepyEmoji} _が答えるよ_`;
@@ -30,7 +30,7 @@ export const HelpCommand = Command.register({
     if (args) {
       if (!Command.has(cmdName)) {
         // 引数としてコマンドは渡されているけど、そんなコマンドは未実装って場合
-        content = `${dupethink} \`!${cmdName}\` _そのコマンドは無いよ……?_`;
+        content = `${thinkdupe} \`!${cmdName}\` _そのコマンドは無いよ……?_`;
       } else {
         const command = Command.find(cmdName);
         // 引数として使えるコマンドを指定しているので、その詳細のみ Embed で返す
