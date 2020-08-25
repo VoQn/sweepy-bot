@@ -1,4 +1,4 @@
-import { Emoji, GuildEmoji, Collection } from 'discord.js';
+import { Emoji, GuildEmoji, Collection, Client } from 'discord.js';
 
 const decimalShift = (x: number, p: number) => {
   const xs = ('' + x).split('e');
@@ -46,8 +46,8 @@ export const trimByRegexp = (regexp: RegExp, text: string): string[] => {
   return [word, remain];
 };
 
-export const getCustomEmoji = (cache: Collection<string, GuildEmoji>, name: string): Emoji => {
-  return cache.find(v => v.name === name);
+export const getCustomEmoji = (client: Client, name: string): Emoji => {
+  return client.emojis.cache.find(v => v.name === name);
 };
 
 export const blankField = (inline: boolean = false) => {

@@ -1,10 +1,12 @@
 import express from 'express';
 import querystring from 'querystring';
-import Discord from 'discord.js';
+import Discord, { Client } from 'discord.js';
 import { AnswerTalker } from './answer_talker';
 import { emojinate } from './emojinate';
 import cheatsheets from '../data/cheatsheet.json';
 import { Critter } from './critter';
+import { Response } from './types';
+import { getCustomEmoji } from './utils';
 
 const client = new Discord.Client();
 
@@ -32,10 +34,6 @@ const commands = [
 ];
 
 const cheatsheetCommand = new AnswerTalker(Object.values(cheatsheets), 'name', 'url');
-
-const getCustomEmoji = (cache: Discord.Collection<string, Discord.GuildEmoji>, name: string): Discord.Emoji => {
-  return cache.find(v => v.name === name);
-};
 
 client.on('ready', () => {
   console.log(`Bot準備完了`);
@@ -85,7 +83,7 @@ client.on('message', message => {
     return;
   }
 
-  const msg = getMessage(message.content);
+  const msg = getMessage(client, message.content);
   // 空メッセージを送らないようにする
   if (msg == null) {
     return;
@@ -97,17 +95,10 @@ client.on('message', message => {
   return;
 });
 
-type Response = {
-  content: string;
-  options?: Discord.MessageOptions;
-};
-
-const findEmoji = (name: string): Discord.Emoji => {
-  return getCustomEmoji(client.emojis.cache, name);
-};
-
-const critterInfoEmbed = (name: string): Response => {
-  const sadSweepyEmoji = findEmoji('sadsweepy');
+// tslint:disable-next-line: no-shadowed-variable
+const critterInfoEmbed = (client: Client, name: string): Response => {
+  const emoji = (emojiName: string) => getCustomEmoji(client, emojiName);
+  const sadSweepyEmoji = emoji('sadsweepy');
   if (name.length < 2) {
     return {
       content: `${sadSweepyEmoji} _**2文字以上で聞いてね**_`,
@@ -124,8 +115,10 @@ const critterInfoEmbed = (name: string): Response => {
   return critter.detailEmbed(client);
 };
 
-const helpInfoEmbed = (): Response => {
-  const sweepyEmoji = findEmoji('sweepy');
+// tslint:disable-next-line: no-shadowed-variable
+const helpInfoEmbed = (client: Client): Response => {
+  const emoji = (emojiName: string) => getCustomEmoji(client, emojiName);
+  const sweepyEmoji = emoji('sweepy');
   const sweepyIcon = client.user.avatarURL();
   const fields = commands.map(c => {
     return {
@@ -157,10 +150,11 @@ const helpInfoEmbed = (): Response => {
   };
 };
 
-function getMessage(context: string): Response {
+// tslint:disable-next-line: no-shadowed-variable
+const getMessage = (client: Client, context: string): Response => {
   // ヘルプタグ
   if (context.match(/^\!help/)) {
-    return helpInfoEmbed();
+    return helpInfoEmbed(client);
   }
 
   // チートシート一覧
@@ -192,20 +186,20 @@ function getMessage(context: string): Response {
   // critter
   const critterName = context.match(/^\!critter\s+(?<arg>.+)$/);
   if (critterName) {
-    return critterInfoEmbed(critterName.groups.arg);
+    return critterInfoEmbed(client, critterName.groups.arg);
   }
-}
+};
 
-function sendReply(message: Discord.Message, content: string): void {
+const sendReply = (message: Discord.Message, content: string): void => {
   message
     .reply(content)
     .then((_result: Discord.Message) => {
       console.log('リプライ送信: ' + content);
     })
     .catch(console.error);
-}
+};
 
-function sendMsg(channelId: Discord.ChannelResolvable, content: string, options: Discord.MessageOptions = {}): void {
+const sendMsg = (channelId: Discord.ChannelResolvable, content: string, options: Discord.MessageOptions = {}): void => {
   (client.channels
     .resolve(channelId) as Discord.TextChannel)
     .send(content, options)
@@ -213,7 +207,7 @@ function sendMsg(channelId: Discord.ChannelResolvable, content: string, options:
       console.log('メッセージ送信: ' + content + ' ' + JSON.stringify(options));
     })
     .catch(console.error);
-}
+};
 
 if (process.env) {
   const TOKEN = process.env.DISCORD_BOT_TOKEN;

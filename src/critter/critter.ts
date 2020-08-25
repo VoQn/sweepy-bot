@@ -1,6 +1,6 @@
 import { ID, Multilingal, OniEntity, Decor, Response } from '../types';
 import { override, getCustomEmoji, blankField } from '../utils';
-import { Client, MessageEmbedOptions } from 'discord.js';
+import { Client, MessageEmbedOptions, EmbedFieldData } from 'discord.js';
 
 /**
  * 生存可能な体温の範囲。摂氏基準
@@ -163,8 +163,8 @@ export class Critter implements CritterInfo {
   }
 
   public detailEmbed(client: Client): Response {
-    const emoji = (name: string) => getCustomEmoji(client.emojis.cache, name);
-    const fields = [
+    const emoji = (name: string) => getCustomEmoji(client, name);
+    const fields: EmbedFieldData[] = [
       {
         name: ':globe_with_meridians: DataBase Link (_oni-db.com_)',
         value: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${this.id})を見てね`,
@@ -174,45 +174,42 @@ export class Critter implements CritterInfo {
         value: `\`${this.id}\``,
         inline: true,
       },
-      {
-        name: `${emoji('oni_thermometer')} 生存可能体温`,
-        value: `**${this.livableTemp.lower} 〜 ${this.livableTemp.upper}** _℃_`,
-        inline: true,
-      },
-      {
-        name: `${emoji('decord')} 装飾値`,
-        value: `**${this.decor.value}** (**${this.decor.radius}** _tile_)`,
-        inline: true,
-      },
-      {
-        name: `${emoji('calories')} カロリー消費`,
-        value: (() => {
-          let calorie = this.caloriesNeeded;
-          if (calorie < 1000) {
-            return `**${calorie}** _cal/s_`;
-          }
-          return `**${calorie / 1000}** _kcal/s_`;
-        })(),
-        inline: true,
-      },
-      {
-        name: ':heart: HP',
-        value: `**${this.hitPoint}**`,
-        inline: true,
-      },
     ];
     const critterEmoji = emoji(this.emojiName);
     if (critterEmoji) {
-      fields.splice(2, 0, {
+      fields.push({
         name: `${critterEmoji} Emoji`,
         value: `\`${this.emojiCode}\``,
         inline: true,
       });
     }
+    fields.push({
+      name: `${emoji('oni_thermometer')} 生存可能体温`,
+      value: `**${this.livableTemp.lower} 〜 ${this.livableTemp.upper}** _℃_`,
+      inline: true,
+    });
+    fields.push({
+      name: `${emoji('decord')} 装飾値`,
+      value: `**${this.decor.value}** (**${this.decor.radius}** _tile_)`,
+      inline: true,
+    });
+    const calories = this.caloriesNeeded < 1000 ?
+      `**${this.caloriesNeeded}** _cal/s_` :
+      `**${this.caloriesNeeded / 1000}** _kcal/s_`
+    fields.push({
+      name: `${emoji('calories')} カロリー消費`,
+      value: calories,
+      inline: true,
+    });
+    fields.push({
+      name: ':heart: HP',
+      value: `**${this.hitPoint}**`,
+      inline: true,
+    });
     if (this.spaceRequired != null) {
       fields.push({
         name: ':u6e80: 過密判定',
-        value: `**${this.spaceRequired}** _/tile_`,
+        value: `**${this.spaceRequired}** _tile_`,
         inline: true,
       });
     }
@@ -244,7 +241,7 @@ export class Critter implements CritterInfo {
         inline: true,
       });
     }
-    if (fields.length > 3 && fields.length % 3 === 0) {
+    if (fields.length > 4 && fields.length % 3 === 0) {
       fields.push(blankField(true));
     }
     const flavorText = this.flavorText.ja || this.flavorText.en;
