@@ -1,4 +1,4 @@
-import { Command, CommandCategory } from './command'
+import { Command, CommandCategory } from './command';
 import { Client } from 'discord.js';
 import { Response } from '../types';
 import { Critter } from '../critter';
