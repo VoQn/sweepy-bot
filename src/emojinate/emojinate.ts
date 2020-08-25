@@ -1,42 +1,25 @@
-const numberEmojis: string[] = [
-  ':zero:',
-  ':one:',
-  ':two:',
-  ':three:',
-  ':four:',
-  ':five:',
-  ':six:',
-  ':seven:',
-  ':eight:',
-  ':nine:',
-  ':keycap_ten:',
-];
-
-const punctuationEmojis = {
-  '!': ':exclamation:',
-  '?': ':question:',
-  '!!': ':bangbang:',
-  '!?': ':interrobang:',
-};
-
-export const trimByRegexp = (regexp: RegExp, text: string): string[] => {
-  const test = text.match(regexp);
-  if (test != null) {
-    const word = test[0];
-    return [
-      word,
-      text.substr(word.length),
-    ];
-  }
-  return null;
-};
+import { numberEmojis, punctuationEmojis } from './preset';
+import { trimByRegexp } from '../utils';
 
 export const emojinateLine = (text: string): string => {
   let result: string = '';
   let rest = text;
   const isRemain = () => rest.length > 0;
+  let isAfterEmoji = false;
   while (isRemain()) {
     let test: string[] = null;
+
+    // :100:
+    test = trimByRegexp(/^100/, rest);
+    if (test) {
+      if (result.length > 0) {
+        result += ' ';
+      }
+      result += ':100:';
+      rest = test[1];
+      isAfterEmoji = true;
+      continue;
+    }
 
     // :ten:
     test = trimByRegexp(/^10/, rest);
@@ -46,6 +29,7 @@ export const emojinateLine = (text: string): string => {
       }
       result += numberEmojis[9];
       rest = test[1];
+      isAfterEmoji = true;
       continue;
     }
 
@@ -57,17 +41,20 @@ export const emojinateLine = (text: string): string => {
       }
       result += numberEmojis[parseInt(test[0], 10)];
       rest = test[1];
+      isAfterEmoji = true;
       continue;
     }
 
     // punctuation
-    test = trimByRegexp(/^(\?|\!(\!|\?)?)/, rest);
+    test = trimByRegexp(/^([\?？]|[\!！]([\!！]|[\?？])?)/, rest);
     if (test) {
       if (result.length > 0) {
         result += ' ';
       }
+      test[0] = test[0].replace(/！/, '!').replace(/？/, '?');
       result += punctuationEmojis[test[0] as ('!' | '?' | '!!' | '!?')];
       rest = test[1];
+      isAfterEmoji = true;
       continue;
     }
 
@@ -79,25 +66,31 @@ export const emojinateLine = (text: string): string => {
       }
       result += `:regional_indicator_${test[0].toLowerCase()}:`;
       rest = test[1];
+      isAfterEmoji = true;
       continue;
     }
 
     // space
     test = trimByRegexp(/^[^\S\n]+/, rest);
     if (test) {
-      if (result.length > 0) {
+      if (result.length > 0 || isAfterEmoji) {
         result += ' ';
       }
       result += ' ';
       rest = test[1];
+      isAfterEmoji = false;
       continue;
     }
 
     // not matching any emoji code
     test = trimByRegexp(/^\W/, rest);
     if (test) {
+      if (isAfterEmoji) {
+        result += ' ';
+      }
       result += test[0];
       rest = test[1];
+      isAfterEmoji = false;
       continue;
     }
 

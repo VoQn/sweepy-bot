@@ -27,3 +27,19 @@ export const override = <T extends {}>(base: NonNullable<T>, append?: Partial<T>
   }
   return ret;
 };
+
+/**
+ * split string at first match by regular expression
+ * @param regexp
+ * @param text
+ * @returns [trimmed_string, remain_string]
+ */
+export const trimByRegexp = (regexp: RegExp, text: string): string[] => {
+  const test = text.match(regexp);
+  if (test == null) {
+    return null;
+  }
+  const word = test[0];
+  const remain = text.substr(word.length);
+  return [word, remain];
+};

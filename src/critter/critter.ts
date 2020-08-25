@@ -1,6 +1,9 @@
 import { ID, Multilingal, OniEntity, Decor } from '../types';
 import { override } from '../utils';
 
+/**
+ * 生存可能な体温の範囲。摂氏基準
+ */
 export type LivableTemp = {
   lower: number;
   upper: number;
