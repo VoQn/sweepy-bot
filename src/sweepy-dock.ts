@@ -45,7 +45,12 @@ export class SweepyDock {
       return message.reply('人生を満喫中さ、わかるだろ？');
     }
     const res = Command.eval(message.content, this.client);
-    return message.channel.send(res.content, res.options);
+    if (res == null || res.content == null) {
+      return;
+    }
+    if (res.content.length > 1 || Object.keys(res.options).length > 1) {
+      return message.channel.send(res.content, res.options);
+    }
   }
 
   async onJoinNewMember(member: GuildMember): Promise<void> {
