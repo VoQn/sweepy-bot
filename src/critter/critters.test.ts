@@ -23,6 +23,14 @@ describe('critter', () => {
       expect(Critters.abyssBug.lightEmitter).toBeNull();
     });
   });
+  describe('emojiName', () => {
+    it('Hatch\'s emoji code is `:hatch:`', () => {
+      expect(Critters.hatch.emojiCode).toEqual(':hatch:');
+    });
+    it('Sage Hatch\'s emoji code is `:sagehatch:`', () => {
+      expect(Critters.sageHatch.emojiCode).toEqual(':sagehatch:');
+    });
+  });
   describe('Critter.findByName', () => {
     it('can not find "stinky"', () => {
       const dupe = Critter.findByName('stinky');
@@ -54,11 +62,6 @@ describe('critter', () => {
       const result = Critter.findByName('プリンス');
       expect(result).not.toBeNull();
       expect(result?.id).toEqual(target.id);
-    });
-  });
-  describe('Critter.getEmojiCode', () => {
-    it('can find :hatch: by "hatch', () => {
-      expect(Critter.getEmojiCode('hatch')).toEqual(':hatch:');
     });
   });
 });

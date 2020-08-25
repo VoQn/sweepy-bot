@@ -1,62 +1,50 @@
-import { ID, Multilingal, OniEntity, Decor, Response } from '../types';
+import { ID, Multilingal, Decor, Response } from '../types';
 import { override, getCustomEmoji, blankField } from '../utils';
 import { Client, MessageEmbedOptions, EmbedFieldData } from 'discord.js';
+import { CritterInfo, LightEmitter, LivableTemp, CritterInfoBase, FamiliyCritterInfo } from './critter-info';
 
-/**
- * 生存可能な体温の範囲。摂氏基準
- */
-export type LivableTemp = {
-  lower: number;
-  upper: number;
+const compareCritter = (a: Critter, b: Critter): number => {
+  if (a.isBaseType && b.isBaseType) {
+    return a.id.length - b.id.length;
+  }
+  if (b.isBaseType) {
+    return 1;
+  }
+  if (a.isBaseType) {
+    return -1;
+  }
+  return 0;
 };
 
-/**
- * 周囲に与える光源影響
- * (現在ではシャインバグ種のみ)
- */
-export type LightEmitter = {
-  range: number;
-  lux: number;
+const findCritterByName = (table: Map<ID, Critter>, query: string | RegExp) => {
+  let lang: 'en' | 'ja' = 'en';
+  if (typeof query === 'string') {
+    if (/^[\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcf]+$/.test(query)) {
+      // たぶん日本語で検索してる
+      lang = 'ja';
+    } else if (/^[a-zA-Z]+.?$/.test(query)) {
+      // たぶん英語で探してる
+      lang = 'en';
+      if (table.has(query)) {
+        return table.get(query);
+      }
+    }
+  }
+  const pattern = typeof query !== 'string' ? query : new RegExp(query.replace(/[^\S\n]/, '\\s?'), 'i');
+  const matched: Critter[] = [];
+  for (const critter of table.values()) {
+    const name = critter.name[lang].replace(/[^\S\n]+/, '');
+    if (name.match(pattern)) {
+      matched.push(critter);
+    }
+  }
+  if (matched.length === 0) {
+    return null;
+  }
+  return matched.sort(compareCritter)[0];
 };
-
-export interface CritterInfoBase extends OniEntity {
-  /** 生存可能な体温の範囲 (℃) */
-  livableTemp: LivableTemp;
-
-  /** 装飾値影響 */
-  decor: Decor;
-
-  /** 生存中消費されるカロリー (テイム時かつ幸福の状態を基準) (cal/sec) */
-  caloriesNeeded: number;
-
-  /** 体力の最大値 (０になったら死亡) */
-  hitPoint: number;
-
-  /** 過密判定される１匹あたりに必要な空間スペース (tile) */
-  spaceRequired?: number;
-
-  /** 1匹あたり卵を産むペース (テイム時かつ幸福の状態を基準) (sec) */
-  layAnEgg?: number;
-
-  /** 卵から孵化するまでの長さ (sec) */
-  hatches?: number;
-
-  /** 孵化から寿命を迎えるまでの長さ (sec) */
-  lifeSpan?: number;
-
-  /** 周囲に与える光源影響 */
-  lightEmitter?: LightEmitter;
-}
-
-export interface CritterInfo extends CritterInfoBase {
-  isBaseType: boolean;
-  baseTypeName: ID;
-}
-
-export type FamiliyCritterInfo = Partial<CritterInfoBase> & OniEntity;
 
 export class Critter implements CritterInfo {
-  public static readonly table: Map<ID, Critter> = new Map<ID, Critter>();
 
   readonly isBaseType: boolean;
   readonly baseTypeName: ID;
@@ -74,45 +62,14 @@ export class Critter implements CritterInfo {
   readonly lifeSpan?: number;
   readonly lightEmitter?: LightEmitter;
 
+  private static readonly table: Map<ID, Critter> = new Map<ID, Critter>();
+
   public static compare(a: Critter, b: Critter): number {
-    if (a.isBaseType && b.isBaseType) {
-      return a.id.length - b.id.length;
-    }
-    if (b.isBaseType) {
-      return 1;
-    }
-    if (a.isBaseType) {
-      return -1;
-    }
-    return 0;
+    return compareCritter(a, b);
   }
 
   public static findByName(query: string | RegExp): Critter {
-    let lang: 'en' | 'ja' = 'en';
-    if (typeof query === 'string') {
-      if (/^[\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcf]+$/.test(query)) {
-        // たぶん日本語で検索してる
-        lang = 'ja';
-      } else if (/^[a-zA-Z]+.?$/.test(query)) {
-        // たぶん英語で探してる
-        lang = 'en';
-        if (this.table.has(query)) {
-          return this.table.get(query);
-        }
-      }
-    }
-    const pattern = typeof query !== 'string' ? query : new RegExp(query.replace(/[^\S\n]/, '\\s?'), 'i');
-    const matched: Critter[] = [];
-    for (const critter of this.table.values()) {
-      const name = critter.name[lang].replace(/[^\S\n]+/, '');
-      if (name.match(pattern)) {
-        matched.push(critter);
-      }
-    }
-    if (matched.length === 0) {
-      return null;
-    }
-    return matched.sort(this.compare)[0];
+    return findCritterByName(this.table, query);
   }
 
   public static register(origin: CritterInfoBase, append?: FamiliyCritterInfo): Critter {
@@ -124,13 +81,6 @@ export class Critter implements CritterInfo {
     const critter = new Critter(origin, append);
     this.table.set(id, critter);
     return critter;
-  }
-
-  public static getEmojiCode(critter: string | Critter): string {
-    if (typeof critter === 'string') {
-      return this.findByName(critter)?.emojiCode;
-    }
-    return critter.emojiCode;
   }
 
   private constructor(origin: CritterInfoBase, append?: FamiliyCritterInfo) {
@@ -163,7 +113,12 @@ export class Critter implements CritterInfo {
   }
 
   public detailEmbed(client: Client): Response {
-    const emoji = (name: string) => getCustomEmoji(client, name);
+    const emoji = (name: string) => {
+      if (client == null) {
+        return `:${name}:`;
+      }
+      return getCustomEmoji(client, name);
+    };
     const fields: EmbedFieldData[] = [
       {
         name: ':globe_with_meridians: DataBase Link (_oni-db.com_)',
