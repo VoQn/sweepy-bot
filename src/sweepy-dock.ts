@@ -1,7 +1,10 @@
 import Discord, { PresenceData, Message } from 'discord.js';
 import { SweepyBot } from './sweepy-bot';
+import { AnswerTalker } from './answer_talker';
+import cheatsheets from '../data/cheatsheet.json';
 
 export class SweepyDock {
+  cheatsheetCommand: AnswerTalker = new AnswerTalker(Object.values(cheatsheets), 'name', 'url');
 
   constructor(client?: Discord.Client) {
     this.client = client;
@@ -25,6 +28,12 @@ export class SweepyDock {
   }
 
   async onMessage(message: Discord.Message): Promise<void> {
+    // チートシート一覧
+    if (message.content.match(/^\!cheatsheet\s?$/)) {
+      await message.channel.send(this.cheatsheetCommand.getKeywords(), {});
+      return;
+    }
+
     throw new Error('no-command-implemented');
   }
 }
