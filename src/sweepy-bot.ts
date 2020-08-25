@@ -1,5 +1,5 @@
 import { PresenceData, MessageEmbed } from 'discord.js';
-//import { Command } from './command';
+// import { Command } from './command';
 
 export class SweepyBot {
   public static loginedActivity: PresenceData = {

@@ -2,6 +2,19 @@ import { Critter } from './critter';
 import * as Critters from './critters';
 
 describe('critter', () => {
+  describe('hitPoint', () => {
+    it('Stone Hatch\'s HP was overried', () => {
+      expect(Critters.stoneHatch.hitPoint).toEqual(200);
+    });
+  });
+  describe('lightEmitter', () => {
+    it('Shine Bug has lightEmitter', () => {
+      expect(Critters.shineBug.lightEmitter).toEqual({ range: 5, lux: 1800 });
+    });
+    it('Abyss Bug has not lightEmitter', () => {
+      expect(Critters.abyssBug.lightEmitter).toBeNull();
+    });
+  });
   describe('Critter.findByName', () => {
     it('can not find "stinky"', () => {
       const dupe = Critter.findByName('stinky');

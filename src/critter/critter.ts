@@ -1,21 +1,5 @@
-export type ID = string;
-
-export type HasId = {
-  /** ONIのゲーム内部で使われている内部登録名 */
-  id: ID;
-};
-
-export type CritterName = {
-  en: string;
-  ja?: string;
-};
-
-export type FlavorText = {
-  en: string;
-  ja?: string;
-};
-
-export type HasName<N> = { name: N };
+import { ID, Multilingal, OniEntity } from '../types';
+import { override } from '../utils';
 
 export type LivableTemp = {
   lower: number;
@@ -39,12 +23,7 @@ export type LightEmitter = {
   lux: number;
 };
 
-export interface CritterInfoBase extends HasId, HasName<CritterName> {
-  imageURL: string;
-
-  /** フレーバーテキスト */
-  flavorText: FlavorText;
-
+export interface CritterInfoBase extends OniEntity {
   /** 生存可能な体温の範囲 (℃) */
   livableTemp: LivableTemp;
 
@@ -73,30 +52,44 @@ export interface CritterInfoBase extends HasId, HasName<CritterName> {
   lightEmitter?: LightEmitter;
 }
 
-export type FamilyCritterRequired = {
-  id: ID;
-  name: CritterName,
-  imageURL: string,
-  flavorText: FlavorText;
-};
-
 export interface CritterInfo extends CritterInfoBase {
   isBaseType: boolean;
   baseTypeName: ID;
 }
 
-export type FamiliyCritterInfo = Partial<CritterInfoBase> & FamilyCritterRequired;
+export type FamiliyCritterInfo = Partial<CritterInfoBase> & OniEntity;
 
 export class Critter implements CritterInfo {
   public static readonly table: Map<ID, Critter> = new Map<ID, Critter>();
 
-  public readonly isBaseType: boolean;
-  public readonly baseTypeName: ID;
-  public readonly id: ID;
-  public readonly name: CritterName;
+  readonly isBaseType: boolean;
+  readonly baseTypeName: ID;
+  readonly id: ID;
+  readonly name: Multilingal;
+  readonly imageURL: string;
+  readonly flavorText: Multilingal;
+  readonly livableTemp: LivableTemp;
+  readonly decor: Decor;
+  readonly caloriesNeeded: number;
+  readonly hitPoint: number;
+  readonly spaceRequired?: number;
+  readonly layAnEgg?: number;
+  readonly hatches?: number;
+  readonly lifeSpan?: number;
+  readonly lightEmitter?: LightEmitter;
 
-  private base: CritterInfoBase;
-  private override?: FamiliyCritterInfo;
+  public static compare(a: Critter, b: Critter): number {
+    if (a.isBaseType && b.isBaseType) {
+      return a.id.length - b.id.length;
+    }
+    if (b.isBaseType) {
+      return 1;
+    }
+    if (a.isBaseType) {
+      return -1;
+    }
+    return 0;
+  }
 
   public static findByName(query: string | RegExp): Critter {
     let lang: 'en' | 'ja' = 'en';
@@ -114,36 +107,25 @@ export class Critter implements CritterInfo {
     }
     const pattern = typeof query !== 'string' ? query : new RegExp(query.replace(/[^\S\n]/, '\\s?'), 'i');
     const matched: Critter[] = [];
-    for (const [_id, critter] of this.table) {
-      if (critter.name[lang].replace(/[^\S\n]+/, '').match(pattern)) {
+    for (const critter of this.table.values()) {
+      const name = critter.name[lang].replace(/[^\S\n]+/, '');
+      if (name.match(pattern)) {
         matched.push(critter);
       }
     }
     if (matched.length === 0) {
       return null;
     }
-    const sort = (a: Critter, b: Critter): number => {
-      if (a.isBaseType && b.isBaseType) {
-        return a.id.length - b.id.length;
-      }
-      if (b.isBaseType) {
-        return 1;
-      }
-      if (a.isBaseType) {
-        return -1;
-      }
-      return 0;
-    };
-    return matched.sort(sort)[0];
+    return matched.sort(this.compare)[0];
   }
 
-  public static register(origin: CritterInfoBase, override?: FamiliyCritterInfo): Critter {
-    const id = override?.id || origin.id;
+  public static register(origin: CritterInfoBase, append?: FamiliyCritterInfo): Critter {
+    const id = append?.id || origin.id;
     const cache = this.table.get(id);
     if (cache) {
       return cache;
     }
-    const critter = new Critter(origin, override);
+    const critter = new Critter(origin, append);
     this.table.set(id, critter);
     return critter;
   }
@@ -155,30 +137,24 @@ export class Critter implements CritterInfo {
     return critter.emojiCode;
   }
 
-  private constructor(origin: CritterInfoBase, override?: FamiliyCritterInfo) {
+  private constructor(origin: CritterInfoBase, append?: FamiliyCritterInfo) {
     const isBaseType = override == null || Object.keys(override).length < 1;
     this.isBaseType = isBaseType;
     this.baseTypeName = origin.id;
 
-    if (isBaseType) {
-      this.id = origin.id;
-      this.name = origin.name;
-    } else {
-      this.id = override.id;
-      this.name = override.name;
-    }
-
-    this.base = origin;
-    this.override = override;
-
-    if (isBaseType) {
-      this.id = origin.id;
-      this.name = origin.name;
-      return;
-    }
-
-    this.id = override.id;
-    this.name = override.name;
+    const param = override(origin, append);
+    this.id = param.id;
+    this.name = param.name;
+    this.imageURL = param.imageURL;
+    this.flavorText = param.flavorText;
+    this.livableTemp = param.livableTemp;
+    this.decor = param.decor;
+    this.hitPoint = param.hitPoint;
+    this.spaceRequired = param.spaceRequired;
+    this.lifeSpan = param.lifeSpan;
+    this.layAnEgg = param.layAnEgg;
+    this.hatches = param.hatches;
+    this.lightEmitter = param.lightEmitter;
   }
 
   public get emojiName(): string {
@@ -187,82 +163,5 @@ export class Critter implements CritterInfo {
 
   public get emojiCode(): string {
     return `:${this.emojiName}:`;
-  }
-
-  public get imageURL(): string {
-    if (!this.isBaseType && this.override?.imageURL) {
-      return this.override.imageURL;
-    }
-    return this.base.imageURL;
-  }
-
-  public get flavorText(): { en: string, ja?: string } {
-    if (!this.isBaseType && this.override?.flavorText) {
-      return this.override.flavorText;
-    }
-    return this.base.flavorText;
-  }
-
-  public get livableTemp(): LivableTemp {
-    if (!this.isBaseType && this.override?.livableTemp) {
-      return this.override.livableTemp;
-    }
-    return this.base.livableTemp;
-  }
-
-  public get decor(): Decor {
-    if (!this.isBaseType && this.override?.decor) {
-      return this.override.decor;
-    }
-    return this.base.decor;
-  }
-
-  public get caloriesNeeded(): number {
-    if (!this.isBaseType && this.override?.caloriesNeeded != null) {
-      return this.override.caloriesNeeded;
-    }
-    return this.base.caloriesNeeded;
-  }
-
-  public get hitPoint(): number {
-    if (!this.isBaseType && this.override.hitPoint != null) {
-      return this.override.hitPoint;
-    }
-    return this.base.hitPoint;
-  }
-
-  public get spaceRequired(): number | null {
-    if (!this.isBaseType && this.override?.spaceRequired != null) {
-      return this.override.spaceRequired;
-    }
-    return this.base.spaceRequired;
-  }
-
-  public get layAnEgg(): number | null {
-    if (!this.isBaseType && this.override?.layAnEgg != null) {
-      return this.override.layAnEgg;
-    }
-    return this.base.layAnEgg;
-  }
-
-  public get hatches(): number | null {
-    if (!this.isBaseType && this.override?.hatches != null) {
-      return this.override.hatches;
-    }
-    return this.base.hatches;
-  }
-
-  public get lifeSpan(): number | null {
-    if (!this.isBaseType && this.override?.lifeSpan != null) {
-      return this.override.lifeSpan;
-    }
-    return this.base.lifeSpan;
-  }
-
-  public get lightEmitter(): LightEmitter | null {
-    if (!this.isBaseType && this.override?.lightEmitter != null) {
-      return this.override.lightEmitter;
-    }
-    return this.base.lightEmitter;
   }
 }
