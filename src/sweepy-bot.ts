@@ -1,5 +1,6 @@
-import { PresenceData, MessageEmbed } from 'discord.js';
-// import { Command } from './command';
+import { PresenceData } from 'discord.js';
+import { CommandInterface } from './commands/command_interface';
+import { Response } from './types';
 
 export class SweepyBot {
   public static loginedActivity: PresenceData = {
@@ -9,38 +10,27 @@ export class SweepyBot {
     },
   };
 
-  // constructor() {
-  //   this.commands = [];
-  // }
+  private commands: Array<CommandInterface> = [];
 
-//  private commands: Array<Command>;
-
-  // registerCommand(command: Command): void {
-  //   this.commands.push(command);
-  // }
-
-//   public help(): MessageEmbed {
-//     let result = new MessageEmbed();
-//     result = result.setTitle('Sweepy Bot');
-//     this.commands.forEach(c => {
-//       result.addField(c.name, c.help);
-//     });
-//     return result;
-//   }
-
-  public ask(message: string): string {
-    // let command: Command = this.findCommand(message);
-    // return command?.message(message) || '何のこと？';
-    return '何のこと？';
+  public register(command: CommandInterface): void {
+    this.commands.push(command);
   }
 
-//   // 最初にマッチしたコマンドを返す
-//   public findCommand(message: string): Command | null {
-//     for (const command of this.commands) {
-//       if (message.match(command.pattern)) {
-//         return command;
-//       }
-//     }
-//     return null;
-//   }
+  public ask(message: string): Response {
+    let command: CommandInterface = this.findCommand(message);
+    if (!command) {
+      throw Error('not-implemented-error');
+    }
+    return command?.message(message);
+  }
+
+  // 最初にマッチしたコマンドを返す
+  public findCommand(message: string): CommandInterface | null {
+    for (const command of this.commands) {
+      if (message.match(command.pattern)) {
+        return command;
+      }
+    }
+    return null;
+  }
 }

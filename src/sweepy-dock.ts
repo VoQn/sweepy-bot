@@ -2,17 +2,22 @@ import Discord, { PresenceData, Message } from 'discord.js';
 import { SweepyBot } from './sweepy-bot';
 import { AnswerTalker } from './answer_talker';
 import cheatsheets from '../data/cheatsheet.json';
+import {CheatsheetCommand} from './commands/cheatsheet_command';
 
 export class SweepyDock {
   cheatsheetCommand: AnswerTalker = new AnswerTalker(Object.values(cheatsheets), 'name', 'url');
 
   constructor(client?: Discord.Client) {
     this.client = client;
-    this.sweepy = new SweepyBot();
     if (client) {
       this.client.once('ready', () => this.onReady());
       this.client.on('message', (message: Discord.Message) => this.onMessage(message));
     }
+
+    this.sweepy = new SweepyBot();
+
+
+    this.sweepy.register(new CheatsheetCommand(this.cheatsheetCommand));
   }
   private client: Discord.Client;
   private sweepy: SweepyBot;
@@ -28,19 +33,6 @@ export class SweepyDock {
   }
 
   async onMessage(message: Discord.Message): Promise<void> {
-    // チートシート一覧
-    if (message.content.match(/^\!cheatsheet\s?$/)) {
-      await message.channel.send(this.cheatsheetCommand.getKeywords(), {});
-      return;
-    }
-
-    // チートシートの返答
-    const cheatsheetName = message.content.match(/^\!cheatsheet\s+(?<arg>\S+)/);
-    if (cheatsheetName) {
-      await message.channel.send(this.cheatsheetCommand.getAnswer(cheatsheetName.groups.arg));
-      return;
-    }
-
-    throw new Error('no-command-implemented');
+    this.sweepy.ask(message.content);
   }
 }
