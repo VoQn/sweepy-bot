@@ -3,12 +3,13 @@ import { SweepyBot } from './sweepy-bot';
 
 export class SweepyDock {
 
-  constructor(client: Discord.Client) {
+  constructor(client?: Discord.Client) {
     this.client = client;
     this.sweepy = new SweepyBot();
-
-    this.client.once('ready', () => this.onReady());
-    this.client.on('message', (message: Discord.Message) => this.onMessage(message));
+    if (client) {
+      this.client.once('ready', () => this.onReady());
+      this.client.on('message', (message: Discord.Message) => this.onMessage(message));
+    }
   }
   private client: Discord.Client;
   private sweepy: SweepyBot;
@@ -24,7 +25,6 @@ export class SweepyDock {
   }
 
   async onMessage(message: Discord.Message): Promise<void> {
-    //
-
+    throw new Error('no-command-implemented');
   }
 }

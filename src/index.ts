@@ -7,6 +7,7 @@ import cheatsheets from '../data/cheatsheet.json';
 import { Critter } from './critter';
 import { Response } from './types';
 import { getCustomEmoji } from './utils';
+import { SweepyDock } from './sweepy-dock';
 
 const client = new Discord.Client();
 
@@ -69,7 +70,9 @@ _'承認済み' のロールが与えられたら、インフォメーション�
     .catch(console.error);
 });
 
-client.on('message', message => {
+const dock = new SweepyDock(null);
+
+client.on('message', async message => {
   if (message.author.id === client.user.id || message.author.bot) {
     return;
   }
@@ -83,15 +86,18 @@ client.on('message', message => {
     return;
   }
 
-  const msg = getMessage(client, message.content);
-  // 空メッセージを送らないようにする
-  if (msg == null) {
-    return;
+  try {
+    await dock.onMessage(message);
+  } catch(e) {
+    const msg = getMessage(client, message.content);
+    // 空メッセージを送らないようにする
+    if (msg == null) {
+      return;
+    }
+    if (msg.content && msg.content.length > 0) {
+      sendMsg(message.channel.id, msg.content, msg.options);
+    }
   }
-  if (msg.content && msg.content.length > 0) {
-    sendMsg(message.channel.id, msg.content, msg.options);
-  }
-
   return;
 });
 
