@@ -205,7 +205,7 @@ const critterInfoEmbed = (name: string): Response => {
       inline: true,
     });
   }
-  if (fields.length > 3 && fields.length % 3 === 2) {
+  if (fields.length > 3 && fields.length % 3 === 1) {
     fields.push(blankField(true));
   }
   const flavorText = critter.flavorText.ja || critter.flavorText.en;
