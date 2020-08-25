@@ -1,6 +1,7 @@
 import Discord, { PresenceData, Message, GuildMember, Client, Presence } from 'discord.js';
 import { Command } from './commands';
 import { emojinate } from './emojinate';
+import { parseCommand } from './parser';
 
 export class SweepyDock {
   public static loginedPresence: PresenceData = {
@@ -42,14 +43,37 @@ export class SweepyDock {
       ignoreEveryone: true,
     };
     if (message.mentions.has(this.client.user, options)) {
-      return message.reply('人生を満喫中さ、わかるだろ？');
+      console.group(`${message.author} から以下のようなメッセージが来ました。`);
+      console.log(message.content);
+      console.groupEnd();
+      const replayMessage = '人生を満喫中さ、わかるだろ？';
+      await message.reply(replayMessage);
+      console.group(`${message.author} に返信しました。`);
+      console.log(replayMessage);
+      console.groupEnd();
     }
+    const cmd = parseCommand(message.content);
     const res = Command.eval(message.content, this.client);
     if (res == null || res.content == null) {
+      if (cmd != null) {
+        // コマンドとしてパースできたけれど実行されていない。
+      }
       return;
     }
-    if (res.content.length > 1 || Object.keys(res.options).length > 1) {
-      return message.channel.send(res.content, res.options);
+    if (res.content.length > 1 || Object.keys(res.options).length > 0) {
+      // 何かしら返信するモノがある。
+      console.group(`${message.author} から以下のようなメッセージが来ました。`);
+      console.log(message.content);
+      console.groupEnd();
+      await message.channel.send(res.content, res.options);
+      console.group(`${message.author} に返信しました。`);
+      if (res.content != null && res.content.length > 1) {
+        console.log(res.content);
+      }
+      if (res.options != null && Object.keys(res.options).length > 0) {
+        console.log(JSON.stringify(res.options));
+      }
+      console.groupEnd();
     }
   }
 
