@@ -153,7 +153,7 @@ const critterInfoEmbed = (name: string): Response => {
           return `**${calorie}** _(cal/s)_`;
         }
         return `**${calorie / 1000}** _(kcal/s)_`;
-      })(),
+      }),
       inline: true,
     },
     {
