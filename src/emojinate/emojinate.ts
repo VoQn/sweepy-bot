@@ -27,7 +27,7 @@ export const emojinateLine = (text: string): string => {
       if (result.length > 0) {
         result += ' ';
       }
-      result += numberEmojis[9];
+      result += numberEmojis[10];
       rest = test[1];
       isAfterEmoji = true;
       continue;

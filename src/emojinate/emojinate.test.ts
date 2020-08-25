@@ -6,6 +6,10 @@ describe('emojinate', () => {
       const text = '100!';
       expect(emojinateLine(text)).toEqual(':100: :exclamation:');
     });
+    it('can convert "100101"', () => {
+      const text = '100101';
+      expect(emojinateLine(text)).toEqual(':100: :keycap_ten: :one:');
+    });
     it('can convert "hello"', () => {
       const text = 'hello';
       expect(emojinateLine(text))
