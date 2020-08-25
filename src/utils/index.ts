@@ -1,3 +1,5 @@
+import { Emoji, GuildEmoji, Collection } from 'discord.js';
+
 const decimalShift = (x: number, p: number) => {
   const xs = ('' + x).split('e');
   return +(xs[0] + 'e' + (xs[1] ? (+xs[1] + p) : p));
@@ -42,4 +44,12 @@ export const trimByRegexp = (regexp: RegExp, text: string): string[] => {
   const word = test[0];
   const remain = text.substr(word.length);
   return [word, remain];
+};
+
+export const getCustomEmoji = (cache: Collection<string, GuildEmoji>, name: string): Emoji => {
+  return cache.find(v => v.name === name);
+};
+
+export const blankField = (inline: boolean = false) => {
+  return { name: '\u200B', value: '\u200B', inline };
 };

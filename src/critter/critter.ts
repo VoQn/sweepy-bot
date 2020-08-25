@@ -1,5 +1,6 @@
-import { ID, Multilingal, OniEntity, Decor } from '../types';
-import { override } from '../utils';
+import { ID, Multilingal, OniEntity, Decor, Response } from '../types';
+import { override, getCustomEmoji, blankField } from '../utils';
+import { Client, MessageEmbedOptions } from 'discord.js';
 
 /**
  * 生存可能な体温の範囲。摂氏基準
@@ -159,5 +160,115 @@ export class Critter implements CritterInfo {
 
   public get emojiCode(): string {
     return `:${this.emojiName}:`;
+  }
+
+  public detailEmbed(client: Client): Response {
+    const emoji = (name: string) => getCustomEmoji(client.emojis.cache, name);
+    const fields = [
+      {
+        name: ':globe_with_meridians: DataBase Link (_oni-db.com_)',
+        value: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${this.id})を見てね`,
+      },
+      {
+        name: `:secret: 内部名`,
+        value: `\`${this.id}\``,
+        inline: true,
+      },
+      {
+        name: `${emoji('oni_thermometer')} 生存可能体温`,
+        value: `**${this.livableTemp.lower} 〜 ${this.livableTemp.upper}** _℃_`,
+        inline: true,
+      },
+      {
+        name: `${emoji('decord')} 装飾値`,
+        value: `**${this.decor.value}** (**${this.decor.radius}** _tile_)`,
+        inline: true,
+      },
+      {
+        name: `${emoji('calories')} カロリー消費`,
+        value: (() => {
+          let calorie = this.caloriesNeeded;
+          if (calorie < 1000) {
+            return `**${calorie}** _cal/s_`;
+          }
+          return `**${calorie / 1000}** _kcal/s_`;
+        })(),
+        inline: true,
+      },
+      {
+        name: ':heart: HP',
+        value: `**${this.hitPoint}**`,
+        inline: true,
+      },
+    ];
+    const critterEmoji = emoji(this.emojiName);
+    if (critterEmoji) {
+      fields.splice(2, 0, {
+        name: `${critterEmoji} Emoji`,
+        value: `\`${this.emojiCode}\``,
+        inline: true,
+      });
+    }
+    if (this.spaceRequired != null) {
+      fields.push({
+        name: ':u6e80: 過密判定',
+        value: `**${this.spaceRequired}** _/tile_`,
+        inline: true,
+      });
+    }
+    if (this.layAnEgg != null) {
+      fields.push({
+        name: ':egg: 産卵ペース',
+        value: `**${this.layAnEgg / 600}** _cycle_`,
+        inline: true,
+      });
+    }
+    if (this.hatches != null) {
+      fields.push({
+        name: `${emoji('joydupe')} 孵化するまで`,
+        value: `**${this.hatches / 600}** _cycle_`,
+        inline: true,
+      });
+    }
+    if (this.lifeSpan != null) {
+      fields.push({
+        name: `${emoji('grave')} 寿命`,
+        value: `**${this.lifeSpan / 600}** _cycle_`,
+        inline: true,
+      });
+    }
+    if (this.lightEmitter != null) {
+      fields.push({
+        name: ':high_brightness: 光源効果',
+        value: `**${this.lightEmitter.lux}** _lux_ (**${this.lightEmitter.range}** _tile_)`,
+        inline: true,
+      });
+    }
+    if (fields.length > 3 && fields.length % 3 === 0) {
+      fields.push(blankField(true));
+    }
+    const flavorText = this.flavorText.ja || this.flavorText.en;
+    const critterName = this.name.ja || this.name.en;
+    const embed: MessageEmbedOptions = {
+      author: {
+        name: critterName,
+        iconURL: this.imageURL,
+      },
+      title: `_${this.name.en}_`,
+      url: `https://oni-db.com/details/${this.id}`,
+      color: 0x0099FF,
+      thumbnail: { url: this.imageURL },
+      description: `_${flavorText}_`,
+      fields,
+      footer: {
+        text: 'Sweepy Bot',
+        iconURL: client.user.avatarURL(),
+      },
+      timestamp: new Date(),
+    };
+    return {
+      content: `:bulb: _**${this.name.ja}** は知ってるよ_`,
+      options: { embed },
+    };
   }
 }

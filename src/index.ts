@@ -106,10 +106,6 @@ const findEmoji = (name: string): Discord.Emoji => {
   return getCustomEmoji(client.emojis.cache, name);
 };
 
-const blankField = (inline: boolean = false) => {
-  return { name: '\u200B', value: '\u200B', inline };
-};
-
 const critterInfoEmbed = (name: string): Response => {
   const sadSweepyEmoji = findEmoji('sadsweepy');
   if (name.length < 2) {
@@ -125,112 +121,7 @@ const critterInfoEmbed = (name: string): Response => {
       options: {},
     };
   }
-  const fields = [
-    {
-      name: ':globe_with_meridians: DataBase Link (_oni-db.com_)',
-      value: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${critter.id})を見てね`,
-    },
-    {
-      name: `:secret: 内部名`,
-      value: `\`${critter.id}\``,
-      inline: true,
-    },
-    {
-      name: `${findEmoji('oni_thermometer')} 生存可能体温`,
-      value: `**${critter.livableTemp.lower} 〜 ${critter.livableTemp.upper}** _℃_`,
-      inline: true,
-    },
-    {
-      name: `${findEmoji('decord')} 装飾値`,
-      value: `**${critter.decor.value}** (**${critter.decor.radius}** _tile_)`,
-      inline: true,
-    },
-    {
-      name: `${findEmoji('calories')} カロリー消費`,
-      value: (() => {
-        let calorie = critter.caloriesNeeded;
-        if (calorie < 1000) {
-          return `**${calorie}** _cal/s_`;
-        }
-        return `**${calorie / 1000}** _kcal/s_`;
-      })(),
-      inline: true,
-    },
-    {
-      name: ':heart: HP',
-      value: `**${critter.hitPoint}**`,
-      inline: true,
-    },
-  ];
-  const critterEmoji = findEmoji(critter.emojiName);
-  if (critterEmoji) {
-    fields.splice(2, 0, {
-      name: `${critterEmoji} Emoji`,
-      value: `\`${critter.emojiCode}\``,
-      inline: true,
-    });
-  }
-  if (critter.spaceRequired != null) {
-    fields.push({
-      name: ':u6e80: 過密判定',
-      value: `**${critter.spaceRequired}** _/tile_`,
-      inline: true,
-    });
-  }
-  if (critter.layAnEgg != null) {
-    fields.push({
-      name: ':egg: 産卵ペース',
-      value: `**${critter.layAnEgg / 600}** _cycle_`,
-      inline: true,
-    });
-  }
-  if (critter.hatches != null) {
-    fields.push({
-      name: `${findEmoji('joydupe')} 孵化するまで`,
-      value: `**${critter.hatches / 600}** _cycle_`,
-      inline: true,
-    });
-  }
-  if (critter.lifeSpan != null) {
-    fields.push({
-      name: `${findEmoji('grave')} 寿命`,
-      value: `**${critter.lifeSpan / 600}** _cycle_`,
-      inline: true,
-    });
-  }
-  if (critter.lightEmitter != null) {
-    fields.push({
-      name: ':high_brightness: 光源効果',
-      value: `**${critter.lightEmitter.lux}** _lux_ (**${critter.lightEmitter.range}** _tile_)`,
-      inline: true,
-    });
-  }
-  if (fields.length > 3 && fields.length % 3 === 0) {
-    fields.push(blankField(true));
-  }
-  const flavorText = critter.flavorText.ja || critter.flavorText.en;
-  const critterName = critter.name.ja || critter.name.en;
-  const embed: Discord.MessageEmbedOptions = {
-    author: {
-      name: critterName,
-      iconURL: critter.imageURL,
-    },
-    title: `_${critter.name.en}_`,
-    url: `https://oni-db.com/details/${critter.id}`,
-    color: 0x0099FF,
-    thumbnail: { url: critter.imageURL },
-    description: `_${flavorText}_`,
-    fields,
-    footer: {
-      text: 'Sweepy Bot',
-      iconURL: client.user.avatarURL(),
-    },
-    timestamp: new Date(),
-  };
-  return {
-    content: `:bulb: _**${critter.name.ja}** は知ってるよ_`,
-    options: { embed },
-  };
+  return critter.detailEmbed(client);
 };
 
 const helpInfoEmbed = (): Response => {

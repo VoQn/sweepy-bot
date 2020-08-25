@@ -1,3 +1,5 @@
+import { MessageOptions } from 'discord.js';
+
 /** ゲーム内部で登録されているid */
 export type ID = string;
 
@@ -34,4 +36,9 @@ export interface Decor {
   radius: number;
   /** 範囲内で加算される装飾値 */
   value: number;
+}
+
+export interface Response {
+  content: string;
+  options?: MessageOptions;
 }
