@@ -46,6 +46,17 @@ export const trimByRegexp = (regexp: RegExp, text: string): string[] => {
   return [word, remain];
 };
 
+export const identify = (name: string): string => {
+  if (name == null || name.length < 1) {
+    return name;
+  }
+  const i = name[0].toLowerCase();
+  if (name.length === 1) {
+    return i;
+  }
+  return i + name.slice(1).replace(/[A-Z](?=[a-z])/, (c) => '_' + c).toLowerCase();
+};
+
 export const getCustomEmoji = (name: string, client?: Client): string | Emoji => {
   if (client == null) {
     return `:${name}:`;
