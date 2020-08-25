@@ -1,40 +1,75 @@
-import Discord, { PresenceData, Message } from 'discord.js';
-import { SweepyBot } from './sweepy-bot';
-import { AnswerTalker } from './answer-talker';
-import cheatsheets from '../data/cheatsheet.json';
-import {CheatsheetCommand} from './commands/cheatsheet-command';
+import Discord, { PresenceData, Message, GuildMember, Client, Presence } from 'discord.js';
+import { Command } from './commands';
+import { emojinate } from './emojinate';
 
 export class SweepyDock {
-  cheatsheetCommand: AnswerTalker = new AnswerTalker(Object.values(cheatsheets), 'name', 'url');
+  public static loginedPresence: PresenceData = {
+    activity: {
+      name: '皆さんからの !help ',
+      type: 'WATCHING',
+    },
+    status: 'online',
+  };
 
-  constructor(client?: Discord.Client) {
+  constructor(client?: Client) {
     this.client = client;
     if (client) {
       this.client.once('ready', () => this.onReady());
-      this.client.on('message', (message: Discord.Message) => this.onMessage(message));
+      this.client.on('message', (message: Message) => this.onMessage(message));
+      this.client.on('guildMemberAdd', (member: GuildMember) => this.onJoinNewMember(member));
     }
-
-    this.sweepy = new SweepyBot();
-
-
-    this.sweepy.register(new CheatsheetCommand(this.cheatsheetCommand));
   }
+
   private client: Discord.Client;
-  private sweepy: SweepyBot;
 
   async start(token: string): Promise<string> {
+    console.log('Login Discord Client...');
     return this.client.login(token);
   }
 
-  async onReady(): Promise<Discord.Presence> {
-    let res = await this.client.user.setPresence(SweepyBot.loginedActivity);
+  async onReady(): Promise<Presence> {
+    let res = await this.client.user.setPresence(SweepyDock.loginedPresence);
     console.log('Sweepy bot is alive.');
     return res;
   }
 
-  async onMessage(message: Discord.Message): Promise<void> {
-    const res = this.sweepy.ask(message.content);
-    await message.channel.send(res);
-    return;
+  async onMessage(message: Message): Promise<Message> {
+    if (message.author.id === this.client.user.id || message.author.bot) {
+      return;
+    }
+    const options = {
+      ignoreRoles: true,
+      ignoreEveryone: true,
+    };
+    if (message.mentions.has(this.client.user, options)) {
+      return message.reply('人生を満喫中さ、わかるだろ？');
+    }
+    const res = Command.eval(message.content, this.client);
+    return message.channel.send(res);
+  }
+
+  async onJoinNewMember(member: GuildMember): Promise<void> {
+    // send the message to a designated channel on a server:
+    const channel: Discord.GuildChannel = member.guild.channels.cache.find(
+      ch => ch.name === 'welcome',
+    );
+    // do nothing if the channel wasn't found on this server
+    if (!channel || channel.type !== 'text') {
+      return;
+    }
+
+    const text = `${emojinate('welcome')}
+ようこそ ${member} 非公式日本語ディスコードサーバーへ！
+まずは #welcome チャンネルで自己紹介してみてね！
+${emojinate('caution')}
+**サーバーに入りたての時は、まだ色んなチャンネルを見ることは出来ません。**
+_'承認済み' のロールが与えられたら、インフォメーション以外のカテゴリも読めるようになります。_`;
+
+    (channel as Discord.TextChannel)
+      .send(text)
+      .then(() => {
+        console.log('メッセージ送信: ' + text + JSON.stringify({}));
+      })
+      .catch(console.error);
   }
 }

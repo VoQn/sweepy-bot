@@ -46,7 +46,10 @@ export const trimByRegexp = (regexp: RegExp, text: string): string[] => {
   return [word, remain];
 };
 
-export const getCustomEmoji = (client: Client, name: string): Emoji => {
+export const getCustomEmoji = (name: string, client?: Client): string | Emoji => {
+  if (client == null) {
+    return `:${name}:`;
+  }
   return client.emojis.cache.find(v => v.name === name);
 };
 
