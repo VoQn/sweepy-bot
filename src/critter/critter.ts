@@ -1,17 +1,9 @@
-import { ID, Multilingal, OniEntity } from '../types';
+import { ID, Multilingal, OniEntity, Decor } from '../types';
 import { override } from '../utils';
 
 export type LivableTemp = {
   lower: number;
   upper: number;
-};
-
-/** 装飾値影響 */
-export type Decor = {
-  /** 装飾値加算がなされる範囲 (半径) */
-  radius: number;
-  /** 範囲内で加算される装飾値 */
-  value: number;
 };
 
 /**
