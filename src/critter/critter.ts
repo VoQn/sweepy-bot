@@ -117,7 +117,7 @@ export class Critter implements CritterInfo {
       if (client == null) {
         return `:${name}:`;
       }
-      return getCustomEmoji(client, name);
+      return getCustomEmoji(name, client);
     };
     const fields: EmbedFieldData[] = [
       {
