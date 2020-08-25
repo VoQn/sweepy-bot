@@ -1,13 +1,12 @@
-import http from 'http';
+import express from 'express';
 import querystring from 'querystring';
-// tslint:disable-next-line: max-line-length
-import { Client, ChannelResolvable, TextChannel, Message, MessageOptions, GuildChannel, MessageEmbedOptions, Collection, GuildEmoji, Emoji, MessageEmbed } from 'discord.js';
+import Discord from 'discord.js';
 import { AnswerTalker } from './answer_talker';
 import { emojinate } from './emojinate';
 import cheatsheets from '../data/cheatsheet.json';
 import { Critter } from './critter';
 
-const client = new Client();
+const client = new Discord.Client();
 
 const commands = [
   {
@@ -34,44 +33,9 @@ const commands = [
 
 const cheatsheetCommand = new AnswerTalker(Object.values(cheatsheets), 'name', 'url');
 
-const getCustomEmoji = (cache: Collection<string, GuildEmoji>, name: string): Emoji => {
+const getCustomEmoji = (cache: Discord.Collection<string, Discord.GuildEmoji>, name: string): Discord.Emoji => {
   return cache.find(v => v.name === name);
 };
-
-http
-  .createServer((req, res) => {
-    if (req.method === 'POST') {
-      let data = '';
-      req.on('data', (chunk) => {
-        data += chunk;
-      });
-      req.on('end', () => {
-        if (!data) {
-          res.end('No post data');
-          return;
-        }
-        const dataObject = querystring.parse(data);
-        console.group('Server Requested');
-        console.log('post:' + dataObject.type);
-        if (dataObject.type === 'wake') {
-          console.log('Woke up in post');
-          if (client.readyTimestamp) {
-            console.log('yay, and I\'m alive since:' + client.readyTimestamp);
-          } else {
-            console.log('but I\'m dead');
-          }
-          res.end();
-        } else {
-          res.end();
-        }
-        console.groupEnd();
-      });
-    } else if (req.method === 'GET') {
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end('Discord Bot is active now\n');
-    }
-  })
-  .listen(3000);
 
 client.on('ready', () => {
   console.log(`Bot準備完了`);
@@ -84,7 +48,7 @@ client.on('ready', () => {
 // 新しく誰かがサーバーに入った時に挨拶する
 client.on('guildMemberAdd', member => {
   // send the message to a designated channel on a server:
-  const channel: GuildChannel = member.guild.channels.cache.find(
+  const channel: Discord.GuildChannel = member.guild.channels.cache.find(
     ch => ch.name === 'welcome',
   );
   // do nothing if the channel wasn't found on this server
@@ -99,7 +63,7 @@ ${emojinate('caution')}
 **サーバーに入りたての時は、まだ色んなチャンネルを見ることは出来ません。**
 _'承認済み' のロールが与えられたら、インフォメーション以外のカテゴリも読めるようになります。_`;
 
-  (channel as TextChannel)
+  (channel as Discord.TextChannel)
     .send(text)
     .then(() => {
       console.log('メッセージ送信: ' + text + JSON.stringify({}));
@@ -135,187 +99,230 @@ client.on('message', message => {
 
 type Response = {
   content: string;
-  options?: MessageOptions;
+  options?: Discord.MessageOptions;
 };
 
-const findEmoji = (name: string) => {
+const findEmoji = (name: string): Discord.Emoji => {
   return getCustomEmoji(client.emojis.cache, name);
+};
+
+const blankField = (inline: boolean = false) => {
+  return { name: '\u200B', value: '\u200B', inline };
+};
+
+const critterInfoEmbed = (name: string): Response => {
+  const sadSweepyEmoji = findEmoji('sadsweepy');
+  if (name.length < 2) {
+    return {
+      content: `${sadSweepyEmoji} _**2文字以上で聞いてね**_`,
+      options: {},
+    };
+  }
+  const critter = Critter.findByName(name);
+  if (critter == null) {
+    return {
+      content: `${sadSweepyEmoji} _まだその動物は知らないや……_`,
+      options: {},
+    };
+  }
+  const fields = [
+    {
+      name: ':globe_with_meridians: DataBase Link (_oni-db.com_)',
+      value: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${critter.id})を見てね`,
+    },
+    {
+      name: `:secret: 内部名`,
+      value: `\`${critter.id}\``,
+      inline: true,
+    },
+    {
+      name: `${findEmoji('oni_thermometer')} 生存可能体温`,
+      value: `**${critter.livableTemp.lower} 〜 ${critter.livableTemp.upper}** _(℃)_`,
+      inline: true,
+    },
+    {
+      name: `${findEmoji('decord')} 装飾値`,
+      value: `**${critter.decor.value}** 半径 **${critter.decor.radius}** _タイル_`,
+      inline: true,
+    },
+    {
+      name: `${findEmoji('calories')} カロリー消費`,
+      value: (() => {
+        let calorie = critter.caloriesNeeded;
+        if (calorie < 1000) {
+          return `**${calorie}** _(cal/s)_`;
+        }
+        return `**${calorie / 1000}** _(kcal/s)_`;
+      }),
+      inline: true,
+    },
+    {
+      name: ':heart: HP',
+      value: `**${critter.hitPoint}**`,
+      inline: true,
+    },
+  ];
+  const critterEmoji = findEmoji(critter.emojiName);
+  if (critterEmoji) {
+    fields.splice(2, 0, {
+      name: `${critterEmoji} Emoji`,
+      value: `\`${critter.emojiCode}\``,
+      inline: true,
+    });
+  }
+  if (critter.spaceRequired != null) {
+    fields.push({
+      name: ':u6e80: 過密判定',
+      value: `**${critter.spaceRequired}** _タイル_`,
+      inline: true,
+    });
+  }
+  if (critter.layAnEgg != null) {
+    fields.push({
+      name: ':egg: 産卵ペース',
+      value: `**${critter.layAnEgg / 600}** _サイクル_`,
+      inline: true,
+    });
+  }
+  if (critter.hatches != null) {
+    fields.push({
+      name: `${findEmoji('joydupe')} 孵化するまで`,
+      value: `**${critter.hatches / 600}** _サイクル_`,
+      inline: true,
+    });
+  }
+  if (critter.lifeSpan != null) {
+    fields.push({
+      name: `${findEmoji('grave')} 寿命`,
+      value: `**${critter.lifeSpan / 600}** _サイクル_`,
+      inline: true,
+    });
+  }
+  if (critter.lightEmitter != null) {
+    fields.push({
+      name: ':high_brightness: 光源効果',
+      value: `**${critter.lightEmitter.lux}** 半径 **${critter.lightEmitter.range}** _タイル_`,
+      inline: true,
+    });
+  }
+  if (fields.length > 3 && fields.length % 3 === 2) {
+    fields.push(blankField(true));
+  }
+  const flavorText = critter.flavorText.ja || critter.flavorText.en;
+  const critterName = critter.name.ja || critter.name.en;
+  const embed: Discord.MessageEmbedOptions = {
+    author: {
+      name: critterName,
+      iconURL: critter.imageURL,
+    },
+    title: `_${critter.name.en}_`,
+    url: `https://oni-db.com/details/${critter.id}`,
+    color: 0x0099FF,
+    thumbnail: { url: critter.imageURL },
+    description: `_${flavorText}_`,
+    fields,
+    footer: {
+      text: 'Sweepy Bot',
+      iconURL: client.user.avatarURL(),
+    },
+    timestamp: new Date(),
+  };
+  return {
+    content: `:bulb: _**${critter.name.ja}** は知ってるよ_`,
+    options: { embed },
+  };
+};
+
+const helpInfoEmbed = (): Response => {
+  const sweepyEmoji = findEmoji('sweepy');
+  const sweepyIcon = client.user.avatarURL();
+  const fields = commands.map(c => {
+    return {
+      name: `:arrow_forward: ${c.command}`,
+      value: c.help,
+    };
+  });
+
+  const embed: Discord.MessageEmbedOptions = {
+    author: {
+      name: 'Sweepy Not',
+      iconURL: sweepyIcon,
+    },
+    color: 0xfc6600,
+    title: emojinate('about'),
+    thumbnail: { url: sweepyIcon },
+    description: '_テキストチャットのログを読んで、行頭の_ `!` _で始まる各コマンドに応答します。_',
+    fields,
+    footer: {
+      text: 'Sweepy Bot',
+      iconURL: sweepyIcon,
+    },
+    timestamp: new Date(),
+  };
+
+  return {
+    content: `:information_source:  ${sweepyEmoji} _が答えるよ_`,
+    options: { embed },
+  };
 };
 
 function getMessage(context: string): Response {
   // ヘルプタグ
   if (context.match(/^\!help/)) {
-    const content = `:information_source:  ${findEmoji('sweepy')} _が答えるよ_`;
-    const sweepyIcon = client.user.avatarURL();
-    const fields = commands.map(c => {
-      return {
-        name: `:arrow_forward: ${c.command}`,
-        value: c.help,
-      };
-    });
-    let embed = new MessageEmbed()
-      .setColor(0xfc6600)
-      .setAuthor('Sweepy Bot', sweepyIcon)
-      .setTitle(emojinate('about'))
-      .setThumbnail(sweepyIcon)
-      .setDescription('_テキストチャットのログを読んで、行頭の_ `!` _で始まる各コマンドに応答します。_')
-      .addFields(fields)
-      .setFooter('Sweepy Bot', sweepyIcon)
-      .setTimestamp();
-    return { content, options: { embed } };
+    return helpInfoEmbed();
   }
 
   // チートシート一覧
   if (context.match(/^\!cheatsheet\s?$/)) {
-    return { content: cheatsheetCommand.getKeywords(), options: {} };
+    return {
+      content: cheatsheetCommand.getKeywords(),
+      options: {},
+    };
   }
 
   // チートシートの返答
-  const m = context.match(/^\!cheatsheet\s+(?<arg>\S+)/);
-  if (m) {
-    return { content: cheatsheetCommand.getAnswer(m.groups.arg), options: {} };
+  const cheatsheetName = context.match(/^\!cheatsheet\s+(?<arg>\S+)/);
+  if (cheatsheetName) {
+    return {
+      content: cheatsheetCommand.getAnswer(cheatsheetName.groups.arg),
+      options: {},
+    };
   }
 
-  // emoji-echo
-  const test = context.match(/^\!emojinate\s+(?<arg>.+)$/ms);
-  if (test) {
-    return { content: emojinate(test.groups.arg), options: {} };
+  // emojinate
+  const emojinateText = context.match(/^\!emojinate\s+(?<arg>.+)$/ms);
+  if (emojinateText) {
+    return {
+      content: emojinate(emojinateText.groups.arg),
+      options: {},
+    };
   }
 
+  // critter
   const critterName = context.match(/^\!critter\s+(?<arg>.+)$/);
   if (critterName) {
-    const matched = critterName.groups.arg;
-    if (matched.length < 2) {
-      return {
-        content: `${findEmoji('sadsweepy')} _**2文字以上で聞いてね**_`,
-        options: {},
-      };
-    }
-    const critter = Critter.findByName(matched);
-    if (critter == null) {
-      return {
-        content: `${findEmoji('sadsweepy')} _まだその動物は知らないや……_`,
-        options: {},
-      };
-    }
-    const fields = [
-      {
-        name: ':globe_with_meridians: DataBase Link (_oni-db.com_)',
-        value: `:point_up: 詳細は[oni-db.com](https://oni-db.com/details/${critter.id})を見てね`,
-      },
-      {
-        name: `:secret: 内部名`,
-        value: `\`${critter.id}\``,
-        inline: true,
-      },
-      {
-        name: `${findEmoji('oni_thermometer')} 生存可能体温`,
-        value: `**${critter.livableTemp.lower} 〜 ${critter.livableTemp.upper}** _(℃)_`,
-        inline: true,
-      },
-      {
-        name: `${findEmoji('decord')} 装飾値`,
-        value: `**${critter.decor.value}** 半径 **${critter.decor.radius}** _タイル_`,
-        inline: true,
-      },
-      {
-        name: `${findEmoji('calories')} カロリー消費`,
-        value: `**${critter.caloriesNeeded}** _(cal/s)_`,
-        inline: true,
-      },
-      {
-        name: ':heart: HP',
-        value: `**${critter.hitPoint}**`,
-        inline: true,
-      },
-    ];
-    const critterEmoji = findEmoji(critter.emojiName);
-    if (critterEmoji) {
-      fields.splice(2, 0, {
-        name: `${critterEmoji} Emoji`,
-        value: `\`${critter.emojiCode}\``,
-        inline: true,
-      });
-    }
-    if (critter.spaceRequired != null) {
-      fields.push({
-        name: ':u6e80: 過密判定',
-        value: `**${critter.spaceRequired}** _タイル_`,
-        inline: true,
-      });
-    }
-    if (critter.layAnEgg != null) {
-      fields.push({
-        name: ':egg: 産卵ペース',
-        value: `**${critter.layAnEgg / 600}** _サイクル_`,
-        inline: true,
-      });
-    }
-    if (critter.hatches != null) {
-      fields.push({
-        name: `${findEmoji('joydupe')} 孵化するまで`,
-        value: `**${critter.hatches / 600}** _サイクル_`,
-        inline: true,
-      });
-    }
-    if (critter.lifeSpan != null) {
-      fields.push({
-        name: `${findEmoji('grave')} 寿命`,
-        value: `**${critter.lifeSpan / 600}** _サイクル_`,
-        inline: true,
-      });
-    }
-    if (critter.lightEmitter != null) {
-      fields.push({
-        name: ':high_brightness: 光源効果',
-        value: `**${critter.lightEmitter.lux}** 半径 **${critter.lightEmitter.range}** _タイル_`,
-        inline: true,
-      });
-    }
-    const embedData: MessageEmbedOptions = {
-      author: {
-        name: critter.name.ja,
-        iconURL: critter.imageURL,
-      },
-      title: `_${critter.name.en}_`,
-      url: `https://oni-db.com/details/${critter.id}`,
-      color: 0x0099FF,
-      thumbnail: { url: critter.imageURL },
-      description: `_${critter.flavorText.ja || critter.flavorText.en}_`,
-      fields,
-      footer: {
-        text: 'Sweepy Bot',
-        iconURL: client.user.avatarURL(),
-      },
-      timestamp: new Date(),
-    };
-    return { content: `:bulb: _**${critter.name.ja}** は知ってるよ_`, options: { embed: embedData } };
+    return critterInfoEmbed(critterName.groups.arg);
   }
 }
 
-function sendReply(message: Message, content: string): void {
+function sendReply(message: Discord.Message, content: string): void {
   message
     .reply(content)
-    .then((_result: Message) => {
+    .then((_result: Discord.Message) => {
       console.log('リプライ送信: ' + content);
     })
     .catch(console.error);
 }
 
-function sendMsg(channelId: ChannelResolvable, content: string, options: MessageOptions = {}): void {
+function sendMsg(channelId: Discord.ChannelResolvable, content: string, options: Discord.MessageOptions = {}): void {
   (client.channels
-    .resolve(channelId) as TextChannel)
+    .resolve(channelId) as Discord.TextChannel)
     .send(content, options)
-    .then((_result: Message) => {
+    .then((_result: Discord.Message) => {
       console.log('メッセージ送信: ' + content + ' ' + JSON.stringify(options));
     })
     .catch(console.error);
 }
-
-// ログインしてこなくなったら確認する
-// client.on("debug", d => {
-//   console.debug(d);
-// });
 
 if (process.env) {
   const TOKEN = process.env.DISCORD_BOT_TOKEN;
@@ -330,3 +337,43 @@ if (process.env) {
     console.log(e);
   });
 }
+
+const app = express();
+const PORT = 3000;
+
+app.get('/', (_req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Discord Bot is active now\n');
+});
+
+app.post('/', (req, res) => {
+  let data = '';
+  req.on('data', (chunk) => {
+    data += chunk;
+  });
+  req.on('end', () => {
+    if (!data) {
+      res.end('No post data');
+      return;
+    }
+    const dataObject = querystring.parse(data);
+    console.group('Server Requested');
+    console.log('post:' + dataObject.type);
+    if (dataObject.type === 'wake') {
+      console.log('Woke up in post');
+      if (client.readyTimestamp) {
+        console.log('yay, and I\'m alive since:' + client.readyTimestamp);
+      } else {
+        console.log('but I\'m dead');
+      }
+      res.end();
+    } else {
+      res.end();
+    }
+    console.groupEnd();
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}...`);
+});
