@@ -86,7 +86,9 @@ client.on('message', async message => {
   try {
     await dock.onMessage(message);
   } catch (e) {
-    console.error(e);
+    // 暫定処置!
+    // onMessageで出た Error(not-implemented-error)は握りつぶして、getMessageに任せる
+    // console.error(e);
 
     const msg = getMessage(client, message.content);
     // 空メッセージを送らないようにする
