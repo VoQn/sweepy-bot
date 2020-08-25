@@ -1,6 +1,6 @@
-import { AnswerTalker } from '../answer_talker';
+import { AnswerTalker } from '../answer-talker';
 import { Response } from '../types';
-import { CommandInterface } from './command_interface';
+import { CommandInterface } from './command-interface';
 
 export class CheatsheetCommand implements CommandInterface {
     name: string = 'cheatsheet';

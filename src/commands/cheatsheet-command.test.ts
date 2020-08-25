@@ -1,6 +1,6 @@
 import cheatsheets from '../../data/cheatsheet.json';
-import { CheatsheetCommand } from './cheatsheet_command';
-import { AnswerTalker } from '../answer_talker';
+import { CheatsheetCommand } from './cheatsheet-command';
+import { AnswerTalker } from '../answer-talker';
 
 describe('CheatsheetCommand', () => {
     const data = new AnswerTalker(Object.values(cheatsheets), 'name', 'url');

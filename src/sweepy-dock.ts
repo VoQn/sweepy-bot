@@ -1,8 +1,8 @@
 import Discord, { PresenceData, Message } from 'discord.js';
 import { SweepyBot } from './sweepy-bot';
-import { AnswerTalker } from './answer_talker';
+import { AnswerTalker } from './answer-talker';
 import cheatsheets from '../data/cheatsheet.json';
-import {CheatsheetCommand} from './commands/cheatsheet_command';
+import {CheatsheetCommand} from './commands/cheatsheet-command';
 
 export class SweepyDock {
   cheatsheetCommand: AnswerTalker = new AnswerTalker(Object.values(cheatsheets), 'name', 'url');

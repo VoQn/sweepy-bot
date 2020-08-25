@@ -1,5 +1,5 @@
 import { PresenceData } from 'discord.js';
-import { CommandInterface } from './commands/command_interface';
+import { CommandInterface } from './commands/command-interface';
 import { Response } from './types';
 
 export class SweepyBot {

@@ -1,7 +1,7 @@
 import express from 'express';
 import querystring from 'querystring';
 import Discord, { Client } from 'discord.js';
-import { AnswerTalker } from './answer_talker';
+import { AnswerTalker } from './answer-talker';
 import { emojinate } from './emojinate';
 import { Critter } from './critter';
 import { Response } from './types';
