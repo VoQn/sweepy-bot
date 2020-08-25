@@ -11,37 +11,44 @@ export const HelpCommand = Command.register({
       '```!help```',
   },
   // tslint:disable-next-line: no-shadowed-variable
-  exec: (_args, client) => {
+  exec: (args, client) => {
     const emoji = (emojiName: string) => getCustomEmoji(emojiName, client);
+    const isNoneArgs = args == null || args.length < 1;
     const sweepyEmoji = emoji('sweepy');
     const sweepyIcon = client.user.avatarURL();
-    const fields = Command.sortedAllCommands.map(c => {
-      return {
-        name: `:arrow_forward: ${c.name}`,
-        value: c.help.summery,
+    let title = emojinate('about');
+    const author = {
+      name: 'Sweepy Not',
+      iconURL: sweepyIcon,
+    };
+    const footer = {
+      text: 'Sweepy Bot',
+      iconURL: sweepyIcon,
+    };
+    const color = 0xfc6600;
+    if (isNoneArgs) {
+      const fields = Command.sortedAllCommands.map(c => {
+        return {
+          name: `:arrow_forward: ${c.name}`,
+          value: c.help.summery,
+        };
+      });
+
+      const embed: MessageEmbedOptions = {
+        author,
+        color,
+        title,
+        thumbnail: { url: sweepyIcon },
+        description: '_テキストチャットのログを読んで、行頭の_ `!` _で始まる各コマンドに応答します。_',
+        fields,
+        footer,
+        timestamp: new Date(),
       };
-    });
 
-    const embed: MessageEmbedOptions = {
-      author: {
-        name: 'Sweepy Not',
-        iconURL: sweepyIcon,
-      },
-      color: 0xfc6600,
-      title: emojinate('about'),
-      thumbnail: { url: sweepyIcon },
-      description: '_テキストチャットのログを読んで、行頭の_ `!` _で始まる各コマンドに応答します。_',
-      fields,
-      footer: {
-        text: 'Sweepy Bot',
-        iconURL: sweepyIcon,
-      },
-      timestamp: new Date(),
-    };
-
-    return {
-      content: `:information_source:  ${sweepyEmoji} _が答えるよ_`,
-      options: { embed },
-    };
+      return {
+        content: `:information_source:  ${sweepyEmoji} _が答えるよ_`,
+        options: { embed },
+      };
+    }
   },
 });
