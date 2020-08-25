@@ -6,7 +6,7 @@ import { parseCommand } from './parser';
 export class SweepyDock {
   public static loginedPresence: PresenceData = {
     activity: {
-      name: '皆さんからの !help ',
+      name: 'みんなの !help ',
       type: 'WATCHING',
     },
     status: 'online',
