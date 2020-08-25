@@ -195,7 +195,7 @@ export class Critter implements CritterInfo {
     });
     const calories = this.caloriesNeeded < 1000 ?
       `**${this.caloriesNeeded}** _cal/s_` :
-      `**${this.caloriesNeeded / 1000}** _kcal/s_`
+      `**${this.caloriesNeeded / 1000}** _kcal/s_`;
     fields.push({
       name: `${emoji('calories')} カロリー消費`,
       value: calories,
