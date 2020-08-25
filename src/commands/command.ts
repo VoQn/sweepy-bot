@@ -14,6 +14,7 @@ export type CommandCategory = typeof CommandCategory[keyof typeof CommandCategor
 export interface Command {
   category: CommandCategory;
   name: string;
+  // todo これらも、単純に string を返すのではなく、カスタム絵文字使えるように (client: Client) => Response とかにするほうが良い。
   help: {
     summery: string;
     description?: string;
