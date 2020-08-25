@@ -137,12 +137,12 @@ const critterInfoEmbed = (name: string): Response => {
     },
     {
       name: `${findEmoji('oni_thermometer')} 生存可能体温`,
-      value: `**${critter.livableTemp.lower} 〜 ${critter.livableTemp.upper}** _(℃)_`,
+      value: `**${critter.livableTemp.lower} 〜 ${critter.livableTemp.upper}** _℃_`,
       inline: true,
     },
     {
       name: `${findEmoji('decord')} 装飾値`,
-      value: `**${critter.decor.value}** 半径 **${critter.decor.radius}** _タイル_`,
+      value: `**${critter.decor.value}** (**${critter.decor.radius}** _tile_)`,
       inline: true,
     },
     {
@@ -150,9 +150,9 @@ const critterInfoEmbed = (name: string): Response => {
       value: (() => {
         let calorie = critter.caloriesNeeded;
         if (calorie < 1000) {
-          return `**${calorie}** _(cal/s)_`;
+          return `**${calorie}** _cal/s_`;
         }
-        return `**${calorie / 1000}** _(kcal/s)_`;
+        return `**${calorie / 1000}** _kcal/s_`;
       })(),
       inline: true,
     },
@@ -173,39 +173,39 @@ const critterInfoEmbed = (name: string): Response => {
   if (critter.spaceRequired != null) {
     fields.push({
       name: ':u6e80: 過密判定',
-      value: `**${critter.spaceRequired}** _タイル_`,
+      value: `**${critter.spaceRequired}** _/tile_`,
       inline: true,
     });
   }
   if (critter.layAnEgg != null) {
     fields.push({
       name: ':egg: 産卵ペース',
-      value: `**${critter.layAnEgg / 600}** _サイクル_`,
+      value: `**${critter.layAnEgg / 600}** _cycle_`,
       inline: true,
     });
   }
   if (critter.hatches != null) {
     fields.push({
       name: `${findEmoji('joydupe')} 孵化するまで`,
-      value: `**${critter.hatches / 600}** _サイクル_`,
+      value: `**${critter.hatches / 600}** _cycle_`,
       inline: true,
     });
   }
   if (critter.lifeSpan != null) {
     fields.push({
       name: `${findEmoji('grave')} 寿命`,
-      value: `**${critter.lifeSpan / 600}** _サイクル_`,
+      value: `**${critter.lifeSpan / 600}** _cycle_`,
       inline: true,
     });
   }
   if (critter.lightEmitter != null) {
     fields.push({
       name: ':high_brightness: 光源効果',
-      value: `**${critter.lightEmitter.lux}** 半径 **${critter.lightEmitter.range}** _タイル_`,
+      value: `**${critter.lightEmitter.lux}** _lux_ (**${critter.lightEmitter.range}** _tile_)`,
       inline: true,
     });
   }
-  if (fields.length > 3 && fields.length % 3 === 1) {
+  if (fields.length > 3 && fields.length % 3 === 0) {
     fields.push(blankField(true));
   }
   const flavorText = critter.flavorText.ja || critter.flavorText.en;
