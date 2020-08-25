@@ -34,6 +34,13 @@ export class SweepyDock {
       return;
     }
 
+    // チートシートの返答
+    const cheatsheetName = message.content.match(/^\!cheatsheet\s+(?<arg>\S+)/);
+    if (cheatsheetName) {
+      await message.channel.send(this.cheatsheetCommand.getAnswer(cheatsheetName.groups.arg));
+      return;
+    }
+
     throw new Error('no-command-implemented');
   }
 }

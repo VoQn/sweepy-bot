@@ -3,7 +3,6 @@ import querystring from 'querystring';
 import Discord, { Client } from 'discord.js';
 import { AnswerTalker } from './answer_talker';
 import { emojinate } from './emojinate';
-import cheatsheets from '../data/cheatsheet.json';
 import { Critter } from './critter';
 import { Response } from './types';
 import { getCustomEmoji } from './utils';
@@ -33,8 +32,6 @@ const commands = [
       '```!emojinate 今からliveやります!```',
   },
 ];
-
-const cheatsheetCommand = new AnswerTalker(Object.values(cheatsheets), 'name', 'url');
 
 client.on('ready', () => {
   console.log(`Bot準備完了`);
@@ -88,7 +85,7 @@ client.on('message', async message => {
 
   try {
     await dock.onMessage(message);
-  } catch(e) {
+  } catch (e) {
     const msg = getMessage(client, message.content);
     // 空メッセージを送らないようにする
     if (msg == null) {
@@ -161,15 +158,6 @@ const getMessage = (client: Client, context: string): Response => {
   // ヘルプタグ
   if (context.match(/^\!help/)) {
     return helpInfoEmbed(client);
-  }
-
-  // チートシートの返答
-  const cheatsheetName = context.match(/^\!cheatsheet\s+(?<arg>\S+)/);
-  if (cheatsheetName) {
-    return {
-      content: cheatsheetCommand.getAnswer(cheatsheetName.groups.arg),
-      options: {},
-    };
   }
 
   // emojinate
