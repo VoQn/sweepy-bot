@@ -1,6 +1,7 @@
 import Discord, { Client } from 'discord.js';
 import { Response } from '../types';
 import { parseCommand } from '../parser';
+import { identify } from '../utils';
 
 export const CommandCategory = {
   General: 0,
@@ -38,12 +39,21 @@ export const compare = (a: Command, b: Command) => {
 export class Command implements Command {
   private static table: Map<string, Command> = new Map<string, Command>();
 
+  public static has(name: string): boolean {
+    return this.table.has(identify(name));
+  }
+
+  public static find(name: string): Command {
+    return this.table.get(identify(name));
+  }
+
   public static register({ name, ...props }: Command): Command {
-    if (this.table.has(name)) {
-      return this.table.get(name);
+    const id = identify(name);
+    if (this.table.has(id)) {
+      return this.table.get(id);
     }
     const command = new Command({ name, ...props });
-    this.table.set(name.toLowerCase(), command);
+    this.table.set(id, command);
     return command;
   }
 
@@ -60,12 +70,12 @@ export class Command implements Command {
     if (test == null) {
       return null;
     }
-    const cmdName = test.command.toLowerCase();
-    if (!this.table.has(cmdName)) {
+    const { command, args } = test;
+    if (!this.has(command)) {
       return null;
     }
-    const command = this.table.get(cmdName);
-    return command.exec(test.args, client);
+    const cmd = this.find(command);
+    return cmd.exec(args, client);
   }
 
   private constructor({ category, name, help, exec }: Command) {
