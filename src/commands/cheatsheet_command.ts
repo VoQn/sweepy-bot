@@ -4,7 +4,7 @@ import { CommandInterface } from './command_interface';
 
 export class CheatsheetCommand implements CommandInterface {
     name: string = 'cheatsheet';
-    pattern: RegExp = /^\!cheatsheet\s+/;
+    pattern: RegExp = /^\!cheatsheet\s*(?<arg>\S+)?$/;
     help: string = '_キーワードにマッチしたチートシート出すよ。何も指定してなかったらとりあえず一覧リストを出すよ_\n' +
         '```!cheatsheet 液体の比重```';
 

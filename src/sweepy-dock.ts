@@ -33,6 +33,8 @@ export class SweepyDock {
   }
 
   async onMessage(message: Discord.Message): Promise<void> {
-    this.sweepy.ask(message.content);
+    const res = this.sweepy.ask(message.content);
+    await message.channel.send(res);
+    return;
   }
 }

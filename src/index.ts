@@ -86,6 +86,8 @@ client.on('message', async message => {
   try {
     await dock.onMessage(message);
   } catch (e) {
+    console.error(e);
+
     const msg = getMessage(client, message.content);
     // 空メッセージを送らないようにする
     if (msg == null) {
