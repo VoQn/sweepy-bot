@@ -2,6 +2,14 @@ import { Critter } from './critter';
 import * as Critters from './critters';
 
 describe('critter', () => {
+  describe('caloriesNeeded', () => {
+    it('Morb does not require any calories', () => {
+      expect(Critters.morb.caloriesNeeded).toEqual(0);
+    });
+    it('Drecko requies 3.33 kcal/s', () => {
+      expect(Critters.drecko.caloriesNeeded).toEqual(3330);
+    });
+  });
   describe('hitPoint', () => {
     it('Stone Hatch\'s HP was overried', () => {
       expect(Critters.stoneHatch.hitPoint).toEqual(200);

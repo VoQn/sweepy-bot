@@ -149,6 +149,7 @@ export class Critter implements CritterInfo {
     this.flavorText = param.flavorText;
     this.livableTemp = param.livableTemp;
     this.decor = param.decor;
+    this.caloriesNeeded = param.caloriesNeeded;
     this.hitPoint = param.hitPoint;
     this.spaceRequired = param.spaceRequired;
     this.lifeSpan = param.lifeSpan;
