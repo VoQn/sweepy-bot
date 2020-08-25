@@ -3,13 +3,12 @@ import { CheatsheetCommand } from './cheatsheet-command';
 import { AnswerTalker } from '../answer-talker';
 
 describe('CheatsheetCommand', () => {
-    const data = new AnswerTalker(Object.values(cheatsheets), 'name', 'url');
-    const command = new CheatsheetCommand(data);
+    const command = CheatsheetCommand;
 
     describe('message without args', () => {
         it('returns contents including all names', () => {
-            for(let { name } of Object.values(cheatsheets)) {
-                expect(command.message('!cheatsheet').content).toMatch(name);
+            for (let { name } of Object.values(cheatsheets)) {
+                expect(command.exec(null, '').content).toMatch(name);
             }
         });
     });
@@ -17,7 +16,7 @@ describe('CheatsheetCommand', () => {
     describe('message with args', () => {
         it('returns contents including all names', () => {
             for (let { name, url } of Object.values(cheatsheets)) {
-                expect(command.message(`!cheatsheet ${name}`).content).toMatch(url);
+                expect(command.exec(null, name).content).toMatch(url);
             }
         });
     });

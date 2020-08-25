@@ -1,30 +1,25 @@
 import { AnswerTalker } from '../answer-talker';
 import { Response } from '../types';
-import { CommandInterface } from './command-interface';
+import { Command, CommandCategory } from './command';
+import cheatsheets from '../../data/cheatsheet.json';
+import { Client } from 'discord.js';
 
-export class CheatsheetCommand implements CommandInterface {
-    name: string = 'cheatsheet';
-    pattern: RegExp = /^\!cheatsheet\s*(?<arg>\S+)?$/;
-    help: string = '_キーワードにマッチしたチートシート出すよ。何も指定してなかったらとりあえず一覧リストを出すよ_\n' +
-        '```!cheatsheet 液体の比重```';
+const answerTalker = new AnswerTalker(Object.values(cheatsheets), 'name', 'url');
 
-    constructor(cheatsheet: AnswerTalker) {
-        this.cheatsheet = cheatsheet;
+export const CheatsheetCommand: Command = Command.register({
+  category: CommandCategory.ONI,
+  name: 'cheatsheet',
+  help: {
+    summery: '_キーワードにマッチしたチートシート出すよ。何も指定してなかったらとりあえず一覧リストを出すよ_\n' +
+    '```!cheatsheet 液体の比重```',
+  },
+  exec: (client: Client, args: string): Response => {
+    if (!args) {
+      // チートシート一覧
+      return { content: answerTalker.getKeywords() };
+    } else {
+      // チートシートの返答
+      return { content: answerTalker.getAnswer(args) };
     }
-
-    private cheatsheet: AnswerTalker;
-
-    message(args: string): Response {
-        let m = args.match(/^\!cheatsheet\s*(?<arg>\S+)?/);
-        if (!m) {
-            throw new Error(`cannot handle this message: ${args}`);
-        }
-        if (!m.groups.arg) {
-            // チートシート一覧
-            return { content: this.cheatsheet.getKeywords() };
-        } else {
-            // チートシートの返答
-            return { content: this.cheatsheet.getAnswer(m.groups.arg) };
-        }
-    }
-}
+  },
+});

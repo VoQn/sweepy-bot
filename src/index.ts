@@ -1,37 +1,155 @@
 import express from 'express';
 import querystring from 'querystring';
 import Discord, { Client } from 'discord.js';
-import { AnswerTalker } from './answer-talker';
 import { emojinate } from './emojinate';
 import { Critter } from './critter';
 import { Response } from './types';
 import { getCustomEmoji } from './utils';
 import { SweepyDock } from './sweepy-dock';
+import { parseCommand } from './parser';
 
 const client = new Discord.Client();
 
-const commands = [
-  {
-    command: 'Help',
-    help: '_このコマンドだよ。応えられるコマンド一覧を出すよ_\n' +
+type CommandCategory = 'general' | 'oni' | 'misc';
+const categoryOrder: CommandCategory[] = ['general', 'oni', 'misc'];
+
+interface Command {
+  category: CommandCategory;
+  name: string;
+  help: {
+    summery: string;
+    description?: string;
+  };
+  exec: (client: Discord.Client, args: string) => Response;
+}
+
+// tslint:disable-next-line: no-shadowed-variable
+const helpInfoEmbed = (commands: Map<string, Command>, client: Client): Response => {
+  const emoji = (emojiName: string) => getCustomEmoji(client, emojiName);
+  const sweepyEmoji = emoji('sweepy');
+  const sweepyIcon = client.user.avatarURL();
+  const fields = sortedCommandList(commands).map(c => {
+    return {
+      name: `:arrow_forward: ${c.name}`,
+      value: c.help.summery,
+    };
+  });
+
+  const embed: Discord.MessageEmbedOptions = {
+    author: {
+      name: 'Sweepy Not',
+      iconURL: sweepyIcon,
+    },
+    color: 0xfc6600,
+    title: emojinate('about'),
+    thumbnail: { url: sweepyIcon },
+    description: '_テキストチャットのログを読んで、行頭の_ `!` _で始まる各コマンドに応答します。_',
+    fields,
+    footer: {
+      text: 'Sweepy Bot',
+      iconURL: sweepyIcon,
+    },
+    timestamp: new Date(),
+  };
+
+  return {
+    content: `:information_source:  ${sweepyEmoji} _が答えるよ_`,
+    options: { embed },
+  };
+};
+
+const commands = new Map<string, Command>();
+commands.set('help', {
+  category: 'general',
+  name: 'Help',
+  help: {
+    summery: '_このコマンドだよ。応えられるコマンド一覧を出すよ_\n' +
       '```!help```',
   },
-  {
-    command: 'CheatSheet',
-    help: '_キーワードにマッチしたチートシート出すよ。何も指定してなかったらとりあえず一覧リストを出すよ_\n' +
+  // tslint:disable-next-line: no-shadowed-variable
+  exec: (client, _args) => helpInfoEmbed(commands, client),
+});
+
+commands.set('cheatsheet', {
+  category: 'oni',
+  name: 'CheatSheet',
+  help: {
+    summery: '_キーワードにマッチしたチートシート出すよ。何も指定してなかったらとりあえず一覧リストを出すよ_\n' +
       '```!cheatsheet 液体の比重```',
   },
-  {
-    command: 'Critter',
-    help: '_知ってる動物の詳細を教えるよ。部分的でも連想は出来るよ_\n' +
+  exec: (client, args) => {
+
+  }
+});
+
+// tslint:disable-next-line: no-shadowed-variable
+const critterInfoEmbed = (client: Client, name: string): Response => {
+  const emoji = (emojiName: string) => getCustomEmoji(client, emojiName);
+  const sadSweepyEmoji = emoji('sadsweepy');
+  if (name.length < 2) {
+    return {
+      content: `${sadSweepyEmoji} _**2文字以上で聞いてね**_`,
+      options: {},
+    };
+  }
+  const critter = Critter.findByName(name);
+  if (critter == null) {
+    return {
+      content: `${sadSweepyEmoji} _まだその動物は知らないや……_`,
+      options: {},
+    };
+  }
+  return critter.detailEmbed(client);
+};
+
+commands.set('critter', {
+  category: 'oni',
+  name: 'Critter',
+  help: {
+    summery: '_知ってる動物の詳細を教えるよ。部分的でも連想は出来るよ_\n' +
       '```!critter プリンス```',
   },
-  {
-    command: 'Emojinate',
-    help: `_出来るだけ_ ${emojinate('emoji')} _に変換するよ_\n` +
+  // tslint:disable-next-line: no-shadowed-variable
+  exec: critterInfoEmbed,
+});
+
+commands.set('emojinate', {
+  category: 'misc',
+  name: 'Emojinate',
+  help: {
+    summery: `_出来るだけ_ ${emojinate('emoji')} _に変換するよ_\n` +
       '```!emojinate 今からliveやります!```',
   },
-];
+  exec: (_client, args) => ({
+    content: emojinate(args),
+    options: {},
+  }),
+});
+
+const cmpCommand = (a: Command, b: Command) => {
+  const ai = categoryOrder.indexOf(a.category);
+  const bi = categoryOrder.indexOf(b.category);
+  if (ai !== bi) {
+    return ai - bi;
+  }
+  const an = a.name.toUpperCase();
+  const bn = b.name.toUpperCase();
+  if (an < bn) {
+    return -1;
+  }
+  if (an > bn) {
+    return 1;
+  }
+  return 0;
+};
+
+const sortedCommandList = (cmds: Map<string, Command>) => {
+  const ret: Command[] = [];
+  for (const cmd of commands.values()) {
+    ret.push(cmd);
+  }
+  return ret.sort(cmpCommand);
+};
 
 client.on('ready', () => {
   console.log(`Bot準備完了`);
@@ -103,81 +221,13 @@ client.on('message', async message => {
 });
 
 // tslint:disable-next-line: no-shadowed-variable
-const critterInfoEmbed = (client: Client, name: string): Response => {
-  const emoji = (emojiName: string) => getCustomEmoji(client, emojiName);
-  const sadSweepyEmoji = emoji('sadsweepy');
-  if (name.length < 2) {
-    return {
-      content: `${sadSweepyEmoji} _**2文字以上で聞いてね**_`,
-      options: {},
-    };
-  }
-  const critter = Critter.findByName(name);
-  if (critter == null) {
-    return {
-      content: `${sadSweepyEmoji} _まだその動物は知らないや……_`,
-      options: {},
-    };
-  }
-  return critter.detailEmbed(client);
-};
-
-// tslint:disable-next-line: no-shadowed-variable
-const helpInfoEmbed = (client: Client): Response => {
-  const emoji = (emojiName: string) => getCustomEmoji(client, emojiName);
-  const sweepyEmoji = emoji('sweepy');
-  const sweepyIcon = client.user.avatarURL();
-  const fields = commands.map(c => {
-    return {
-      name: `:arrow_forward: ${c.command}`,
-      value: c.help,
-    };
-  });
-
-  const embed: Discord.MessageEmbedOptions = {
-    author: {
-      name: 'Sweepy Not',
-      iconURL: sweepyIcon,
-    },
-    color: 0xfc6600,
-    title: emojinate('about'),
-    thumbnail: { url: sweepyIcon },
-    description: '_テキストチャットのログを読んで、行頭の_ `!` _で始まる各コマンドに応答します。_',
-    fields,
-    footer: {
-      text: 'Sweepy Bot',
-      iconURL: sweepyIcon,
-    },
-    timestamp: new Date(),
-  };
-
-  return {
-    content: `:information_source:  ${sweepyEmoji} _が答えるよ_`,
-    options: { embed },
-  };
-};
-
-// tslint:disable-next-line: no-shadowed-variable
 const getMessage = (client: Client, context: string): Response => {
-  // ヘルプタグ
-  if (context.match(/^\!help/)) {
-    return helpInfoEmbed(client);
+  const tst = parseCommand(context);
+  if (tst == null || !commands.has(tst.command)) {
+    return null;
   }
-
-  // emojinate
-  const emojinateText = context.match(/^\!emojinate\s+(?<arg>.+)$/ms);
-  if (emojinateText) {
-    return {
-      content: emojinate(emojinateText.groups.arg),
-      options: {},
-    };
-  }
-
-  // critter
-  const critterName = context.match(/^\!critter\s+(?<arg>.+)$/);
-  if (critterName) {
-    return critterInfoEmbed(client, critterName.groups.arg);
-  }
+  const command = commands.get(tst.command);
+  return command.exec(client, tst.args);
 };
 
 const sendReply = (message: Discord.Message, content: string): void => {
