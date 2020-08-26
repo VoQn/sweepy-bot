@@ -29,7 +29,7 @@ export const BookmarkCommand = Command.register({
     if (client) {
       const sweepyIcon = client.user.avatarURL();
       embed.author = {
-        name: 'Sweepy Not',
+        name: 'Sweepy Bot',
         iconURL: sweepyIcon,
       };
       embed.footer = {

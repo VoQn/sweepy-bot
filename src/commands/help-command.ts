@@ -53,7 +53,7 @@ export const HelpCommand = Command.register({
     const sweepyIcon = client.user.avatarURL();
 
     const author = {
-      name: 'Sweepy Not',
+      name: 'Sweepy Bot',
       iconURL: sweepyIcon,
     };
     const footer = {
