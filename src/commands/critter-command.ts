@@ -8,12 +8,15 @@ export const CritterCommand = Command.register({
   category: CommandCategory.ONI,
   name: 'Critter',
   help: {
-    summery: '_知ってる動物の詳細を教えるよ_\n' + '```!critter プリンス```',
-    description:
-      '_知ってる動物の詳細を教えるよ。_\n' +
-      '```!critter ハッチ```\n' +
-      '_名前が部分的でも2文字以上なら連想できるモノを探すよ_\n' +
+    summery: ['_知ってる動物の詳細を教えるよ_', '```!critter プリンス```'].join(
+      '\n'
+    ),
+    description: [
+      '_知ってる動物の詳細を教えるよ。_',
+      '```!critter ハッチ```',
+      '_名前が部分的でも2文字以上なら連想できるモノを探すよ_',
       '```!critter ふさふさ```',
+    ].join('\n'),
   },
   exec: (args: string, client: Client): Response => {
     const emoji = (emojiName: string) => getCustomEmoji(emojiName, client);

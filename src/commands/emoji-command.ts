@@ -5,9 +5,10 @@ export const EmojiCommand = Command.register({
   category: CommandCategory.Misc,
   name: 'Emojinate',
   help: {
-    summery:
-      `_出来るだけ_ ${emojinate('emoji')} _に変換するよ_\n` +
-      '```!emojinate 今からliveやります!```',
+    summery: [
+      `_出来るだけ_ ${emojinate('emoji')} _に変換するよ_` +
+        '```!emojinate 今からliveやります!```',
+    ].join('\n'),
   },
   exec: (args, _client) => ({
     content: emojinate(args),
