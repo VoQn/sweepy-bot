@@ -12,6 +12,7 @@
     "start": "ts-node src/index.ts"
   },
   "dependencies": {
+    "@discordjs/collection": "^0.1.6",
     "discord.js": "^12.3.1",
     "express": "^4.17.1",
     "global": "^4.4.0",
