@@ -113,12 +113,7 @@ export class Critter implements CritterInfo {
   }
 
   public detailEmbed(client: Client): Response {
-    const emoji = (name: string) => {
-      if (client == null) {
-        return `:${name}:`;
-      }
-      return getCustomEmoji(name, client);
-    };
+    const emoji = (name: string) => getCustomEmoji(name, client);
     const fields: EmbedFieldData[] = [
       {
         name: ':globe_with_meridians: DataBase Link (_oni-db.com_)',
