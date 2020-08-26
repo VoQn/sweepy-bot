@@ -9,6 +9,18 @@ export const emojinateLine = (text: string): string => {
   while (isRemain()) {
     let test: string[] = null;
 
+    // already emoji code
+    test = trimByRegexp(/^:[A-Za-z0-9_]+:/, rest);
+    if (test) {
+      // if (result.length > 0) {
+      //   result += ' ';
+      // }
+      result += test[0];
+      rest = test[1];
+      isAfterEmoji = false;
+      continue;
+    }
+
     // :100:
     test = trimByRegexp(/^100/, rest);
     if (test) {
@@ -76,7 +88,7 @@ export const emojinateLine = (text: string): string => {
       if (result.length > 0 || isAfterEmoji) {
         result += ' ';
       }
-      result += ' ';
+      // result += ' ';
       rest = test[1];
       isAfterEmoji = false;
       continue;
