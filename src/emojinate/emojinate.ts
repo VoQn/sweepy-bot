@@ -46,7 +46,7 @@ export const emojinateLine = (text: string): string => {
     }
 
     // punctuation
-    test = trimByRegexp(/^([\?？]|[\!！]([\!！]|[\?？])?)/, rest);
+    test = trimByRegexp(/^([\?？]|[\!！]([\!！]|[\?？])?)/, rest);
     if (test) {
       if (result.length > 0) {
         result += ' ';
