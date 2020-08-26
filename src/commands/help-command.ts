@@ -7,9 +7,10 @@ export const HelpCommand = Command.register({
   category: CommandCategory.General,
   name: 'Help',
   help: {
-    summery: '_このコマンドだよ。応えられるコマンド一覧を出すよ_\n' +
-      '```!help```',
-    description: '_このコマンドだよ。応えられるコマンド一覧を出すよ_\n' +
+    summery:
+      '_このコマンドだよ。応えられるコマンド一覧を出すよ_\n' + '```!help```',
+    description:
+      '_このコマンドだよ。応えられるコマンド一覧を出すよ_\n' +
       '```!help```\n' +
       '_特定のコマンドの詳しい説明も出せるよ_\n' +
       '```!help !critter```',
@@ -22,7 +23,8 @@ export const HelpCommand = Command.register({
 
     let title = emojinate('about');
     let content = `:information_source:  ${sweepyEmoji} _が答えるよ_`;
-    let description = '_テキストチャットのログを読んで、行頭の_ `!` _で始まる各コマンドに応答します。_';
+    let description =
+      '_テキストチャットのログを読んで、行頭の_ `!` _で始まる各コマンドに応答します。_';
     const fields: EmbedFieldData[] = [];
     const cmdName = args.replace(/^\!/, '');
 
@@ -42,7 +44,7 @@ export const HelpCommand = Command.register({
     }
     if (viewAllHelp) {
       // 特定のコマンドのヘルプではないので全てフィールドへ追加する
-      Command.sortedAllCommands.forEach(c => {
+      Command.sortedAllCommands.forEach((c) => {
         fields.push({
           name: `:arrow_forward: ${c.name}`,
           value: c.help.summery,

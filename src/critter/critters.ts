@@ -8,7 +8,8 @@ export const morb: Critter = Critter.register({
     ja: 'モーブ',
   },
   flavorText: {
-    en: 'Morbs are attracted to unhygienic conditions and frequently excrete bursts of Polluted Oxygen.',
+    en:
+      'Morbs are attracted to unhygienic conditions and frequently excrete bursts of Polluted Oxygen.',
     ja: null,
   },
   livableTemp: {
@@ -27,7 +28,8 @@ export const hatch: Critter = Critter.register({
   id: 'hatch',
   imageURL: 'https://oni-db.com/static/media/hatch.9ac84da3.png',
   flavorText: {
-    en: 'Hatches excrete solid Coal as waste and may be uncovered by digging up Buried Objects.',
+    en:
+      'Hatches excrete solid Coal as waste and may be uncovered by digging up Buried Objects.',
   },
   name: {
     en: 'Hatch',
@@ -53,7 +55,8 @@ export const sageHatch: Critter = Critter.register(hatch, {
   id: 'hatchveggie',
   imageURL: 'https://oni-db.com/static/media/hatchveggie.43f08b29.png',
   flavorText: {
-    en: 'Sage Hatches excrete solid Coal as waste and enjoy burrowing into the ground.',
+    en:
+      'Sage Hatches excrete solid Coal as waste and enjoy burrowing into the ground.',
   },
   name: {
     en: 'Sage Hatch',
@@ -65,7 +68,8 @@ export const stoneHatch: Critter = Critter.register(hatch, {
   id: 'hatchhard',
   imageURL: 'https://oni-db.com/static/media/hatchhard.3c68ac41.png',
   flavorText: {
-    en: 'Stone Hatches excrete solid Coal as waste and enjoy burrowing into the ground.',
+    en:
+      'Stone Hatches excrete solid Coal as waste and enjoy burrowing into the ground.',
   },
   name: {
     en: 'Stone Hatch',
@@ -78,7 +82,8 @@ export const smoothHatch: Critter = Critter.register(hatch, {
   id: 'hatchmetal',
   imageURL: 'https://oni-db.com/static/media/hatchmetal.81bf83ad.png',
   flavorText: {
-    en: 'Smooth Hatches enjoy burrowing into the ground and excrete Refined Metal when fed Metal Ore.',
+    en:
+      'Smooth Hatches enjoy burrowing into the ground and excrete Refined Metal when fed Metal Ore.',
   },
   name: {
     en: 'Smooth Hatch',
@@ -91,7 +96,8 @@ export const puft: Critter = Critter.register({
   id: 'puft',
   imageURL: 'https://oni-db.com/static/media/puft.fcd3ca60.png',
   flavorText: {
-    en: 'Pufts are non-aggressive critters that excrete lumps of Slime with each breath.',
+    en:
+      'Pufts are non-aggressive critters that excrete lumps of Slime with each breath.',
   },
   name: {
     en: 'Puft',
@@ -117,7 +123,8 @@ export const puftPrince: Critter = Critter.register(puft, {
   id: 'puftalpha',
   imageURL: 'https://oni-db.com/static/media/puftalpha.863f5c27.png',
   flavorText: {
-    en: 'The Puft Prince is a lazy critter that excretes little lumps of Slime with each breath.',
+    en:
+      'The Puft Prince is a lazy critter that excretes little lumps of Slime with each breath.',
   },
   name: {
     en: 'Puft Prince',
@@ -133,7 +140,8 @@ export const spankyPuft: Critter = Critter.register(puft, {
   id: 'puftbleachstone',
   imageURL: 'https://oni-db.com/static/media/puftbleachstone.ed1f806a.png',
   flavorText: {
-    en: 'Squeaky Pufts are non-aggressive critters that excrete lumps of Bleachstone with each breath.',
+    en:
+      'Squeaky Pufts are non-aggressive critters that excrete lumps of Bleachstone with each breath.',
   },
   name: {
     en: 'Spakky Puft',
@@ -149,7 +157,8 @@ export const densePuft: Critter = Critter.register(puft, {
   id: 'puftoxylite',
   imageURL: 'https://oni-db.com/static/media/puftoxylite.fd06a3d5.png',
   flavorText: {
-    en: 'Dense Pufts are non-aggressive critters that excrete condensed Oxylite with each breath.',
+    en:
+      'Dense Pufts are non-aggressive critters that excrete condensed Oxylite with each breath.',
   },
   name: {
     en: 'Dense Puft',
@@ -165,7 +174,8 @@ export const pip: Critter = Critter.register({
   id: 'squirrel',
   imageURL: 'https://oni-db.com/static/media/squirrel.cec15472.png',
   flavorText: {
-    en: 'Pips are pesky, nonhostile critters that subsist on the branches of Arbor Trees.\n' +
+    en:
+      'Pips are pesky, nonhostile critters that subsist on the branches of Arbor Trees.\n' +
       'They are known to bury Seeds in the ground whenever they can find a suitable area with enough space.',
   },
   name: {
@@ -192,7 +202,8 @@ export const poleShell: Critter = Critter.register({
   id: 'crab',
   imageURL: 'https://oni-db.com/static/media/crab.49f7a55b.png',
   flavorText: {
-    en: 'Pokeshells are nonhostile critters that eat Polluted Dirt and Rot Piles.\n' +
+    en:
+      'Pokeshells are nonhostile critters that eat Polluted Dirt and Rot Piles.\n' +
       'The shells they leave behind after molting can be crushed into Lime.',
   },
   name: {
@@ -219,7 +230,8 @@ export const shoveVole = Critter.register({
   id: 'mole',
   imageURL: 'https://oni-db.com/static/media/mole.047061d6.png',
   flavorText: {
-    en: 'Shove Voles are burrowing critters that eat the Regolith collected on terrestrial surfaces.\n' +
+    en:
+      'Shove Voles are burrowing critters that eat the Regolith collected on terrestrial surfaces.\n' +
       'They cannot burrow through Refined Metals.',
   },
   name: {
@@ -245,7 +257,8 @@ export const gassyMoo = Critter.register({
   id: 'moo',
   imageURL: 'https://oni-db.com/static/media/moo.64332eff.png',
   flavorText: {
-    en: 'Moos are extraterrestrial critters that feed on Gas Grass and excrete Natural Gas.',
+    en:
+      'Moos are extraterrestrial critters that feed on Gas Grass and excrete Natural Gas.',
   },
   name: {
     en: 'Gassy Moo',
@@ -269,7 +282,8 @@ export const drecko = Critter.register({
   id: 'drecko',
   imageURL: 'https://oni-db.com/static/media/drecko.13441e24.png',
   flavorText: {
-    en: 'Dreckos are nonhostile critters that graze only on live Mealwood Plants.\n' +
+    en:
+      'Dreckos are nonhostile critters that graze only on live Mealwood Plants.\n' +
       '\n' +
       'Their backsides are covered in thick woolly fibers that only grow in Hydrogen climates.',
   },
@@ -297,7 +311,8 @@ export const glossyDrecko = Critter.register(drecko, {
   id: 'dreckoplastic',
   imageURL: 'https://oni-db.com/static/media/dreckoplastic.8a5171c9.png',
   flavorText: {
-    en: 'Glossy Dreckos are nonhostile critters that graze only on live Mealwood Plants.\n' +
+    en:
+      'Glossy Dreckos are nonhostile critters that graze only on live Mealwood Plants.\n' +
       'Their backsides are covered in bioplastic scales that only grow in Hydrogen climates.',
   },
   name: {
@@ -312,9 +327,11 @@ export const glossyDrecko = Critter.register(drecko, {
 
 export const slickster = Critter.register({
   id: 'oilfloater',
-  imageURL: 'https://oni-assistant.com/assets/elements/oilfloater-edf4ba0749925568d5dddb3de4121a67655211d0088baa4115f425b8b0344c19.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/oilfloater-edf4ba0749925568d5dddb3de4121a67655211d0088baa4115f425b8b0344c19.png',
   flavorText: {
-    en: 'Slicksters are slimy critters that consume Carbon Dioxide and exude Crude Oil.',
+    en:
+      'Slicksters are slimy critters that consume Carbon Dioxide and exude Crude Oil.',
   },
   name: {
     en: 'Slickster',
@@ -338,9 +355,11 @@ export const slickster = Critter.register({
 
 export const moltenSlickster = Critter.register(slickster, {
   id: 'oilfloaterhightemp',
-  imageURL: 'https://oni-assistant.com/assets/elements/oilfloaterhightemp-5aaf984823606cdb18452bc94373edadcfc471bd627ec21e3ec5488f3cd2113c.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/oilfloaterhightemp-5aaf984823606cdb18452bc94373edadcfc471bd627ec21e3ec5488f3cd2113c.png',
   flavorText: {
-    en: 'Molten Slicksters are slimy critters that consume Carbon Dioxide and exude Petroleum.',
+    en:
+      'Molten Slicksters are slimy critters that consume Carbon Dioxide and exude Petroleum.',
   },
   name: {
     en: 'Molten Slickster',
@@ -355,9 +374,11 @@ export const moltenSlickster = Critter.register(slickster, {
 export const longhairSlickster = Critter.register(slickster, {
   id: 'oilfloaterdecor',
   // tslint:disable-next-line: max-line-length
-  imageURL: 'https://oni-assistant.com/assets/elements/oilfloaterdecor-0fe382ede364d89d9edc455a589338b6da3e82c5d0c3084bb5ab4322a47e3604.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/oilfloaterdecor-0fe382ede364d89d9edc455a589338b6da3e82c5d0c3084bb5ab4322a47e3604.png',
   flavorText: {
-    en: 'Longhair Slicksters are friendly critters that consume Oxygen and thrive in close contact with Duplicant companions.\n' +
+    en:
+      'Longhair Slicksters are friendly critters that consume Oxygen and thrive in close contact with Duplicant companions.\n' +
       'Longhairs have extremely beautiful and luxurious coats.',
   },
   name: {
@@ -379,9 +400,11 @@ export const longhairSlickster = Critter.register(slickster, {
 
 export const pacu = Critter.register({
   id: 'pacu',
-  imageURL: 'https://oni-assistant.com/assets/elements/pacu-fa8d5c7f61c0cb2999b18bd695df51d0a5c40c0d69ce5bc94027de489c0ba11f.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/pacu-fa8d5c7f61c0cb2999b18bd695df51d0a5c40c0d69ce5bc94027de489c0ba11f.png',
   flavorText: {
-    en: 'Pacus are aquatic creatures that cannot live outside of Water or Contaminated Water.\n' +
+    en:
+      'Pacus are aquatic creatures that cannot live outside of Water or Contaminated Water.\n' +
       'Every organism in the known universe finds the Pacu extremely delicious.',
   },
   name: {
@@ -406,9 +429,11 @@ export const pacu = Critter.register({
 
 export const gulpFish = Critter.register(pacu, {
   id: 'pacucleaner',
-  imageURL: 'https://oni-assistant.com/assets/elements/pacucleaner-21e4f8471460384a5380607e819711738452e5e71ca7cdf5aaef1856aace812f.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/pacucleaner-21e4f8471460384a5380607e819711738452e5e71ca7cdf5aaef1856aace812f.png',
   flavorText: {
-    en: 'Every organism in the known universe finds the Pacu extremely delicious.',
+    en:
+      'Every organism in the known universe finds the Pacu extremely delicious.',
   },
   name: {
     en: 'Gulp Fish',
@@ -422,9 +447,11 @@ export const gulpFish = Critter.register(pacu, {
 
 export const tropicalPacu = Critter.register(pacu, {
   id: 'pacutropical',
-  imageURL: 'https://oni-assistant.com/assets/elements/pacutropical-0c786e3ed85f8d9d2e42c5af9d45fecc6cf1d1bb27c0e44288a4368dfe5fa93b.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/pacutropical-0c786e3ed85f8d9d2e42c5af9d45fecc6cf1d1bb27c0e44288a4368dfe5fa93b.png',
   flavorText: {
-    en: 'Every organism in the known universe finds the Pacu extremely delicious.',
+    en:
+      'Every organism in the known universe finds the Pacu extremely delicious.',
   },
   name: {
     en: 'Tropical Pacu',
@@ -442,9 +469,11 @@ export const tropicalPacu = Critter.register(pacu, {
 
 export const shineBug = Critter.register({
   id: 'lightbug',
-  imageURL: 'https://oni-assistant.com/assets/elements/lightbug-605a1ef77042284ad82c3d5e50e2abb693ceaedcee29366705c5999f6e7928a1.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/lightbug-605a1ef77042284ad82c3d5e50e2abb693ceaedcee29366705c5999f6e7928a1.png',
   flavorText: {
-    en: 'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
+    en:
+      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
   },
   name: {
     en: 'Shine Bug',
@@ -472,9 +501,11 @@ export const shineBug = Critter.register({
 
 export const sunBug = Critter.register(shineBug, {
   id: 'lightbugorange',
-  imageURL: 'https://oni-assistant.com/assets/elements/lightbugorange-6ceb9fc4c6faeb91e695f69b928536092b50a70ba4a450657ef37125f1828510.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/lightbugorange-6ceb9fc4c6faeb91e695f69b928536092b50a70ba4a450657ef37125f1828510.png',
   flavorText: {
-    en: 'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+    en:
+      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
       'The light of the Sun morph has been turned orange through selective breeding.',
   },
   name: {
@@ -489,9 +520,11 @@ export const sunBug = Critter.register(shineBug, {
 
 export const coralBug = Critter.register(shineBug, {
   id: 'lightbugpink',
-  imageURL: 'https://oni-assistant.com/assets/elements/lightbugpink-1f57547a1156e465b9561cb5b1a711a92682e6be9cc026ecca9f6ea011e75988.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/lightbugpink-1f57547a1156e465b9561cb5b1a711a92682e6be9cc026ecca9f6ea011e75988.png',
   flavorText: {
-    en: 'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+    en:
+      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
       'The light of the Coral morph has been turned pink through selective breeding.',
   },
   name: {
@@ -506,9 +539,11 @@ export const coralBug = Critter.register(shineBug, {
 
 export const royalBug = Critter.register(shineBug, {
   id: 'lightbugpurple',
-  imageURL: 'https://oni-assistant.com/assets/elements/lightbugpurple-a546797c1be64f9cf0c8c02498c906d3c3c18d157c77e393701079d49c58f476.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/lightbugpurple-a546797c1be64f9cf0c8c02498c906d3c3c18d157c77e393701079d49c58f476.png',
   flavorText: {
-    en: 'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+    en:
+      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
       'The light of the Royal morph has been turned purple through selective breeding.',
   },
   name: {
@@ -523,9 +558,11 @@ export const royalBug = Critter.register(shineBug, {
 
 export const abyssBug = Critter.register(shineBug, {
   id: 'lightbugblack',
-  imageURL: 'https://oni-assistant.com/assets/elements/lightbugblack-d0d01483be33464c7eb4b7be87e7c81a8a9e15b48327ce96883394bbaaeacf8c.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/lightbugblack-d0d01483be33464c7eb4b7be87e7c81a8a9e15b48327ce96883394bbaaeacf8c.png',
   flavorText: {
-    en: 'This Shine Bug emits no Light, but it makes up for it by having an excellent personality.',
+    en:
+      'This Shine Bug emits no Light, but it makes up for it by having an excellent personality.',
   },
   name: {
     en: 'Abyss Bug',
@@ -560,9 +597,11 @@ export const azureBug = Critter.register(shineBug, {
 export const radiantBug = Critter.register(shineBug, {
   id: 'lightbugcrystal',
   // tslint:disable-next-line: max-line-length
-  imageURL: 'https://oni-assistant.com/assets/elements/lightbugcrystal-c8f4e64126ebdfdedde73dc153a7215e0549d553f12de93fb4500baa5593ffd6.png',
+  imageURL:
+    'https://oni-assistant.com/assets/elements/lightbugcrystal-c8f4e64126ebdfdedde73dc153a7215e0549d553f12de93fb4500baa5593ffd6.png',
   flavorText: {
-    en: 'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+    en:
+      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
       'The light of the Radiant morph has been amplified through selective breeding.',
   },
   name: {

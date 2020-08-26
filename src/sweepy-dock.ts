@@ -1,4 +1,10 @@
-import Discord, { PresenceData, Message, GuildMember, Client, Presence } from 'discord.js';
+import Discord, {
+  PresenceData,
+  Message,
+  GuildMember,
+  Client,
+  Presence,
+} from 'discord.js';
 import { Command } from './commands';
 import { emojinate } from './emojinate';
 import { parseCommand } from './parser';
@@ -17,7 +23,9 @@ export class SweepyDock {
     if (client) {
       this.client.once('ready', () => this.onReady());
       this.client.on('message', (message: Message) => this.onMessage(message));
-      this.client.on('guildMemberAdd', (member: GuildMember) => this.onJoinNewMember(member));
+      this.client.on('guildMemberAdd', (member: GuildMember) =>
+        this.onJoinNewMember(member)
+      );
     }
   }
 
@@ -29,7 +37,7 @@ export class SweepyDock {
   }
 
   async onReady(): Promise<Presence> {
-    let res = await this.client.user.setPresence(SweepyDock.loginedPresence);
+    const res = await this.client.user.setPresence(SweepyDock.loginedPresence);
     console.log('Sweepy bot is alive.');
     return res;
   }
@@ -80,7 +88,7 @@ export class SweepyDock {
   async onJoinNewMember(member: GuildMember): Promise<void> {
     // send the message to a designated channel on a server:
     const channel: Discord.GuildChannel = member.guild.channels.cache.find(
-      ch => ch.name === 'welcome',
+      (ch) => ch.name === 'welcome'
     );
     // do nothing if the channel wasn't found on this server
     if (!channel || channel.type !== 'text') {

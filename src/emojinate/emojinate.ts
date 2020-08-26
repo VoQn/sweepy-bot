@@ -52,7 +52,7 @@ export const emojinateLine = (text: string): string => {
         result += ' ';
       }
       test[0] = test[0].replace(/！/, '!').replace(/？/, '?');
-      result += punctuationEmojis[test[0] as ('!' | '?' | '!!' | '!?')];
+      result += punctuationEmojis[test[0] as '!' | '?' | '!!' | '!?'];
       rest = test[1];
       isAfterEmoji = true;
       continue;

@@ -1,4 +1,4 @@
-export type ParseResult = { command: string, args: string };
+export type ParseResult = { command: string; args: string };
 
 export const parseCommand = (text: string): ParseResult => {
   const withArgs = /^\!(?<command>\S+)[^\S\n]+(?<args>.+)$/;

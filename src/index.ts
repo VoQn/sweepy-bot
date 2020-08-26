@@ -39,9 +39,9 @@ app.post('/', (req, res) => {
     if (dataObject.type === 'wake') {
       console.log('Woke up in post');
       if (client.readyTimestamp) {
-        console.log('yay, and I\'m alive since:' + client.readyTimestamp);
+        console.log("yay, and I'm alive since:" + client.readyTimestamp);
       } else {
-        console.log('but I\'m dead');
+        console.log("but I'm dead");
       }
       res.end();
     } else {

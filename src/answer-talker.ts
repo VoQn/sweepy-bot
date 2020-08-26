@@ -1,7 +1,5 @@
-
-
 export type Entry = { [key: string]: string };
-export type Dictionary = Array<Entry>;
+export type Dictionary = Entry[];
 
 export class AnswerTalker {
   dictionary: Dictionary;
@@ -9,18 +7,25 @@ export class AnswerTalker {
   answer: string;
   answerConverter?: (query: string) => string;
 
-  constructor(dictionary: Dictionary, keyword: string, answer: string, answerConverter?: ((query: string) => string)) {
+  constructor(
+    dictionary: Dictionary,
+    keyword: string,
+    answer: string,
+    answerConverter?: (query: string) => string
+  ) {
     this.dictionary = dictionary; // e.g. [{ tag: 'a', url: 'hoge'}, ...]
     this.keyword = keyword; // e.g. 'tag'
     this.answer = answer; // e.g. 'url'
-    this.answerConverter = a => a;
+    this.answerConverter = (a) => a;
     if (answerConverter !== undefined) {
       this.answerConverter = answerConverter;
     }
   }
 
   getKeywords(): string {
-    return ['```', ...this.dictionary.map(o => o[this.keyword]), '```'].join('\n');
+    return ['```', ...this.dictionary.map((o) => o[this.keyword]), '```'].join(
+      '\n'
+    );
   }
 
   getAnswer(arg: string): string {
@@ -49,22 +54,33 @@ export class AnswerTalker {
       if (answer === arg) {
         return suggested;
       } else {
-        return [':bulb: もしかして、これ？', '```', keyword, '```', suggested].join('\n');
+        return [
+          ':bulb: もしかして、これ？',
+          '```',
+          keyword,
+          '```',
+          suggested,
+        ].join('\n');
       }
     }
 
     if (choice.length > 0) {
-      return [':thinking: 複数あるよ。聞き直してね。', '```', ...choice.map(o => o[this.keyword]), '```'].join('\n');
+      return [
+        ':thinking: 複数あるよ。聞き直してね。',
+        '```',
+        ...choice.map((o) => o[this.keyword]),
+        '```',
+      ].join('\n');
     }
 
     return defaultAnswer;
   }
 
   exact_match(arg: string): Entry {
-    return this.dictionary.find(o => o[this.keyword] === arg);
+    return this.dictionary.find((o) => o[this.keyword] === arg);
   }
 
-  partial_match(arg: string): Array<Entry> {
-    return this.dictionary.filter(o => o[this.keyword].match(arg));
+  partial_match(arg: string): Entry[] {
+    return this.dictionary.filter((o) => o[this.keyword].match(arg));
   }
 }

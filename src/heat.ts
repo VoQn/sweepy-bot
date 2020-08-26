@@ -1,7 +1,10 @@
 import { TemparetureUnit } from './types';
 import { round } from './utils';
 
-export const convertKelvinTemp = (temp: number, unit: TemparetureUnit = TemparetureUnit.Celsius) => {
+export const convertKelvinTemp = (
+  temp: number,
+  unit: TemparetureUnit = TemparetureUnit.Celsius
+) => {
   switch (unit) {
     case TemparetureUnit.Celsius:
       return round(temp - 273.15, 2);

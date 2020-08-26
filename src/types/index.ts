@@ -8,7 +8,7 @@ export const TemparetureUnit = {
   Celsius: '°C',
   Fahrenheit: '°F',
 } as const;
-export type TemparetureUnit = (typeof TemparetureUnit)[keyof typeof TemparetureUnit];
+export type TemparetureUnit = typeof TemparetureUnit[keyof typeof TemparetureUnit];
 
 /** 多言語対応されているテキスト */
 export type Multilingal = {

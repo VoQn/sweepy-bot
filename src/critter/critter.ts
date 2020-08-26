@@ -1,7 +1,13 @@
 import { ID, Multilingal, Decor, Response } from '../types';
 import { override, getCustomEmoji, blankField } from '../utils';
 import { Client, MessageEmbedOptions, EmbedFieldData } from 'discord.js';
-import { CritterInfo, LightEmitter, LivableTemp, CritterInfoBase, FamiliyCritterInfo } from './critter-info';
+import {
+  CritterInfo,
+  LightEmitter,
+  LivableTemp,
+  CritterInfoBase,
+  FamiliyCritterInfo,
+} from './critter-info';
 
 const compareCritter = (a: Critter, b: Critter): number => {
   if (a.isBaseType && b.isBaseType) {
@@ -19,7 +25,9 @@ const compareCritter = (a: Critter, b: Critter): number => {
 const findCritterByName = (table: Map<ID, Critter>, query: string | RegExp) => {
   let lang: 'en' | 'ja' = 'en';
   if (typeof query === 'string') {
-    if (/^[\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcf]+$/.test(query)) {
+    if (
+      /^[\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcf]+$/.test(query)
+    ) {
       // たぶん日本語で検索してる
       lang = 'ja';
     } else if (/^[a-zA-Z]+.?$/.test(query)) {
@@ -30,7 +38,10 @@ const findCritterByName = (table: Map<ID, Critter>, query: string | RegExp) => {
       }
     }
   }
-  const pattern = typeof query !== 'string' ? query : new RegExp(query.replace(/[^\S\n]/, '\\s?'), 'i');
+  const pattern =
+    typeof query !== 'string'
+      ? query
+      : new RegExp(query.replace(/[^\S\n]/, '\\s?'), 'i');
   const matched: Critter[] = [];
   for (const critter of table.values()) {
     const name = critter.name[lang].replace(/[^\S\n]+/, '');
@@ -45,7 +56,6 @@ const findCritterByName = (table: Map<ID, Critter>, query: string | RegExp) => {
 };
 
 export class Critter implements CritterInfo {
-
   readonly isBaseType: boolean;
   readonly baseTypeName: ID;
   readonly id: ID;
@@ -72,7 +82,10 @@ export class Critter implements CritterInfo {
     return findCritterByName(this.table, query);
   }
 
-  public static register(origin: CritterInfoBase, append?: FamiliyCritterInfo): Critter {
+  public static register(
+    origin: CritterInfoBase,
+    append?: FamiliyCritterInfo
+  ): Critter {
     const id = append?.id || origin.id;
     const cache = this.table.get(id);
     if (cache) {
@@ -143,9 +156,10 @@ export class Critter implements CritterInfo {
       value: `**${this.decor.value}** (**${this.decor.radius}** _tile_)`,
       inline: true,
     });
-    const calories = this.caloriesNeeded < 1000 ?
-      `**${this.caloriesNeeded}** _cal/s_` :
-      `**${this.caloriesNeeded / 1000}** _kcal/s_`;
+    const calories =
+      this.caloriesNeeded < 1000
+        ? `**${this.caloriesNeeded}** _cal/s_`
+        : `**${this.caloriesNeeded / 1000}** _kcal/s_`;
     fields.push({
       name: `${emoji('calories')} カロリー消費`,
       value: calories,
@@ -203,7 +217,7 @@ export class Critter implements CritterInfo {
       },
       title: `_${this.name.en}_`,
       url: `https://oni-db.com/details/${this.id}`,
-      color: 0x0099FF,
+      color: 0x0099ff,
       thumbnail: { url: this.imageURL },
       description: `_${flavorText}_`,
       fields,

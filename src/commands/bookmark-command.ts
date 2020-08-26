@@ -7,8 +7,8 @@ export const BookmarkCommand = Command.register({
   category: CommandCategory.ONI,
   name: 'Bookmark',
   help: {
-    summery: 'ONI のゲームプレイで便利なサイトを紹介するよ\n' +
-      '```!bookmark```',
+    summery:
+      'ONI のゲームプレイで便利なサイトを紹介するよ\n' + '```!bookmark```',
   },
   exec: (_args: string, client?: Client): Response => {
     const color = 0xfcfc00;
