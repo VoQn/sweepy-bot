@@ -19,8 +19,13 @@ export const HelpCommand = Command.register({
     ].join('\n'),
   },
   exec: (args, client) => {
-    const emoji = (emojiName: string) => getCustomEmoji(emojiName, client);
-
+    const emoji = (emojiName: string): string => {
+      const e = getCustomEmoji(emojiName, client);
+      if (typeof e === 'string') {
+        return e;
+      }
+      return e.toString();
+    };
     const sweepyEmoji = emoji('sweepy');
     const thinkdupe = emoji('thinkdupe');
 
@@ -30,7 +35,7 @@ export const HelpCommand = Command.register({
     let description =
       '_テキストチャットのログを読んで、行頭の_ `!` _で始まる各コマンドに応答します。_';
     const fields: EmbedFieldData[] = [];
-    const cmdName = args.replace(/^\!/, '');
+    const cmdName = args.replace(/^!/, '');
 
     let viewAllHelp = true;
     if (args) {

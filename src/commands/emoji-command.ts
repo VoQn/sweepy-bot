@@ -10,7 +10,7 @@ export const EmojiCommand = Command.register({
         '```!emojinate 今からliveやります!```',
     ].join('\n'),
   },
-  exec: (args, _client) => ({
+  exec: (args) => ({
     content: emojinate(args),
     options: {},
   }),

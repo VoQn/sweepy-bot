@@ -3,7 +3,6 @@ import Discord, {
   Message,
   GuildMember,
   Client,
-  Presence,
 } from 'discord.js';
 import { Command } from './commands';
 import { emojinate } from './emojinate';
@@ -21,28 +20,32 @@ export class SweepyDock {
   constructor(client?: Client) {
     this.client = client;
     if (client) {
-      this.client.once('ready', () => this.onReady());
-      this.client.on('message', (message: Message) => this.onMessage(message));
-      this.client.on('guildMemberAdd', (member: GuildMember) =>
-        this.onJoinNewMember(member)
+      this.client.once('ready', () => void this.onReady());
+      this.client.on(
+        'message',
+        (message: Message) => void this.onMessage(message)
+      );
+      this.client.on(
+        'guildMemberAdd',
+        (member: GuildMember) => void this.onJoinNewMember(member)
       );
     }
   }
 
   private client: Discord.Client;
 
-  async start(token: string): Promise<string> {
+  async start(token: string): Promise<boolean> {
     console.log('Login Discord Client...');
-    return this.client.login(token);
+    await this.client.login(token);
+    return true;
   }
 
-  async onReady(): Promise<Presence> {
-    const res = await this.client.user.setPresence(SweepyDock.loginedPresence);
+  async onReady(): Promise<void> {
+    await this.client.user.setPresence(SweepyDock.loginedPresence);
     console.log('Sweepy bot is alive.');
-    return res;
   }
 
-  async onMessage(message: Message): Promise<Message> {
+  async onMessage(message: Message): Promise<void> {
     if (message.author.id === this.client.user.id || message.author.bot) {
       return;
     }
@@ -51,12 +54,14 @@ export class SweepyDock {
       ignoreEveryone: true,
     };
     if (message.mentions.has(this.client.user, options)) {
-      console.group(`${message.author} から以下のようなメッセージが来ました。`);
+      console.group(
+        `${message.author.username} から以下のようなメッセージが来ました。`
+      );
       console.log(message.content);
       console.groupEnd();
       const replayMessage = '人生を満喫中さ、わかるだろ？';
       await message.reply(replayMessage);
-      console.group(`${message.author} に返信しました。`);
+      console.group(`${message.author.username} に返信しました。`);
       console.log(replayMessage);
       console.groupEnd();
     }
@@ -70,11 +75,13 @@ export class SweepyDock {
     }
     if (res.content.length > 1 || Object.keys(res.options).length > 0) {
       // 何かしら返信するモノがある。
-      console.group(`${message.author} から以下のようなメッセージが来ました。`);
+      console.group(
+        `${message.author.username} から以下のようなメッセージが来ました。`
+      );
       console.log(message.content);
       console.groupEnd();
       await message.channel.send(res.content, res.options);
-      console.group(`${message.author} に返信しました。`);
+      console.group(`${message.author.username} に返信しました。`);
       if (res.content != null && res.content.length > 1) {
         console.log(res.content);
       }
@@ -86,27 +93,28 @@ export class SweepyDock {
   }
 
   async onJoinNewMember(member: GuildMember): Promise<void> {
+    const welcomeChannelName = 'welcome';
     // send the message to a designated channel on a server:
     const channel: Discord.GuildChannel = member.guild.channels.cache.find(
-      (ch) => ch.name === 'welcome'
+      (ch) => ch.name === welcomeChannelName
     );
     // do nothing if the channel wasn't found on this server
     if (!channel || channel.type !== 'text') {
       return;
     }
 
-    const text = `${emojinate('welcome')}
-ようこそ ${member} 非公式日本語ディスコードサーバーへ！
-まずは #welcome チャンネルで自己紹介してみてね！
-${emojinate('caution')}
-**サーバーに入りたての時は、まだ色んなチャンネルを見ることは出来ません。**
-_'承認済み' のロールが与えられたら、インフォメーション以外のカテゴリも読めるようになります。_`;
+    const text = [
+      `${emojinate('welcome')}`,
+      `ようこそ ${member.user.username} 非公式日本語ディスコードサーバーへ！`,
+      `まずは #${welcomeChannelName} チャンネルで自己紹介してみてね！`,
+      `${emojinate('caution')}`,
+      '**サーバーに入りたての時は、まだ色んなチャンネルを見ることは出来ません。**',
+      "_'承認済み' のロールが与えられたら、インフォメーション以外のカテゴリも読めるようになります。_",
+    ].join('\n');
 
-    (channel as Discord.TextChannel)
-      .send(text)
-      .then(() => {
-        console.log('メッセージ送信: ' + text + JSON.stringify({}));
-      })
-      .catch(console.error);
+    await (channel as Discord.TextChannel).send(text).catch((reason) => {
+      console.error(reason);
+    });
+    console.log('メッセージ送信: ' + text + JSON.stringify({}));
   }
 }

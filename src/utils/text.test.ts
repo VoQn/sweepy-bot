@@ -1,4 +1,5 @@
-import { trimByRegexp, identify } from '.';
+import { identify, trimByRegexp } from './text';
+
 describe('identify', () => {
   it('can convert "x" => "x"', () => {
     expect(identify('x')).toEqual('x');
@@ -20,11 +21,11 @@ describe('trimByRegexp', () => {
   it('can trim "1000" by /^100/', () => {
     const text = '1000';
     const regexp = /^100/;
-    expect(trimByRegexp(regexp, text)).toEqual(['100', '0']);
+    expect(trimByRegexp(regexp, text)).toEqual({ matched: '100', rest: '0' });
   });
   it('can trim "10" by /^10/', () => {
     const text = '1020';
     const regexp = /^10/;
-    expect(trimByRegexp(regexp, text)).toEqual(['10', '20']);
+    expect(trimByRegexp(regexp, text)).toEqual({ matched: '10', rest: '20' });
   });
 });
