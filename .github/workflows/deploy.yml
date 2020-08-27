@@ -1,5 +1,5 @@
 # sync deploy master repository
-name: Glitch Sync
+name: Deploy Glitch Sync
 
 on:
   push:
