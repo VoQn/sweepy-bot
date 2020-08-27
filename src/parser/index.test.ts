@@ -9,6 +9,14 @@ describe('parseCommand', () => {
       });
     });
   });
+  describe('with multiline arguments', () => {
+    it('!critter hatch', () => {
+      expect(parseCommand('!critter hatch\nhatch')).toEqual({
+        command: 'critter',
+        args: 'hatch\nhatch',
+      });
+    });
+  });
   describe('without any argument', () => {
     it('!cheatsheet', () => {
       expect(parseCommand('!cheatsheet')).toEqual({
