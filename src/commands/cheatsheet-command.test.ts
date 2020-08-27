@@ -1,4 +1,4 @@
-import cheatsheets from '../../data/cheatsheet.json';
+import cheatsheets from '../data/cheatsheet.json';
 import { CheatsheetCommand } from './cheatsheet-command';
 
 describe('CheatsheetCommand', () => {

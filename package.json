@@ -5,8 +5,8 @@
   "main": "./dist/src/index.js",
   "scripts": {
     "clean": "rm -rf ./dist",
-    "lint": "eslint . --ext .js,.ts",
-    "lint:fix": "eslint . --fix --ext .js,.ts",
+    "lint": "eslint ./src --ext .js,.ts",
+    "lint:fix": "eslint ./src --fix --ext .js,.ts",
     "format": "prettier --write 'src/**/*.ts'",
     "build": "tsc",
     "test": "jest",

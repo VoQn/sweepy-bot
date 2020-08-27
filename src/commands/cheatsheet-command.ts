@@ -1,7 +1,7 @@
 import { AnswerTalker } from '../answer-talker';
 import { Response } from '../types';
 import { Command, CommandCategory } from './command';
-import cheatsheets from '../../data/cheatsheet.json';
+import cheatsheets from '../data/cheatsheet.json';
 
 const answerTalker = new AnswerTalker(
   Object.values(cheatsheets),
