@@ -32,6 +32,8 @@ export const hatch: Critter = Critter.register({
   flavorText: {
     en:
       'Hatches excrete solid Coal as waste and may be uncovered by digging up Buried Objects.',
+    ja:
+      'ハッチは固形の **石炭** を排泄します。埋もれた物体を掘り起こすことで現れることがあります。',
   },
   name: {
     en: 'Hatch',
@@ -60,6 +62,8 @@ export const sageHatch: Critter = Critter.register(hatch, {
   flavorText: {
     en:
       'Sage Hatches excrete solid Coal as waste and enjoy burrowing into the ground.',
+    ja:
+      'セイジ ハッチは固形の **石炭** を排泄します。地面を掘り進むことを好みます。',
   },
   name: {
     en: 'Sage Hatch',
@@ -74,6 +78,8 @@ export const stoneHatch: Critter = Critter.register(hatch, {
   flavorText: {
     en:
       'Stone Hatches excrete solid Coal as waste and enjoy burrowing into the ground.',
+    ja:
+      'ごつごつ ハッチは固形の **石炭** を排泄します。地面を掘り進むことを好みます。',
   },
   name: {
     en: 'Stone Hatch',
@@ -89,6 +95,8 @@ export const smoothHatch: Critter = Critter.register(hatch, {
   flavorText: {
     en:
       'Smooth Hatches enjoy burrowing into the ground and excrete Refined Metal when fed Metal Ore.',
+    ja:
+      'つるつるハッチは地面を掘り進むことを好み、 **金属鉱石** を食べ **精錬金属** を排出します。',
   },
   name: {
     en: 'Smooth Hatch',
@@ -218,6 +226,10 @@ export const poleShell: Critter = Critter.register({
       'Pokeshells are nonhostile critters that eat Polluted Dirt and Rot Piles.',
       'The shells they leave behind after molting can be crushed into Lime.',
     ].join('\n'),
+    ja: [
+      'ポークシェルは **汚染土** と **腐った塊** を食べる、非敵対的な動物です。',
+      '彼らが脱皮の後に残す殻は、粉砕して **石灰** にできます。',
+    ].join('\n'),
   },
   name: {
     en: 'Poke Shell',
@@ -247,6 +259,10 @@ export const shoveVole = Critter.register({
     en: [
       'Shove Voles are burrowing critters that eat the Regolith collected on terrestrial surfaces.',
       'They cannot burrow through Refined Metals.',
+    ].join('\n'),
+    ja: [
+      'ぐりぐりネズミは **表土** を掘り進みながら食べる動物です。',
+      '彼らは **精錬金属** を掘ることはできません。',
     ].join('\n'),
   },
   name: {
@@ -303,6 +319,10 @@ export const drecko = Critter.register({
       'Dreckos are nonhostile critters that graze only on live Mealwood Plants.',
       'Their backsides are covered in thick woolly fibers that only grow in Hydrogen climates.',
     ].join('\n'),
+    ja: [
+      'ドレッコは生育中の **ミールウッド** のみを食する、非敵対的な動物です',
+      '彼らの背面は **水素** 下でのみ伸びる厚いウール繊維で覆われています。',
+    ].join('\n'),
   },
   name: {
     en: 'Drecko',
@@ -332,6 +352,10 @@ export const glossyDrecko = Critter.register(drecko, {
     en: [
       'Glossy Dreckos are nonhostile critters that graze only on live Mealwood Plants.',
       'Their backsides are covered in bioplastic scales that only grow in Hydrogen climates.',
+    ].join('\n'),
+    ja: [
+      'つやつやドレッコは生育中の **ミールウッド** のみを食する、非敵対的な動物です。',
+      '彼らの背面は **水素** 下でのみ成長する生体プラスチックの鱗で覆われています。',
     ].join('\n'),
   },
   name: {
@@ -494,6 +518,7 @@ export const shineBug = Critter.register({
   flavorText: {
     en:
       'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
+    ja: 'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
   },
   name: {
     en: 'Shine Bug',
@@ -528,6 +553,10 @@ export const sunBug = Critter.register(shineBug, {
       'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
       'The light of the Sun morph has been turned orange through selective breeding.',
     ].join('\n'),
+    ja: [
+      'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
+      '太陽 バグの光の色は人為選択の結果、オレンジになりました。',
+    ].join('\n'),
   },
   name: {
     en: 'Sun Bug',
@@ -547,6 +576,10 @@ export const coralBug = Critter.register(shineBug, {
     en: [
       'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
       'The light of the Coral morph has been turned pink through selective breeding.',
+    ].join('\n'),
+    ja: [
+      'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
+      '珊瑚 バグの光の色は人為選択の結果、ピンクになりました。',
     ].join('\n'),
   },
   name: {
@@ -568,6 +601,10 @@ export const royalBug = Critter.register(shineBug, {
       'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
       'The light of the Royal morph has been turned purple through selective breeding.',
     ].join('\n'),
+    ja: [
+      'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
+      'ロイヤル バグの光の色は人為選択の結果、紫になりました。',
+    ].join('\n'),
   },
   name: {
     en: 'Royal Bug',
@@ -586,6 +623,8 @@ export const abyssBug = Critter.register(shineBug, {
   flavorText: {
     en:
       'This Shine Bug emits no Light, but it makes up for it by having an excellent personality.',
+    ja:
+      'このシャインバグは **光源** になりませんが、素晴らしい個性がそれを補っています。',
   },
   name: {
     en: 'Abyss Bug',
@@ -610,6 +649,10 @@ export const azureBug = Critter.register(shineBug, {
       'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
       'The light of the Azure morph has been turned blue through selective breeding.',
     ].join('\n'),
+    ja: [
+      'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
+      '青空 バグの光の色は人為選択の結果、青色になりました。',
+    ].join('\n'),
   },
   name: {
     en: 'Azure Bug',
@@ -629,6 +672,10 @@ export const radiantBug = Critter.register(shineBug, {
     en: [
       'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
       'The light of the Radiant morph has been amplified through selective breeding.',
+    ].join('\n'),
+    ja: [
+      'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
+      '煌き バグの光は人為選択の結果、より輝くようになりました。',
     ].join('\n'),
   },
   name: {
