@@ -3,6 +3,7 @@ import { Client } from 'discord.js';
 import { Response } from '../types';
 import { Critter } from '../critter';
 import { getCustomEmoji } from '../emojinate';
+import { HelpCommand } from './help-command';
 
 export const CritterCommand = Command.register({
   category: CommandCategory.ONI,
@@ -23,6 +24,10 @@ export const CritterCommand = Command.register({
       const e = getCustomEmoji(emojiName, client);
       return typeof e === 'string' ? e : e.toString();
     };
+    if (!args || args.length === 0) {
+      // 引数なしの時は HelpCommand に委譲する
+      return HelpCommand.exec('critter', client);
+    }
     const sadSweepyEmoji = emoji('sadsweepy');
     if (args.length < 2) {
       return {

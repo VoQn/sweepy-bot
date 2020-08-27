@@ -7,5 +7,9 @@ export const getCustomEmoji = (
   if (client == null) {
     return `:${name}:`;
   }
-  return client?.emojis?.cache?.find((v) => v.name === name);
+  const result = client.emojis.cache.find((v) => v.name === name);
+  if (result == null) {
+    return '';
+  }
+  return result;
 };

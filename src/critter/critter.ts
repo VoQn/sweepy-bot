@@ -129,7 +129,13 @@ export class Critter implements CritterInfo {
   public detailEmbed(client: Client): Response {
     const emoji = (name: string) => {
       const e = getCustomEmoji(name, client);
-      return typeof e === 'string' ? e : e.toString();
+      if (e == null) {
+        return '';
+      }
+      if (typeof e === 'string') {
+        return e;
+      }
+      return e.toString();
     };
     const getSweepyIcon = () => (client == null ? '' : client.user.avatarURL());
     const fields: EmbedFieldData[] = [
