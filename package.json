@@ -14,16 +14,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pnpm lint-staged",
-      "pre-push": "pnpm test"
+      "pre-commit": "lint-staged",
+      "pre-push": "test"
     }
   },
   "lint-staged": {
-    "*.{js,ts}": [
-      "lint:fix",
-      "prettier --write",
-      "git add"
-    ]
+    "*.{js,ts}": "eslint --cache --fix"
   },
   "dependencies": {
     "@discordjs/collection": "^0.1.6",
