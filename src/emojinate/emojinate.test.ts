@@ -16,6 +16,12 @@ describe('emojinate', () => {
         ':regional_indicator_h: :regional_indicator_e: :regional_indicator_l: :regional_indicator_l: :regional_indicator_o:'
       );
     });
+    it('can convert "0123', () => {
+      const text = '0123';
+      expect(emojinateLine(text)).toEqual(
+        ':zero: :one: :two: :three:'
+      );
+    });
     it('can convert "Hello World."', () => {
       const text = 'Hello, World!!';
       const expected =
@@ -32,9 +38,10 @@ describe('emojinate', () => {
         '全角の :exclamation: や :question: も :regional_indicator_e: :regional_indicator_m: :regional_indicator_o: :regional_indicator_j: :regional_indicator_i: :regional_indicator_n: :regional_indicator_a: :regional_indicator_t: :regional_indicator_e: できる :bangbang: のか :interrobang:';
       expect(emojinateLine(text)).toEqual(expected);
     });
-    it('すでに :emoji: 化されたワードは変換しない', () => {
-      const text = 'すでに :emoji: 化されたワードは変換しない';
-      expect(emojinateLine(text)).toEqual(text);
+    it('すでに :emoji: 化されたワードは変換しない100', () => {
+      const text = 'すでに :emoji: 化されたワードは変換しない100';
+      const expected = 'すでに :emoji: 化されたワードは変換しない :100:';
+      expect(emojinateLine(text)).toEqual(expected);
     });
   });
 });
