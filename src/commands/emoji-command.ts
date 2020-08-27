@@ -1,5 +1,5 @@
 import { Command, CommandCategory } from './command';
-import { emojinate, emojinateLine } from '../emojinate';
+import { emojinate } from '../emojinate';
 import { HelpCommand } from './help-command';
 import { Client } from 'discord.js';
 
