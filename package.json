@@ -7,16 +7,11 @@
     "clean": "rm -rf ./dist",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint . --fix --ext .js,.ts",
+    "format": "prettier --write 'src/**/*.ts'",
     "build": "tsc",
     "test": "jest",
     "start": "ts-node src/index.ts",
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.(j|t)sx?": [
-      "pnpm lint:fix",
-      "git add"
-    ]
+    "pre-commit": "run-s lint:fix format"
   },
   "dependencies": {
     "@discordjs/collection": "^0.1.6",

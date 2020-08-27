@@ -11,7 +11,7 @@ describe('critter', () => {
     });
   });
   describe('hitPoint', () => {
-    it('Stone Hatch\'s HP was overried', () => {
+    it("Stone Hatch's HP was overried", () => {
       expect(Critters.stoneHatch.hitPoint).toEqual(200);
     });
   });
@@ -24,10 +24,10 @@ describe('critter', () => {
     });
   });
   describe('emojiName', () => {
-    it('Hatch\'s emoji code is `:hatch:`', () => {
+    it("Hatch's emoji code is `:hatch:`", () => {
       expect(Critters.hatch.emojiCode).toEqual(':hatch:');
     });
-    it('Sage Hatch\'s emoji code is `:sagehatch:`', () => {
+    it("Sage Hatch's emoji code is `:sagehatch:`", () => {
       expect(Critters.sageHatch.emojiCode).toEqual(':sagehatch:');
     });
   });

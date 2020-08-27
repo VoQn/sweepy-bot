@@ -18,8 +18,8 @@ describe('parseCommand', () => {
     });
   });
   describe('ignore any not command text', () => {
-    it('it\'s not command!', () => {
-      expect(parseCommand('it\'s not command!')).toBeNull();
+    it("it's not command!", () => {
+      expect(parseCommand("it's not command!")).toBeNull();
     });
   });
 });
