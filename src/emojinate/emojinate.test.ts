@@ -39,9 +39,12 @@ describe('emojinate', () => {
       expect(emojinateLine(text)).toEqual(expected);
     });
     it('すでに :emoji: 化されたワードは変換しない100', () => {
-      const text = 'すでに :emoji: 化されたワードは変換しない100';
-      const expected = 'すでに :emoji: 化されたワードは変換しない :100:';
-      expect(emojinateLine(text)).toEqual(expected);
+      const text = 'すでに :emoji: 化されたワードは変換しない';
+      expect(emojinateLine(text)).toEqual(text);
+    });
+    it('カスタム絵文字 <:emoji:012345679> も変換はスキップする', () => {
+      const text = 'カスタム絵文字 <:emoji:012345679> も変換はスキップする';
+      expect(emojinateLine(text)).toEqual(text);
     });
   });
 });
