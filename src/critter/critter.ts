@@ -127,10 +127,10 @@ export class Critter implements CritterInfo {
 
   public detailEmbed(client: Client): Response {
     const emoji = (name: string) => {
-      const t = getCustomEmoji(name, client);
-      if (typeof t === 'string') return t;
-      return t.toString();
+      const e = getCustomEmoji(name, client);
+      return typeof e === 'string' ? e : e.toString();
     };
+    const getSweepyIcon = () => (client == null ? '' : client.user.avatarURL());
     const fields: EmbedFieldData[] = [
       {
         name: ':globe_with_meridians: DataBase Link (_oni-db.com_)',
@@ -227,7 +227,7 @@ export class Critter implements CritterInfo {
       fields,
       footer: {
         text: 'Sweepy Bot',
-        iconURL: client.user.avatarURL(),
+        iconURL: getSweepyIcon(),
       },
       timestamp: new Date(),
     };

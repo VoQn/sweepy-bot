@@ -21,11 +21,9 @@ export const HelpCommand = Command.register({
   exec: (args, client) => {
     const emoji = (emojiName: string): string => {
       const e = getCustomEmoji(emojiName, client);
-      if (typeof e === 'string') {
-        return e;
-      }
-      return e.toString();
+      return typeof e === 'string' ? e : e.toString();
     };
+    const getSweepyIcon = () => (client == null ? '' : client.user.avatarURL());
     const sweepyEmoji = emoji('sweepy');
     const thinkdupe = emoji('thinkdupe');
 
@@ -61,7 +59,7 @@ export const HelpCommand = Command.register({
       });
     }
 
-    const sweepyIcon = client.user.avatarURL();
+    const sweepyIcon = getSweepyIcon();
 
     const author = {
       name: authorName,

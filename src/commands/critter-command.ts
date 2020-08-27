@@ -21,10 +21,7 @@ export const CritterCommand = Command.register({
   exec: (args: string, client: Client): Response => {
     const emoji = (emojiName: string): string => {
       const e = getCustomEmoji(emojiName, client);
-      if (typeof e === 'string') {
-        return e;
-      }
-      return e.toString();
+      return typeof e === 'string' ? e : e.toString();
     };
     const sadSweepyEmoji = emoji('sadsweepy');
     if (args.length < 2) {
