@@ -1,8 +1,7 @@
 name: Test
 
 on:
-  push:
-  # Run Test any Pull Request
+  # Run Test when Pull Request
   pull_request:
     types: [opened, synchronize]
 
