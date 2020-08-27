@@ -1,5 +1,6 @@
 import { ID, Multilingal, Decor, Response } from '../types';
-import { override, getCustomEmoji, blankField } from '../utils';
+import { override, blankField } from '../utils';
+import { getCustomEmoji } from '../emojinate';
 import { Client, MessageEmbedOptions, EmbedFieldData } from 'discord.js';
 import {
   CritterInfo,

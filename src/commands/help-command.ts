@@ -1,7 +1,6 @@
 import { CommandCategory, Command } from './command';
-import { getCustomEmoji } from '../utils';
 import { MessageEmbedOptions, EmbedFieldData } from 'discord.js';
-import { emojinate } from '../emojinate';
+import { emojinate, getCustomEmoji } from '../emojinate';
 
 export const HelpCommand = Command.register({
   category: CommandCategory.General,

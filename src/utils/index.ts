@@ -1,5 +1,3 @@
-import { Emoji, Client } from 'discord.js';
-
 /**
  * return new object with parameter by append values.
  * @param base base object
@@ -14,16 +12,6 @@ export const override = <T>(base: NonNullable<T>, append?: Partial<T>): T => {
     ret[key] = append[key];
   }
   return ret;
-};
-
-export const getCustomEmoji = (
-  name: string,
-  client?: Client
-): string | Emoji => {
-  if (client == null) {
-    return `:${name}:`;
-  }
-  return client.emojis.cache.find((v) => v.name === name);
 };
 
 export const blankField = (

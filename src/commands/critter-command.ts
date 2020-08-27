@@ -2,7 +2,7 @@ import { Command, CommandCategory } from './command';
 import { Client } from 'discord.js';
 import { Response } from '../types';
 import { Critter } from '../critter';
-import { getCustomEmoji } from '../utils';
+import { getCustomEmoji } from '../emojinate';
 
 export const CritterCommand = Command.register({
   category: CommandCategory.ONI,
