@@ -286,7 +286,6 @@ export const drecko = Critter.register({
   flavorText: {
     en: [
       'Dreckos are nonhostile critters that graze only on live Mealwood Plants.',
-
       'Their backsides are covered in thick woolly fibers that only grow in Hydrogen climates.',
     ].join('\n'),
   },
@@ -314,9 +313,10 @@ export const glossyDrecko = Critter.register(drecko, {
   id: 'dreckoplastic',
   imageURL: 'https://oni-db.com/static/media/dreckoplastic.8a5171c9.png',
   flavorText: {
-    en:
-      'Glossy Dreckos are nonhostile critters that graze only on live Mealwood Plants.\n' +
+    en:[
+'Glossy Dreckos are nonhostile critters that graze only on live Mealwood Plants.', 
       'Their backsides are covered in bioplastic scales that only grow in Hydrogen climates.',
+    ].join('\n'),
   },
   name: {
     en: 'Glossy Drecko',
