@@ -1,4 +1,5 @@
 # DiscordBotBase
+![Test](https://github.com/VoQn/sweepy-bot/workflows/Test/badge.svg)
 
 Glitch で DiscordBot を作るためのベースです。
 
