@@ -2,7 +2,8 @@ import { Critter } from './critter';
 
 export const morb: Critter = Critter.register({
   id: 'glom',
-  imageURL: 'https://oni-assistant.com/database/critters/glom',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fglom.png?v=1598520527653',
   name: {
     en: 'Morb',
     ja: 'モーブ',
@@ -26,10 +27,13 @@ export const morb: Critter = Critter.register({
 
 export const hatch: Critter = Critter.register({
   id: 'hatch',
-  imageURL: 'https://oni-db.com/static/media/hatch.9ac84da3.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fhatch.png?v=1598520584336',
   flavorText: {
     en:
       'Hatches excrete solid Coal as waste and may be uncovered by digging up Buried Objects.',
+    ja:
+      'ハッチは固形の **石炭** を排泄します。埋もれた物体を掘り起こすことで現れることがあります。',
   },
   name: {
     en: 'Hatch',
@@ -53,10 +57,13 @@ export const hatch: Critter = Critter.register({
 
 export const sageHatch: Critter = Critter.register(hatch, {
   id: 'hatchveggie',
-  imageURL: 'https://oni-db.com/static/media/hatchveggie.43f08b29.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fhatchveggie.png?v=1598520612706',
   flavorText: {
     en:
       'Sage Hatches excrete solid Coal as waste and enjoy burrowing into the ground.',
+    ja:
+      'セイジ ハッチは固形の **石炭** を排泄します。地面を掘り進むことを好みます。',
   },
   name: {
     en: 'Sage Hatch',
@@ -66,10 +73,13 @@ export const sageHatch: Critter = Critter.register(hatch, {
 
 export const stoneHatch: Critter = Critter.register(hatch, {
   id: 'hatchhard',
-  imageURL: 'https://oni-db.com/static/media/hatchhard.3c68ac41.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fhatchhard.png?v=1598520676450',
   flavorText: {
     en:
       'Stone Hatches excrete solid Coal as waste and enjoy burrowing into the ground.',
+    ja:
+      'ごつごつ ハッチは固形の **石炭** を排泄します。地面を掘り進むことを好みます。',
   },
   name: {
     en: 'Stone Hatch',
@@ -80,10 +90,13 @@ export const stoneHatch: Critter = Critter.register(hatch, {
 
 export const smoothHatch: Critter = Critter.register(hatch, {
   id: 'hatchmetal',
-  imageURL: 'https://oni-db.com/static/media/hatchmetal.81bf83ad.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fhatchmetal.png?v=1598520723070',
   flavorText: {
     en:
       'Smooth Hatches enjoy burrowing into the ground and excrete Refined Metal when fed Metal Ore.',
+    ja:
+      'つるつるハッチは地面を掘り進むことを好み、 **金属鉱石** を食べ **精錬金属** を排出します。',
   },
   name: {
     en: 'Smooth Hatch',
@@ -94,7 +107,8 @@ export const smoothHatch: Critter = Critter.register(hatch, {
 
 export const puft: Critter = Critter.register({
   id: 'puft',
-  imageURL: 'https://oni-db.com/static/media/puft.fcd3ca60.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fpuft.png?v=1598520877070',
   flavorText: {
     en:
       'Pufts are non-aggressive critters that excrete lumps of Slime with each breath.',
@@ -121,7 +135,8 @@ export const puft: Critter = Critter.register({
 
 export const puftPrince: Critter = Critter.register(puft, {
   id: 'puftalpha',
-  imageURL: 'https://oni-db.com/static/media/puftalpha.863f5c27.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fpuftalpha.png?v=1598520880541',
   flavorText: {
     en:
       'The Puft Prince is a lazy critter that excretes little lumps of Slime with each breath.',
@@ -138,7 +153,8 @@ export const puftPrince: Critter = Critter.register(puft, {
 
 export const spankyPuft: Critter = Critter.register(puft, {
   id: 'puftbleachstone',
-  imageURL: 'https://oni-db.com/static/media/puftbleachstone.ed1f806a.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fpuftbleachstone.png?v=1598520886300',
   flavorText: {
     en:
       'Squeaky Pufts are non-aggressive critters that excrete lumps of Bleachstone with each breath.',
@@ -155,7 +171,8 @@ export const spankyPuft: Critter = Critter.register(puft, {
 
 export const densePuft: Critter = Critter.register(puft, {
   id: 'puftoxylite',
-  imageURL: 'https://oni-db.com/static/media/puftoxylite.fd06a3d5.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fpuftoxylite.png?v=1598520891699',
   flavorText: {
     en:
       'Dense Pufts are non-aggressive critters that excrete condensed Oxylite with each breath.',
@@ -172,7 +189,8 @@ export const densePuft: Critter = Critter.register(puft, {
 
 export const pip: Critter = Critter.register({
   id: 'squirrel',
-  imageURL: 'https://oni-db.com/static/media/squirrel.cec15472.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fsquirrel.png?v=1598520896712',
   flavorText: {
     en: [
       'Pips are pesky, nonhostile critters that subsist on the branches of Arbor Trees.',
@@ -201,11 +219,17 @@ export const pip: Critter = Critter.register({
 
 export const poleShell: Critter = Critter.register({
   id: 'crab',
-  imageURL: 'https://oni-db.com/static/media/crab.49f7a55b.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fcrab.png?v=1598520174359',
   flavorText: {
-    en:
-      'Pokeshells are nonhostile critters that eat Polluted Dirt and Rot Piles.\n' +
+    en: [
+      'Pokeshells are nonhostile critters that eat Polluted Dirt and Rot Piles.',
       'The shells they leave behind after molting can be crushed into Lime.',
+    ].join('\n'),
+    ja: [
+      'ポークシェルは **汚染土** と **腐った塊** を食べる、非敵対的な動物です。',
+      '彼らが脱皮の後に残す殻は、粉砕して **石灰** にできます。',
+    ].join('\n'),
   },
   name: {
     en: 'Poke Shell',
@@ -229,11 +253,16 @@ export const poleShell: Critter = Critter.register({
 
 export const shoveVole = Critter.register({
   id: 'mole',
-  imageURL: 'https://oni-db.com/static/media/mole.047061d6.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fmole.png?v=1598520211207',
   flavorText: {
     en: [
       'Shove Voles are burrowing critters that eat the Regolith collected on terrestrial surfaces.',
       'They cannot burrow through Refined Metals.',
+    ].join('\n'),
+    ja: [
+      'ぐりぐりネズミは **表土** を掘り進みながら食べる動物です。',
+      '彼らは **精錬金属** を掘ることはできません。',
     ].join('\n'),
   },
   name: {
@@ -257,7 +286,8 @@ export const shoveVole = Critter.register({
 
 export const gassyMoo = Critter.register({
   id: 'moo',
-  imageURL: 'https://oni-db.com/static/media/moo.64332eff.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fmoo.png?v=1598521115804',
   flavorText: {
     en:
       'Moos are extraterrestrial critters that feed on Gas Grass and excrete Natural Gas.',
@@ -282,11 +312,16 @@ export const gassyMoo = Critter.register({
 
 export const drecko = Critter.register({
   id: 'drecko',
-  imageURL: 'https://oni-db.com/static/media/drecko.13441e24.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fdrecko.png?v=1598521097845',
   flavorText: {
     en: [
       'Dreckos are nonhostile critters that graze only on live Mealwood Plants.',
       'Their backsides are covered in thick woolly fibers that only grow in Hydrogen climates.',
+    ].join('\n'),
+    ja: [
+      'ドレッコは生育中の **ミールウッド** のみを食する、非敵対的な動物です',
+      '彼らの背面は **水素** 下でのみ伸びる厚いウール繊維で覆われています。',
     ].join('\n'),
   },
   name: {
@@ -311,11 +346,16 @@ export const drecko = Critter.register({
 
 export const glossyDrecko = Critter.register(drecko, {
   id: 'dreckoplastic',
-  imageURL: 'https://oni-db.com/static/media/dreckoplastic.8a5171c9.png',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fdreckoplastic.png?v=1598521105530',
   flavorText: {
     en: [
       'Glossy Dreckos are nonhostile critters that graze only on live Mealwood Plants.',
       'Their backsides are covered in bioplastic scales that only grow in Hydrogen climates.',
+    ].join('\n'),
+    ja: [
+      'つやつやドレッコは生育中の **ミールウッド** のみを食する、非敵対的な動物です。',
+      '彼らの背面は **水素** 下でのみ成長する生体プラスチックの鱗で覆われています。',
     ].join('\n'),
   },
   name: {
@@ -331,7 +371,7 @@ export const glossyDrecko = Critter.register(drecko, {
 export const slickster = Critter.register({
   id: 'oilfloater',
   imageURL:
-    'https://oni-assistant.com/assets/elements/oilfloater-edf4ba0749925568d5dddb3de4121a67655211d0088baa4115f425b8b0344c19.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Foilfloater.png?v=1598521124252',
   flavorText: {
     en:
       'Slicksters are slimy critters that consume Carbon Dioxide and exude Crude Oil.',
@@ -359,7 +399,7 @@ export const slickster = Critter.register({
 export const moltenSlickster = Critter.register(slickster, {
   id: 'oilfloaterhightemp',
   imageURL:
-    'https://oni-assistant.com/assets/elements/oilfloaterhightemp-5aaf984823606cdb18452bc94373edadcfc471bd627ec21e3ec5488f3cd2113c.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Foilfloaterhightemp.png?v=1598521137195',
   flavorText: {
     en:
       'Molten Slicksters are slimy critters that consume Carbon Dioxide and exude Petroleum.',
@@ -376,9 +416,8 @@ export const moltenSlickster = Critter.register(slickster, {
 
 export const longhairSlickster = Critter.register(slickster, {
   id: 'oilfloaterdecor',
-  // tslint:disable-next-line: max-line-length
   imageURL:
-    'https://oni-assistant.com/assets/elements/oilfloaterdecor-0fe382ede364d89d9edc455a589338b6da3e82c5d0c3084bb5ab4322a47e3604.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Foilfloaterdecor.png?v=1598521130893',
   flavorText: {
     en: [
       'Longhair Slicksters are friendly critters that consume Oxygen and thrive in close contact with Duplicant companions.',
@@ -405,11 +444,12 @@ export const longhairSlickster = Critter.register(slickster, {
 export const pacu = Critter.register({
   id: 'pacu',
   imageURL:
-    'https://oni-assistant.com/assets/elements/pacu-fa8d5c7f61c0cb2999b18bd695df51d0a5c40c0d69ce5bc94027de489c0ba11f.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fpacu.png?v=1598521315481',
   flavorText: {
-    en:
-      'Pacus are aquatic creatures that cannot live outside of Water or Contaminated Water.\n' +
+    en: [
+      'Pacus are aquatic creatures that cannot live outside of Water or Contaminated Water.',
       'Every organism in the known universe finds the Pacu extremely delicious.',
+    ].join('\n'),
   },
   name: {
     en: 'Pacu',
@@ -434,7 +474,7 @@ export const pacu = Critter.register({
 export const gulpFish = Critter.register(pacu, {
   id: 'pacucleaner',
   imageURL:
-    'https://oni-assistant.com/assets/elements/pacucleaner-21e4f8471460384a5380607e819711738452e5e71ca7cdf5aaef1856aace812f.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fpacucleaner.png?v=1598521328561',
   flavorText: {
     en:
       'Every organism in the known universe finds the Pacu extremely delicious.',
@@ -452,7 +492,7 @@ export const gulpFish = Critter.register(pacu, {
 export const tropicalPacu = Critter.register(pacu, {
   id: 'pacutropical',
   imageURL:
-    'https://oni-assistant.com/assets/elements/pacutropical-0c786e3ed85f8d9d2e42c5af9d45fecc6cf1d1bb27c0e44288a4368dfe5fa93b.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Fpacutropical.png?v=1598521334767',
   flavorText: {
     en:
       'Every organism in the known universe finds the Pacu extremely delicious.',
@@ -474,10 +514,11 @@ export const tropicalPacu = Critter.register(pacu, {
 export const shineBug = Critter.register({
   id: 'lightbug',
   imageURL:
-    'https://oni-assistant.com/assets/elements/lightbug-605a1ef77042284ad82c3d5e50e2abb693ceaedcee29366705c5999f6e7928a1.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Flightbug.png?v=1598520205072',
   flavorText: {
     en:
       'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
+    ja: 'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
   },
   name: {
     en: 'Shine Bug',
@@ -506,11 +547,16 @@ export const shineBug = Critter.register({
 export const sunBug = Critter.register(shineBug, {
   id: 'lightbugorange',
   imageURL:
-    'https://oni-assistant.com/assets/elements/lightbugorange-6ceb9fc4c6faeb91e695f69b928536092b50a70ba4a450657ef37125f1828510.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Flightbugorange.png?v=1598521459984',
   flavorText: {
-    en:
-      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+    en: [
+      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
       'The light of the Sun morph has been turned orange through selective breeding.',
+    ].join('\n'),
+    ja: [
+      'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
+      '太陽 バグの光の色は人為選択の結果、オレンジになりました。',
+    ].join('\n'),
   },
   name: {
     en: 'Sun Bug',
@@ -525,11 +571,16 @@ export const sunBug = Critter.register(shineBug, {
 export const coralBug = Critter.register(shineBug, {
   id: 'lightbugpink',
   imageURL:
-    'https://oni-assistant.com/assets/elements/lightbugpink-1f57547a1156e465b9561cb5b1a711a92682e6be9cc026ecca9f6ea011e75988.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Flightbugpink.png?v=1598521615825',
   flavorText: {
-    en:
-      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+    en: [
+      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
       'The light of the Coral morph has been turned pink through selective breeding.',
+    ].join('\n'),
+    ja: [
+      'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
+      '珊瑚 バグの光の色は人為選択の結果、ピンクになりました。',
+    ].join('\n'),
   },
   name: {
     en: 'Coral Bug',
@@ -544,11 +595,16 @@ export const coralBug = Critter.register(shineBug, {
 export const royalBug = Critter.register(shineBug, {
   id: 'lightbugpurple',
   imageURL:
-    'https://oni-assistant.com/assets/elements/lightbugpurple-a546797c1be64f9cf0c8c02498c906d3c3c18d157c77e393701079d49c58f476.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Flightbugpurple.png?v=1598521610291',
   flavorText: {
-    en:
-      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+    en: [
+      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
       'The light of the Royal morph has been turned purple through selective breeding.',
+    ].join('\n'),
+    ja: [
+      'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
+      'ロイヤル バグの光の色は人為選択の結果、紫になりました。',
+    ].join('\n'),
   },
   name: {
     en: 'Royal Bug',
@@ -563,10 +619,12 @@ export const royalBug = Critter.register(shineBug, {
 export const abyssBug = Critter.register(shineBug, {
   id: 'lightbugblack',
   imageURL:
-    'https://oni-assistant.com/assets/elements/lightbugblack-d0d01483be33464c7eb4b7be87e7c81a8a9e15b48327ce96883394bbaaeacf8c.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Flightbugblack.png?v=1598520193369',
   flavorText: {
     en:
       'This Shine Bug emits no Light, but it makes up for it by having an excellent personality.',
+    ja:
+      'このシャインバグは **光源** になりませんが、素晴らしい個性がそれを補っています。',
   },
   name: {
     en: 'Abyss Bug',
@@ -584,9 +642,17 @@ export const abyssBug = Critter.register(shineBug, {
 
 export const azureBug = Critter.register(shineBug, {
   id: 'lightbugblue',
-  imageURL: '',
+  imageURL:
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Flightbugblue.png?v=1598521602991',
   flavorText: {
-    en: '',
+    en: [
+      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
+      'The light of the Azure morph has been turned blue through selective breeding.',
+    ].join('\n'),
+    ja: [
+      'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
+      '青空 バグの光の色は人為選択の結果、青色になりました。',
+    ].join('\n'),
   },
   name: {
     en: 'Azure Bug',
@@ -600,13 +666,17 @@ export const azureBug = Critter.register(shineBug, {
 
 export const radiantBug = Critter.register(shineBug, {
   id: 'lightbugcrystal',
-  // tslint:disable-next-line: max-line-length
   imageURL:
-    'https://oni-assistant.com/assets/elements/lightbugcrystal-c8f4e64126ebdfdedde73dc153a7215e0549d553f12de93fb4500baa5593ffd6.png',
+    'https://cdn.glitch.com/90b71f4e-a02c-4bc1-aab0-41d89538239f%2Flightbugcrystal.png?v=1598520187782',
   flavorText: {
-    en:
-      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.\n' +
+    en: [
+      'Shine Bugs emit a soft Light in hopes of attracting more of their kind for company.',
       'The light of the Radiant morph has been amplified through selective breeding.',
+    ].join('\n'),
+    ja: [
+      'シャインバグは仲間を引き寄せるために柔らかい **光** を放ちます。',
+      '煌き バグの光は人為選択の結果、より輝くようになりました。',
+    ].join('\n'),
   },
   name: {
     en: 'Radiant Bug',
