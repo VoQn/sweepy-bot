@@ -9,6 +9,7 @@ export const emojinateLine = (text: string): string => {
   while (isRemain()) {
     let test: { matched: string; rest: string } = null;
 
+    // Escape Custom Emoji
     test = trimByRegexp(/^<:[A-Za-z0-9_]+:[0-9]+>/, rest);
     if (test) {
       result += test.matched;
