@@ -1,20 +1,5 @@
 import { Emoji, Client } from 'discord.js';
 
-const decimalShift = (x: number, p: number): number => {
-  const xs = `${x}`.split('e');
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-  return +(xs[0] + 'e' + (xs[1] ? +xs[1] + p : p));
-};
-
-/**
- * round a number to any digit.
- * @param x target number
- * @param precision precision digits
- */
-export const round = (x: number, precision: number): number => {
-  return decimalShift(Math.round(decimalShift(x, precision)), -precision);
-};
-
 /**
  * return new object with parameter by append values.
  * @param base base object
@@ -48,3 +33,4 @@ export const blankField = (
 };
 
 export * from './text';
+export { round } from './math';
