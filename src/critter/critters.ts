@@ -231,7 +231,8 @@ export const shoveVole = Critter.register({
   id: 'mole',
   imageURL: 'https://oni-db.com/static/media/mole.047061d6.png',
   flavorText: {
-    en: ['Shove Voles are burrowing critters that eat the Regolith collected on terrestrial surfaces.','They cannot burrow through Refined Metals.',].join('\n'),
+    en: ['Shove Voles are burrowing critters that eat the Regolith collected on terrestrial surfaces.','They cannot burrow through Refined Metals.',
+    ].join('\n'),
   },
   name: {
     en: 'Shove Vole',
@@ -282,9 +283,9 @@ export const drecko = Critter.register({
   imageURL: 'https://oni-db.com/static/media/drecko.13441e24.png',
   flavorText: {
     en:
-      'Dreckos are nonhostile critters that graze only on live Mealwood Plants.\n' +
-      '\n' +
-      'Their backsides are covered in thick woolly fibers that only grow in Hydrogen climates.',
+      ['Dreckos are nonhostile critters that graze only on live Mealwood Plants.',
+      
+      'Their backsides are covered in thick woolly fibers that only grow in Hydrogen climates.'].join('\n'),
   },
   name: {
     en: 'Drecko',
