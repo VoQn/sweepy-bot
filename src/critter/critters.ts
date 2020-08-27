@@ -380,9 +380,10 @@ export const longhairSlickster = Critter.register(slickster, {
   imageURL:
     'https://oni-assistant.com/assets/elements/oilfloaterdecor-0fe382ede364d89d9edc455a589338b6da3e82c5d0c3084bb5ab4322a47e3604.png',
   flavorText: {
-    en:
-      'Longhair Slicksters are friendly critters that consume Oxygen and thrive in close contact with Duplicant companions.\n' +
+    en:[
+      'Longhair Slicksters are friendly critters that consume Oxygen and thrive in close contact with Duplicant companions.',
       'Longhairs have extremely beautiful and luxurious coats.',
+    ].join('\n')
   },
   name: {
     en: 'Longhair Slickster',
