@@ -175,8 +175,8 @@ export const pip: Critter = Critter.register({
   imageURL: 'https://oni-db.com/static/media/squirrel.cec15472.png',
   flavorText: {
     en:
-      'Pips are pesky, nonhostile critters that subsist on the branches of Arbor Trees.\n' +
-      'They are known to bury Seeds in the ground whenever they can find a suitable area with enough space.',
+      ['Pips are pesky, nonhostile critters that subsist on the branches of Arbor Trees.',
+      'They are known to bury Seeds in the ground whenever they can find a suitable area with enough space.'].join('\n'),
   },
   name: {
     en: 'Pip',
@@ -231,8 +231,8 @@ export const shoveVole = Critter.register({
   imageURL: 'https://oni-db.com/static/media/mole.047061d6.png',
   flavorText: {
     en:
-      'Shove Voles are burrowing critters that eat the Regolith collected on terrestrial surfaces.\n' +
-      'They cannot burrow through Refined Metals.',
+      ['Shove Voles are burrowing critters that eat the Regolith collected on terrestrial surfaces.', 
+      'They cannot burrow through Refined Metals.'].join('\n'),
   },
   name: {
     en: 'Shove Vole',
