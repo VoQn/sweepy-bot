@@ -1,8 +1,8 @@
 import { Response } from '../types';
 import { Command, CommandCategory } from './command';
 
-import cheatsheet_data from '../data/cheatsheet.json';
-const cheatsheets = Object.values(cheatsheet_data);
+import cheatsheetData from '../data/cheatsheet.json';
+const cheatsheets = Object.values(cheatsheetData);
 type Cheatsheet = { name: string, url: string, keywords: Array<string> }
 
 function getNames() {
