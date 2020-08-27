@@ -14,7 +14,7 @@ export const EmojiCommand = Command.register({
   },
   exec: (args: string, client?: Client) => {
     if (args) {
-      return { content: emojinateLine(args) };
+      return { content: emojinate(args) };
     }
     // 引数が無かったら使い方を返す
     return HelpCommand.exec('emoji', client);
