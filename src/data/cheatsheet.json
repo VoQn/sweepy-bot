@@ -1,34 +1,42 @@
 {
   "oxygenBuilds": {
     "name": "酸素と人数",
+    "keywords": ["酸素", "人口", "人数"],
     "url": "https://gyazo.com/75dea51d415b74b6082d75fcdda8f08d"
   },
   "plantsAndFeeding": {
     "name": "作物の株数",
+    "keywords": ["作物", "株数", "農業", "人口", "人数"],
     "url": "https://gyazo.com/703af5dc05131d973eedf3f6280232f6"
   },
   "plantsAndTempareture": {
     "name": "作物の適温",
+    "keywords": ["作物", "農業", "適温", "温度"],
     "url": "https://gyazo.com/9bc68e5a03f78600a18e63c82dcbecd6"
   },
   "gasWeight": {
     "name": "気体の比重",
+    "keywords": ["気体", "ガス", "比重", "重さ", "上下"],
     "url": "https://gyazo.com/539b75221b72c0defc184ea84db0c7f9"
   },
   "liquidMass": {
     "name": "液体の水圧",
+    "keywords": ["液体", "圧力", "水圧"],
     "url": "https://gyazo.com/19017bac9164b8dd1160d2590187591c"
   },
   "liquidWeight": {
     "name": "液体の比重",
+    "keywords": ["液体", "比重", "重さ", "上下"],
     "url": "https://gyazo.com/7d5e226199facb9bb0e5b852d2210df1"
   },
   "transitTubeDoAndDonts": {
     "name": "移動チューブ",
+    "keywords": ["チューブ", "配管"],
     "url": "https://gyazo.com/161b5e104c43e12aeef3ddc36cfa04fb"
   },
   "aquatunerBypassing": {
     "name": "液体クーラー",
+    "keywords": ["液体", "温度", "配管"],
     "url": "https://gyazo.com/06375d94aea03932592895cfc064dd1d"
   }
 }

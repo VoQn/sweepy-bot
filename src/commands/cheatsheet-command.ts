@@ -3,23 +3,15 @@ import { Command, CommandCategory } from './command';
 
 import cheatsheet_data from '../data/cheatsheet.json';
 const cheatsheets = Object.values(cheatsheet_data);
-type Cheatsheet = { name: string, url: string }
+type Cheatsheet = { name: string, url: string, keywords: Array<string> }
 
-function getKeywords() {
+function getNames() {
   return ['```', ...cheatsheets.map((o) => o.name), '```'].join('\n')
 }
 
 const defaultAnswer = ':thinking: なんのこと？';
 
-function getAnswer(arg: string): string {
-  // keywordと完全一致検索する
-  const exact: Cheatsheet = exact_match(arg);
-  if (exact !== null) {
-    return exact.url;
-  }
-
-  // keywordと部分一致検索する
-  const choice: Array<Cheatsheet> = partial_match(arg);
+function aimaiAnswer(choice :Array<Cheatsheet>) {
   if (choice.length === 1) {
     const name = choice[0].name;
     const url = choice[0].url;
@@ -41,6 +33,29 @@ function getAnswer(arg: string): string {
       '```',
     ].join('\n');
   }
+  return null;
+}
+
+function getAnswer(arg: string): string {
+  // argとnameを完全一致検索する
+  const exact: Cheatsheet | null = exact_match(arg);
+  if (exact) {
+    return exact.url;
+  }
+
+  // argを分解してkeyword検索する
+  const choice: Array<Cheatsheet> = keyword_match(arg);
+  const answer = aimaiAnswer(choice);
+  if(answer) {
+    return answer;
+  }
+
+  // argとnameを部分一致検索する
+  const choice2: Array<Cheatsheet> = partial_match(arg);
+  const answer2 = aimaiAnswer(choice2);
+  if (answer2) {
+    return answer2;
+  }
 
   return defaultAnswer;
 }
@@ -51,6 +66,16 @@ function exact_match(arg: string): Cheatsheet | null {
 
 function partial_match(arg: string): Array < Cheatsheet > {
   return cheatsheets.filter((o) => o.name.includes(arg));
+}
+
+function keyword_match(arg: string): Array < Cheatsheet > {
+  const keywords: string[] = arg.split(/\s/);
+  let result = cheatsheets.slice();
+  for(const keyword of keywords) {
+    result = result.filter(o => o.keywords.some(k => k.includes(keyword)))
+  }
+
+  return result;
 }
 
 export const CheatsheetCommand: Command = Command.register({
@@ -74,7 +99,7 @@ export const CheatsheetCommand: Command = Command.register({
   exec: (args: string): Response => {
     if (!args || args.length == 0) {
       // チートシート一覧
-      return { content: getKeywords() };
+      return { content: getNames() };
     } else if (args.length < 2) {
       return { content: ':thinking: もうちょっとヒントちょうだい (2文字以上欲しがっています)' };
     } else {
