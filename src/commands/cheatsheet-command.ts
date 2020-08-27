@@ -38,20 +38,20 @@ function aimaiAnswer(choice :Array<Cheatsheet>) {
 
 function getAnswer(arg: string): string {
   // argとnameを完全一致検索する
-  const exact: Cheatsheet | null = exact_match(arg);
+  const exact: Cheatsheet | null = exactMatch(arg);
   if (exact) {
     return exact.url;
   }
 
   // argを分解してkeyword検索する
-  const choice: Array<Cheatsheet> = keyword_match(arg);
+  const choice: Array<Cheatsheet> = keywordMatch(arg);
   const answer = aimaiAnswer(choice);
   if(answer) {
     return answer;
   }
 
   // argとnameを部分一致検索する
-  const choice2: Array<Cheatsheet> = partial_match(arg);
+  const choice2: Array<Cheatsheet> = partialMatch(arg);
   const answer2 = aimaiAnswer(choice2);
   if (answer2) {
     return answer2;
@@ -60,15 +60,15 @@ function getAnswer(arg: string): string {
   return defaultAnswer;
 }
 
-function exact_match(arg: string): Cheatsheet | null {
+function exactMatch(arg: string): Cheatsheet | null {
   return cheatsheets.find((o) => o.name === arg);
 }
 
-function partial_match(arg: string): Array < Cheatsheet > {
+function partialMatch(arg: string): Array < Cheatsheet > {
   return cheatsheets.filter((o) => o.name.includes(arg));
 }
 
-function keyword_match(arg: string): Array < Cheatsheet > {
+function keywordMatch(arg: string): Array < Cheatsheet > {
   const keywords: string[] = arg.split(/\s/);
   let result = cheatsheets.slice();
   for(const keyword of keywords) {
