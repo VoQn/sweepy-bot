@@ -19,4 +19,15 @@ describe('CheatsheetCommand', () => {
       }
     });
   });
+
+  describe('message with keywords', () => {
+    it('returns exact one', () => {
+      expect(command.exec("液体 上下").content).toMatch(cheatsheets.liquidWeight.url);
+    });
+
+    it('returns some two', () => {
+      expect(command.exec("人数").content).toMatch(cheatsheets.oxygenBuilds.name);
+      expect(command.exec("人数").content).toMatch(cheatsheets.plantsAndFeeding.name);
+    });
+  });
 });
