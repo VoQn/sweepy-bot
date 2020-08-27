@@ -313,8 +313,8 @@ export const glossyDrecko = Critter.register(drecko, {
   id: 'dreckoplastic',
   imageURL: 'https://oni-db.com/static/media/dreckoplastic.8a5171c9.png',
   flavorText: {
-    en:[
-'Glossy Dreckos are nonhostile critters that graze only on live Mealwood Plants.', 
+    en: [
+      'Glossy Dreckos are nonhostile critters that graze only on live Mealwood Plants.',
       'Their backsides are covered in bioplastic scales that only grow in Hydrogen climates.',
     ].join('\n'),
   },
