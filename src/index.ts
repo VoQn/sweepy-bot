@@ -12,7 +12,7 @@ if (process.env) {
     console.log('DISCORD_BOT_TOKENが設定されていません。');
     process.exit(0);
   }
-  dock.start(TOKEN);
+  void dock.start(TOKEN);
 }
 
 const app = express();
@@ -35,11 +35,11 @@ app.post('/', (req, res) => {
     }
     const dataObject = querystring.parse(data);
     console.group('Server Requested');
-    console.log('post:' + dataObject.type);
+    console.log('post:' + dataObject.type.toLocaleString());
     if (dataObject.type === 'wake') {
       console.log('Woke up in post');
       if (client.readyTimestamp) {
-        console.log("yay, and I'm alive since:" + client.readyTimestamp);
+        console.log(`yay, and I'm alive since: ${client.readyTimestamp}`);
       } else {
         console.log("but I'm dead");
       }

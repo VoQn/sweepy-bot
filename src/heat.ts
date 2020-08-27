@@ -4,7 +4,7 @@ import { round } from './utils';
 export const convertKelvinTemp = (
   temp: number,
   unit: TemparetureUnit = TemparetureUnit.Celsius
-) => {
+): number => {
   switch (unit) {
     case TemparetureUnit.Celsius:
       return round(temp - 273.15, 2);

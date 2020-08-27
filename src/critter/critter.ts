@@ -45,7 +45,7 @@ const findCritterByName = (table: Map<ID, Critter>, query: string | RegExp) => {
   const matched: Critter[] = [];
   for (const critter of table.values()) {
     const name = critter.name[lang].replace(/[^\S\n]+/, '');
-    if (name.match(pattern)) {
+    if (pattern.test(name)) {
       matched.push(critter);
     }
   }
@@ -126,7 +126,11 @@ export class Critter implements CritterInfo {
   }
 
   public detailEmbed(client: Client): Response {
-    const emoji = (name: string) => getCustomEmoji(name, client);
+    const emoji = (name: string) => {
+      const t = getCustomEmoji(name, client);
+      if (typeof t === 'string') return t;
+      return t.toString();
+    };
     const fields: EmbedFieldData[] = [
       {
         name: ':globe_with_meridians: DataBase Link (_oni-db.com_)',

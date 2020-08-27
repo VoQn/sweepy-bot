@@ -2,7 +2,6 @@ import { AnswerTalker } from '../answer-talker';
 import { Response } from '../types';
 import { Command, CommandCategory } from './command';
 import cheatsheets from '../../data/cheatsheet.json';
-import { Client } from 'discord.js';
 
 const answerTalker = new AnswerTalker(
   Object.values(cheatsheets),
@@ -27,7 +26,7 @@ export const CheatsheetCommand: Command = Command.register({
       '```!cheatsheet 比重```',
     ].join('\n'),
   },
-  exec: (args: string, _client: Client): Response => {
+  exec: (args: string): Response => {
     if (!args) {
       // チートシート一覧
       return { content: answerTalker.getKeywords() };

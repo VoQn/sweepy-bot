@@ -1,13 +1,13 @@
 export type ParseResult = { command: string; args: string };
 
 export const parseCommand = (text: string): ParseResult => {
-  const withArgs = /^\!(?<command>\S+)[^\S\n]+(?<args>.+)$/;
-  const withoutArgs = /^\!(?<command>\S+)\s?$/;
+  const withArgs = /^!(?<command>\S+)[^\S\n]+(?<args>.+)$/;
+  const withoutArgs = /^!(?<command>\S+)\s?$/;
   if (withArgs.test(text)) {
-    return text.match(withArgs).groups as ParseResult;
+    return withArgs.exec(text).groups as ParseResult;
   }
   if (withoutArgs.test(text)) {
-    const { command } = text.match(withoutArgs).groups;
+    const { command } = withoutArgs.exec(text).groups;
     return { command, args: '' };
   }
   return null;

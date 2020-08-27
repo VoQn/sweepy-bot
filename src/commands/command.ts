@@ -22,7 +22,7 @@ export interface Command {
   exec: (args: string, client?: Discord.Client) => Response;
 }
 
-export const compare = (a: Command, b: Command) => {
+export const compare = (a: Command, b: Command): number => {
   if (a.category !== b.category) {
     return a.category - b.category;
   }

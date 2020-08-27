@@ -2,12 +2,24 @@ import { numberEmojis, punctuationEmojis } from './preset';
 import { trimByRegexp } from '../utils';
 
 export const emojinateLine = (text: string): string => {
-  let result: string = '';
+  let result = '';
   let rest = text;
   const isRemain = () => rest.length > 0;
   let isAfterEmoji = false;
   while (isRemain()) {
-    let test: string[] = null;
+    let test: { matched: string; rest: string } = null;
+
+    // already emoji code
+    test = trimByRegexp(/^:[A-Za-z0-9_]+:/, rest);
+    if (test) {
+      // if (result.length > 0) {
+      //   result += ' ';
+      // }
+      result += test.matched;
+      rest = test.rest;
+      isAfterEmoji = false;
+      continue;
+    }
 
     // :100:
     test = trimByRegexp(/^100/, rest);
@@ -16,7 +28,7 @@ export const emojinateLine = (text: string): string => {
         result += ' ';
       }
       result += ':100:';
-      rest = test[1];
+      rest = test.rest;
       isAfterEmoji = true;
       continue;
     }
@@ -28,7 +40,7 @@ export const emojinateLine = (text: string): string => {
         result += ' ';
       }
       result += numberEmojis[10];
-      rest = test[1];
+      rest = test.rest;
       isAfterEmoji = true;
       continue;
     }
@@ -39,21 +51,25 @@ export const emojinateLine = (text: string): string => {
       if (result.length > 0) {
         result += ' ';
       }
-      result += numberEmojis[parseInt(test[0], 10)];
-      rest = test[1];
+      result += numberEmojis[parseInt(test.matched, 10)];
+      rest = test.rest;
       isAfterEmoji = true;
       continue;
     }
 
     // punctuation
+<<<<<<< HEAD
     test = trimByRegexp(/^([\?？]|[\!！]([\!！]|[\?？])?)/, rest);
+=======
+    test = trimByRegexp(/^([?？]|[!！]([!！?？])?)/, rest);
+>>>>>>> voqn
     if (test) {
       if (result.length > 0) {
         result += ' ';
       }
-      test[0] = test[0].replace(/！/, '!').replace(/？/, '?');
-      result += punctuationEmojis[test[0] as '!' | '?' | '!!' | '!?'];
-      rest = test[1];
+      const matched = test.matched.replace(/！/, '!').replace(/？/, '?');
+      result += punctuationEmojis[matched as '!' | '?' | '!!' | '!?'];
+      rest = test.rest;
       isAfterEmoji = true;
       continue;
     }
@@ -64,8 +80,8 @@ export const emojinateLine = (text: string): string => {
       if (result.length > 0) {
         result += ' ';
       }
-      result += `:regional_indicator_${test[0].toLowerCase()}:`;
-      rest = test[1];
+      result += `:regional_indicator_${test.matched.toLowerCase()}:`;
+      rest = test.rest;
       isAfterEmoji = true;
       continue;
     }
@@ -76,8 +92,8 @@ export const emojinateLine = (text: string): string => {
       if (result.length > 0 || isAfterEmoji) {
         result += ' ';
       }
-      result += ' ';
-      rest = test[1];
+      // result += ' ';
+      rest = test.rest;
       isAfterEmoji = false;
       continue;
     }
@@ -88,8 +104,8 @@ export const emojinateLine = (text: string): string => {
       if (isAfterEmoji) {
         result += ' ';
       }
-      result += test[0];
-      rest = test[1];
+      result += test.matched;
+      rest = test.rest;
       isAfterEmoji = false;
       continue;
     }
@@ -99,6 +115,6 @@ export const emojinateLine = (text: string): string => {
   return result;
 };
 
-export const emojinate = (text: string) => {
+export const emojinate = (text: string): string => {
   return text.split(/\n/).map(emojinateLine).join('\n');
 };

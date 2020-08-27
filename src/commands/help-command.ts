@@ -7,26 +7,35 @@ export const HelpCommand = Command.register({
   category: CommandCategory.General,
   name: 'Help',
   help: {
-    summery:
-      '_このコマンドだよ。応えられるコマンド一覧を出すよ_\n' + '```!help```',
-    description:
-      '_このコマンドだよ。応えられるコマンド一覧を出すよ_\n' +
-      '```!help```\n' +
-      '_特定のコマンドの詳しい説明も出せるよ_\n' +
+    summery: [
+      '_このコマンドだよ。応えられるコマンド一覧を出すよ_',
+      '```!help```',
+    ].join('\n'),
+    description: [
+      '_このコマンドだよ。応えられるコマンド一覧を出すよ_',
+      '```!help```',
+      '_特定のコマンドの詳しい説明も出せるよ_',
       '```!help !critter```',
+    ].join('\n'),
   },
   exec: (args, client) => {
-    const emoji = (emojiName: string) => getCustomEmoji(emojiName, client);
-
+    const emoji = (emojiName: string): string => {
+      const e = getCustomEmoji(emojiName, client);
+      if (typeof e === 'string') {
+        return e;
+      }
+      return e.toString();
+    };
     const sweepyEmoji = emoji('sweepy');
     const thinkdupe = emoji('thinkdupe');
 
     let title = emojinate('about');
+    const authorName = 'Sweepy Bot';
     let content = `:information_source:  ${sweepyEmoji} _が答えるよ_`;
     let description =
       '_テキストチャットのログを読んで、行頭の_ `!` _で始まる各コマンドに応答します。_';
     const fields: EmbedFieldData[] = [];
-    const cmdName = args.replace(/^\!/, '');
+    const cmdName = args.replace(/^!/, '');
 
     let viewAllHelp = true;
     if (args) {
@@ -55,11 +64,11 @@ export const HelpCommand = Command.register({
     const sweepyIcon = client.user.avatarURL();
 
     const author = {
-      name: 'Sweepy Bot',
+      name: authorName,
       iconURL: sweepyIcon,
     };
     const footer = {
-      text: 'Sweepy Bot',
+      text: authorName,
       iconURL: sweepyIcon,
     };
     const color = 0xfc6600;
@@ -75,9 +84,6 @@ export const HelpCommand = Command.register({
       timestamp: new Date(),
     };
 
-    return {
-      content,
-      options: { embed },
-    };
+    return { content, options: { embed } };
   },
 });

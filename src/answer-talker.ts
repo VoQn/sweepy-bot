@@ -81,6 +81,7 @@ export class AnswerTalker {
   }
 
   partial_match(arg: string): Entry[] {
+    // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
     return this.dictionary.filter((o) => o[this.keyword].match(arg));
   }
 }

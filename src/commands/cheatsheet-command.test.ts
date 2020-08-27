@@ -6,7 +6,7 @@ describe('CheatsheetCommand', () => {
 
   describe('message without args', () => {
     it('returns contents including all names', () => {
-      for (let { name } of Object.values(cheatsheets)) {
+      for (const { name } of Object.values(cheatsheets)) {
         expect(command.exec('').content).toMatch(name);
       }
     });
@@ -14,7 +14,7 @@ describe('CheatsheetCommand', () => {
 
   describe('message with args', () => {
     it('returns contents including all names', () => {
-      for (let { name, url } of Object.values(cheatsheets)) {
+      for (const { name, url } of Object.values(cheatsheets)) {
         expect(command.exec(name).content).toMatch(url);
       }
     });
