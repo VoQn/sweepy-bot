@@ -13,14 +13,12 @@ describe('emojinate', () => {
     it('can convert "hello"', () => {
       const text = 'hello';
       expect(emojinateLine(text)).toEqual(
-        ':regional_indicator_h: :regional_indicator_e: :regional_indicator_l: :regional_indicator_l: :regional_indicator_o:'
+        ':regional_indicator_h: :regional_indicator_e: :regional_indicator_l: :regional_indicator_l: :regional_indicator_o:',
       );
     });
     it('can convert "0123', () => {
       const text = '0123';
-      expect(emojinateLine(text)).toEqual(
-        ':zero: :one: :two: :three:'
-      );
+      expect(emojinateLine(text)).toEqual(':zero: :one: :two: :three:');
     });
     it('can convert "Hello World."', () => {
       const text = 'Hello, World!!';

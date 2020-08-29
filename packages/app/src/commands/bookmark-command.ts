@@ -3,6 +3,13 @@ import { Client, EmbedFieldData, MessageEmbedOptions } from 'discord.js';
 import { Response } from '../types';
 import bookmarks from '../data/bookmark.json';
 
+interface Bookmark {
+  name: string;
+  alias: string;
+  url: string;
+  keywords: string[];
+}
+
 export const BookmarkCommand = Command.register({
   category: CommandCategory.ONI,
   name: 'Bookmark',
@@ -16,7 +23,7 @@ export const BookmarkCommand = Command.register({
     const color = 0xfcfc00;
     const fields: EmbedFieldData[] = [];
 
-    for (const siteInfo of Object.values(bookmarks)) {
+    for (const siteInfo of Object.values<Bookmark>(bookmarks)) {
       fields.push({
         name: siteInfo.name,
         value: `:link: _${siteInfo.url}_`,

@@ -3,26 +3,20 @@ import { Command, CommandCategory } from './command';
 
 import cheatsheetData from '../data/cheatsheet.json';
 const cheatsheets = Object.values(cheatsheetData);
-type Cheatsheet = { name: string, url: string, keywords: Array<string> }
+type Cheatsheet = { name: string; url: string; keywords: Array<string> };
 
 function getNames() {
-  return ['```', ...cheatsheets.map((o) => o.name), '```'].join('\n')
+  return ['```', ...cheatsheets.map((o) => o.name), '```'].join('\n');
 }
 
 const defaultAnswer = ':thinking: なんのこと？';
 
-function aimaiAnswer(choice :Array<Cheatsheet>) {
+function aimaiAnswer(choice: Array<Cheatsheet>) {
   if (choice.length === 1) {
     const name = choice[0].name;
     const url = choice[0].url;
 
-    return [
-      ':bulb: もしかして、これ？',
-      '```',
-      name,
-      '```',
-      url,
-    ].join('\n');
+    return [':bulb: もしかして、これ？', '```', name, '```', url].join('\n');
   }
 
   if (choice.length > 1) {
@@ -46,7 +40,7 @@ function getAnswer(arg: string): string {
   // argを分解してkeyword検索する
   const choice: Array<Cheatsheet> = keywordMatch(arg);
   const answer = aimaiAnswer(choice);
-  if(answer) {
+  if (answer) {
     return answer;
   }
 
@@ -64,15 +58,15 @@ function exactMatch(arg: string): Cheatsheet | null {
   return cheatsheets.find((o) => o.name === arg);
 }
 
-function partialMatch(arg: string): Array < Cheatsheet > {
+function partialMatch(arg: string): Array<Cheatsheet> {
   return cheatsheets.filter((o) => o.name.includes(arg));
 }
 
-function keywordMatch(arg: string): Array < Cheatsheet > {
+function keywordMatch(arg: string): Array<Cheatsheet> {
   const keywords: string[] = arg.split(/\s/);
   let result = cheatsheets.slice();
-  for(const keyword of keywords) {
-    result = result.filter(o => o.keywords.some(k => k.includes(keyword)))
+  for (const keyword of keywords) {
+    result = result.filter((o) => o.keywords.some((k) => k.includes(keyword)));
   }
 
   return result;
@@ -101,10 +95,13 @@ export const CheatsheetCommand: Command = Command.register({
       // チートシート一覧
       return { content: getNames() };
     } else if (args.length < 2) {
-      return { content: ':thinking: もうちょっとヒントちょうだい (2文字以上欲しがっています)' };
+      return {
+        content:
+          ':thinking: もうちょっとヒントちょうだい (2文字以上欲しがっています)',
+      };
     } else {
       // チートシートの返答
       return { content: getAnswer(args) };
     }
-  }
+  },
 });

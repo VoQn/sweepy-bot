@@ -1,8 +1,7 @@
-
 const decimalShift = (x: number, p: number): number => {
   const xs = `${x}`.split('e');
   // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-  return parseFloat(`${xs[0]}e${xs[1]? parseFloat(xs[1]) + p : p}`);
+  return parseFloat(`${xs[0]}e${xs[1] ? parseFloat(xs[1]) + p : p}`);
   // return +(xs[0] + 'e' + (xs[1] ? +xs[1] + p : p));
 };
 

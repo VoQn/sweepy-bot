@@ -15,7 +15,7 @@ export const override = <T>(base: NonNullable<T>, append?: Partial<T>): T => {
 };
 
 export const blankField = (
-  inline = false
+  inline = false,
 ): { name: string; value: string; inline?: boolean } => {
   return { name: '\u200B', value: '\u200B', inline };
 };

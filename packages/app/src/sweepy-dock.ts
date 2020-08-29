@@ -23,11 +23,11 @@ export class SweepyDock {
       this.client.once('ready', () => void this.onReady());
       this.client.on(
         'message',
-        (message: Message) => void this.onMessage(message)
+        (message: Message) => void this.onMessage(message),
       );
       this.client.on(
         'guildMemberAdd',
-        (member: GuildMember) => void this.onJoinNewMember(member)
+        (member: GuildMember) => void this.onJoinNewMember(member),
       );
     }
   }
@@ -55,7 +55,7 @@ export class SweepyDock {
     };
     if (message.mentions.has(this.client.user, options)) {
       console.group(
-        `${message.author.username} から以下のようなメッセージが来ました。`
+        `${message.author.username} から以下のようなメッセージが来ました。`,
       );
       console.log(message.content);
       console.groupEnd();
@@ -76,7 +76,7 @@ export class SweepyDock {
     if (res.content.length > 1 || Object.keys(res.options).length > 0) {
       // 何かしら返信するモノがある。
       console.group(
-        `${message.author.username} から以下のようなメッセージが来ました。`
+        `${message.author.username} から以下のようなメッセージが来ました。`,
       );
       console.log(message.content);
       console.groupEnd();
@@ -96,7 +96,7 @@ export class SweepyDock {
     const welcomeChannelName = 'welcome';
     // send the message to a designated channel on a server:
     const channel: Discord.GuildChannel = member.guild.channels.cache.find(
-      (ch) => ch.name === welcomeChannelName
+      (ch) => ch.name === welcomeChannelName,
     );
     // do nothing if the channel wasn't found on this server
     if (!channel || channel.type !== 'text') {

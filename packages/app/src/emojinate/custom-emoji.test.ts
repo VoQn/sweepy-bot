@@ -1,4 +1,4 @@
-import { getCustomEmoji } from "./custom-emoji";
+import { getCustomEmoji } from './custom-emoji';
 
 describe('getCustomEmoji', () => {
   describe('without any Client', () => {

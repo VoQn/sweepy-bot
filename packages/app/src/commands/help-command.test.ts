@@ -13,7 +13,7 @@ describe('help command', () => {
     const result = HelpCommand.exec('unknown');
     expect(result).not.toBeNull();
     expect(result.content).toEqual(
-      ':thinkdupe: `!unknown` _そのコマンドは無いよ……?_'
+      ':thinkdupe: `!unknown` _そのコマンドは無いよ……?_',
     );
   });
 });

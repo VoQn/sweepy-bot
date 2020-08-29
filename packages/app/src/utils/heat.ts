@@ -3,7 +3,7 @@ import { round } from './math';
 
 export const convertKelvinTemp = (
   temp: number,
-  unit: TemparetureUnit = TemparetureUnit.Celsius
+  unit: TemparetureUnit = TemparetureUnit.Celsius,
 ): number => {
   switch (unit) {
     case TemparetureUnit.Celsius:

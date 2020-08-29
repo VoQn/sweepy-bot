@@ -2,7 +2,6 @@ import { hatch, shineBug } from './critters';
 
 describe('Critter', () => {
   describe('detailEmbed', () => {
-    
     it('hatch', () => {
       const result = hatch.detailEmbed(null);
       expect(result).not.toBeNull();
