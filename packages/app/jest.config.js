@@ -5,18 +5,17 @@ module.exports = {
   testEnvironment: 'node',
   moduleDirectories: ['node_modules', 'src'],
   moduleFileExtensions: ['ts', 'json', 'js'],
-  moduleNameMapper: {
-    'src/(.*)': '<rootDir>/src/$1',
-  },
-
   transform: {
-    '^.+\\.ts$': 'ts-jest',
+    '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/.jest/transform.js',
   },
+  // moduleNameMapper: {
+  //   'src/(.*)': '<rootDir>/src/$1',
+  // },
   globals: {
     'ts-jest': {
       tsConfig: 'tsconfig.json',
       packageJson: 'package.json',
     },
   },
-  testMatch: ['<rootDir>/**/?(*.)(spec|test).(ts|js)?(x)'],
+  testMatch: ['<rootDir>/src/**/?(*.)(spec|test).(ts|js)?(x)'],
 };

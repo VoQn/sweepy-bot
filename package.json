@@ -24,13 +24,13 @@
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "pnpm lint",
-      "pnpm test",
-      "pnpm format"
+      "pnpm run lint",
+      "pnpm run format"
     ]
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-typescript": "^7.10.4",
     "@types/express": "^4.17.7",

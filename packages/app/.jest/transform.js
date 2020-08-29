@@ -6,5 +6,5 @@ module.exports = require('babel-jest').createTransformer({
     ],
     '@babel/preset-typescript',
   ],
-  plugins: ['require-context-hook', '@babel/plugin-transform-modules-commonjs'],
+  plugins: ['@babel/plugin-transform-modules-commonjs'],
 });
