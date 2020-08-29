@@ -1,7 +1,6 @@
 module.exports = {
   name: 'app',
   displayName: 'app',
-  verbose: true,
   testEnvironment: 'node',
   moduleDirectories: ['node_modules', 'src'],
   moduleFileExtensions: ['ts', 'json', 'js'],
