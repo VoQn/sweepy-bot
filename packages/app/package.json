@@ -10,13 +10,14 @@
   },
   "main": "./dist/src/index.js",
   "scripts": {
-    "clean": "rimraf dist",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rimraf dist coverage",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .js,.ts",
     "lint:fix": "eslint src --fix --ext .js,.ts",
     "format": "prettier -w src",
     "build": "tsc -p tsconfig.json --declaration",
     "test": "NODE_ENV=test jest",
+    "test:coverage": "NODE_ENV=test jest --coverage",
     "start": "ts-node src/index.ts"
   },
   "dependencies": {
