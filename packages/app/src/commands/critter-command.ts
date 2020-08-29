@@ -1,8 +1,9 @@
-import { Command, CommandCategory } from './command';
 import { Client } from 'discord.js';
-import { Response } from '../types';
+
 import { Critter } from '../critter';
 import { getCustomEmoji } from '../emojinate';
+import { Response } from '../types';
+import { Command, CommandCategory } from './command';
 import { HelpCommand } from './help-command';
 
 export const CritterCommand = Command.register({

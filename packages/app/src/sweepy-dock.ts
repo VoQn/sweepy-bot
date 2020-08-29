@@ -1,9 +1,10 @@
 import Discord, {
-  PresenceData,
-  Message,
-  GuildMember,
   Client,
+  GuildMember,
+  Message,
+  PresenceData,
 } from 'discord.js';
+
 import { Command } from './commands';
 import { emojinate } from './emojinate';
 import { parseCommand } from './parser';

@@ -1,7 +1,8 @@
-import { Command, CommandCategory } from './command';
-import { emojinate } from '../emojinate';
-import { HelpCommand } from './help-command';
 import { Client } from 'discord.js';
+
+import { emojinate } from '../emojinate';
+import { Command, CommandCategory } from './command';
+import { HelpCommand } from './help-command';
 
 export const EmojiCommand = Command.register({
   category: CommandCategory.Misc,

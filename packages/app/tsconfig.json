@@ -1,21 +1,10 @@
 {
+  "extends": "@sweepy-bot/typescript",
   "compilerOptions": {
     "module": "commonjs",
     "lib": ["esnext"],
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "es6",
-    "noImplicitAny": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "baseUrl": "src",
-    "outDir": "dist",
-    "typeRoots": [
-      "./node_modules/@types",
-      "../node_modules/@types",
-      "../../node_modules/@types",
-      "./types"
-    ]
+    "rootDir": "./src",
+    "outDir": "./dist",
   },
   "include": ["./src/*"],
   "exclude": ["node_modules"]

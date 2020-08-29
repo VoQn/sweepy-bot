@@ -1,4 +1,4 @@
-import { ID, OniEntity, Decor } from '../types';
+import { Decor, ID, OniEntity } from '../types';
 
 /**
  * 生存可能な体温の範囲。摂氏基準

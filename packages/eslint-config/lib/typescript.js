@@ -12,10 +12,9 @@ module.exports = {
         project: 'packages/*/tsconfig.json',
       },
       extends: [
-        'eslint:recommended',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:jest/recommended',
+        'plugin:import/typescript',
       ],
       rules: require('./rules/typescript'),
     },

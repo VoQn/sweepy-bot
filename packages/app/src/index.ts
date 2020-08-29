@@ -1,6 +1,7 @@
+import Discord from 'discord.js';
 import express from 'express';
 import querystring from 'querystring';
-import Discord from 'discord.js';
+
 import { SweepyDock } from './sweepy-dock';
 
 const client = new Discord.Client();

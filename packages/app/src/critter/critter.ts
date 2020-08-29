@@ -1,13 +1,14 @@
-import { ID, Multilingal, Decor, Response } from '../types';
-import { override, blankField } from '../utils';
+import { Client, EmbedFieldData, MessageEmbedOptions } from 'discord.js';
+
 import { getCustomEmoji } from '../emojinate';
-import { Client, MessageEmbedOptions, EmbedFieldData } from 'discord.js';
+import { Decor, ID, Multilingal, Response } from '../types';
+import { blankField, override } from '../utils';
 import {
   CritterInfo,
-  LightEmitter,
-  LivableTemp,
   CritterInfoBase,
   FamiliyCritterInfo,
+  LightEmitter,
+  LivableTemp,
 } from './critter-info';
 
 const compareCritter = (a: Critter, b: Critter): number => {

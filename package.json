@@ -14,7 +14,7 @@
     "format": "pnpm recursive run format --no-bail",
     "typecheck": "pnpm recursive run typecheck",
     "build": "pnpm recursive run build",
-    "test": "pnpm recursive test -- ",
+    "test": "pnpm recursive test",
     "start": "pnpm start --filter app"
   },
   "husky": {
@@ -24,13 +24,8 @@
     }
   },
   "lint-staged": {
-    "**/src/*.{js,ts}": [
-      "pnpm run lint",
-      "pnpm run format",
-      "pnpm run test"
-    ],
     "*.{js,ts}": [
-      "pnpm run lint",
+      "pnpm run lint:fix",
       "pnpm run format"
     ]
   },

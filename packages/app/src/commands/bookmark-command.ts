@@ -1,7 +1,8 @@
-import { Command, CommandCategory } from './command';
 import { Client, EmbedFieldData, MessageEmbedOptions } from 'discord.js';
-import { Response } from '../types';
+
 import bookmarks from '../data/bookmark.json';
+import { Response } from '../types';
+import { Command, CommandCategory } from './command';
 
 interface Bookmark {
   name: string;

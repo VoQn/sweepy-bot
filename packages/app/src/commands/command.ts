@@ -1,6 +1,7 @@
 import Discord, { Client } from 'discord.js';
-import { Response } from '../types';
+
 import { parseCommand } from '../parser';
+import { Response } from '../types';
 import { identify } from '../utils';
 
 export const CommandCategory = {

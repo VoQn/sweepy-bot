@@ -1,5 +1,5 @@
-import { convertKelvinTemp } from './heat';
 import { TemparetureUnit } from '../types';
+import { convertKelvinTemp } from './heat';
 
 describe('heat', () => {
   describe('convertKelvinTemp', () => {

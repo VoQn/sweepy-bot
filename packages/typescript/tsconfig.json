@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "incremental": false,
+    "target": "es2019",
+    "module": "esnext",
+    "jsx": "react",
+    "lib": ["esnext"],
+
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationMap": false,
+    "downlevelIteration": true,
+    "skipLibCheck": true,
+
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    "removeComments": true,
+    "newLine": "LF",
+    "noEmitOnError": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "../node_modules/@types",
+      "../../node_modules/@types",
+      "./types"
+    ]
+  },
+  "include": ["./src/*"],
+  "exclude": ["node_modules", "*.test.ts"]
+}

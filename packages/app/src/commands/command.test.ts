@@ -1,7 +1,7 @@
-import { Command, compare } from './command';
-import { HelpCommand } from './help-command';
-import { CritterCommand } from './critter-command';
 import { BookmarkCommand } from './bookmark-command';
+import { Command, compare } from './command';
+import { CritterCommand } from './critter-command';
+import { HelpCommand } from './help-command';
 
 describe('compare', () => {
   it('Category.General < Category.ONI', () => {

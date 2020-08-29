@@ -1,5 +1,5 @@
-import { numberEmojis, punctuationEmojis } from './preset';
 import { trimByRegexp } from '../utils';
+import { numberEmojis, punctuationEmojis } from './preset';
 
 export const emojinateLine = (text: string): string => {
   let result = '';
