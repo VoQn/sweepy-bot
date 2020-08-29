@@ -19,20 +19,16 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
+      "pre-commit": "pnpm lint:fix && pretty-quick --staged",
       "pre-push": "pnpm test"
     }
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "pnpm run lint:fix",
-      "pnpm run format"
-    ]
   },
   "devDependencies": {
     "husky": "^4.2.5",
     "jest": "^26.4.2",
-    "lint-staged": "^10.2.13"
+    "lint-staged": "^10.2.13",
+    "prettier": "^2.1.1",
+    "pretty-quick": "^3.0.0"
   },
   "engines": {
     "node": "12.x",
