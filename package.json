@@ -15,11 +15,12 @@
     "typecheck": "pnpm recursive run typecheck",
     "build": "pnpm recursive run build",
     "test": "pnpm recursive test",
-    "start": "pnpm start --filter app"
+    "start": "pnpm start --filter app",
+    "precommit": "pretty-quick --staged --verbose"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pnpm lint:fix && pretty-quick --staged",
+      "pre-commit": "run-s lint:fix precommit",
       "pre-push": "pnpm test"
     }
   },
@@ -27,6 +28,7 @@
     "husky": "^4.2.5",
     "jest": "^26.4.2",
     "lint-staged": "^10.2.13",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.1.1",
     "pretty-quick": "^3.0.0"
   },

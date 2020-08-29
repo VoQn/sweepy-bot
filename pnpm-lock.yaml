@@ -4,12 +4,14 @@ importers:
       husky: 4.2.5
       jest: 26.4.2
       lint-staged: 10.2.13
+      npm-run-all: 4.1.5
       prettier: 2.1.1
       pretty-quick: 3.0.0_prettier@2.1.1
     specifiers:
       husky: ^4.2.5
       jest: ^26.4.2
       lint-staged: ^10.2.13
+      npm-run-all: ^4.1.5
       prettier: ^2.1.1
       pretty-quick: ^3.0.0
   packages/app:
