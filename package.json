@@ -24,8 +24,9 @@
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "lint",
-      "format"
+      "pnpm lint",
+      "pnpm test",
+      "pnpm format"
     ]
   },
   "devDependencies": {
