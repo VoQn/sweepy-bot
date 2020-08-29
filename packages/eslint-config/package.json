@@ -12,9 +12,7 @@
     "@sweepy-bot/prettier": "workspace:^0.0.1",
     "typescript": "^4.0.2"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "keywords": [
     "config",
     "eslint"
