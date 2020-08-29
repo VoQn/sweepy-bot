@@ -85,7 +85,7 @@ export class Critter implements CritterInfo {
 
   public static register(
     origin: CritterInfoBase,
-    append?: FamiliyCritterInfo,
+    append?: FamiliyCritterInfo
   ): Critter {
     const id = append?.id || origin.id;
     const cache = this.table.get(id);

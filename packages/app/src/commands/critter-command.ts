@@ -10,7 +10,7 @@ export const CritterCommand = Command.register({
   name: 'Critter',
   help: {
     summery: ['_知ってる動物の詳細を教えるよ_', '```!critter プリンス```'].join(
-      '\n',
+      '\n'
     ),
     description: [
       '_知ってる動物の詳細を教えるよ。_',

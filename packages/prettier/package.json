@@ -7,7 +7,10 @@
   "license": "MIT",
   "main": "prettier.config.js",
   "module": "prettier.config.js",
-  "scripts": {},
+  "scripts": {
+    "test": "eslint prettier.config.js",
+    "format": "prettier -w prettier.config.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://glitch.com/edit/#!/sweepy-bot"
@@ -19,5 +22,8 @@
   "dependencies": {
     "prettier": "^2.1.1",
     "prettier-package-json": "^2.1.3"
+  },
+  "devDependencies": {
+    "@sweepy-bot/eslint-config": "workspace:^0.0.1"
   }
 }

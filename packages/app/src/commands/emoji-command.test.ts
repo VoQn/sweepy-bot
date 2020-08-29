@@ -12,7 +12,7 @@ describe('Emoji Command', () => {
     const result = EmojiCommand.exec('O\nK');
     expect(result).not.toBeNull();
     expect(result.content).toEqual(
-      ':regional_indicator_o:\n:regional_indicator_k:',
+      ':regional_indicator_o:\n:regional_indicator_k:'
     );
   });
 });
