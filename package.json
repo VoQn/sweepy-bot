@@ -8,10 +8,11 @@
     "url": "https://github.com/VoQn/sweepy-bot.git"
   },
   "scripts": {
-    "clean": "pnpm recursive run clean",
-    "lint": "pnpm recursive run lint",
+    "clean": "pnpm recursive run clean --no-bail",
+    "lint": "pnpm recursive run lint --no-bail",
     "lint:fix": "pnpm recursive run lint:fix",
-    "format": "pnpm recursive run format",
+    "format": "pnpm recursive run format --no-bail",
+    "typecheck": "pnpm recursive run typecheck",
     "build": "pnpm recursive run build",
     "test": "pnpm recursive test -- ",
     "start": "pnpm start --filter app"

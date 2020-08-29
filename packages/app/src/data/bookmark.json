@@ -44,29 +44,18 @@
     "name": "Tools Not Included",
     "url": "https://toolsnotincluded.net",
     "alias": "tni",
-    "keywords": [
-      "検索",
-      "マップ",
-      "シード(値)?"
-    ]
+    "keywords": ["検索", "マップ", "シード(値)?"]
   },
   "blueprint-not-included": {
     "name": "BlueprintNotIncluded",
     "url": "https://blueprintnotincluded.com",
     "alias": "blueprint",
-    "keywords": [
-      "blueprint",
-      "ブループリント"
-    ]
+    "keywords": ["blueprint", "ブループリント"]
   },
   "onimods": {
     "name": "onimods",
     "url": "https://scrapbox.io/onimods",
     "alias": "onimods",
-    "keywords": [
-      "[m|M][o|O][d|D]",
-      "[s|S]crapbox",
-      "日本(語)?"
-    ]
+    "keywords": ["[m|M][o|O][d|D]", "[s|S]crapbox", "日本(語)?"]
   }
 }

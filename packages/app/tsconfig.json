@@ -8,10 +8,15 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "sourceMap": true,
-    "baseUrl": ".",
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "baseUrl": "src",
+    "outDir": "dist",
+    "typeRoots": [
+      "./node_modules/@types",
+      "../node_modules/@types",
+      "../../node_modules/@types",
+      "./types"
+    ]
   },
-  "include": ["./**/*.js", "./**/*.ts", "./*.js"]
+  "include": ["./src/*"],
+  "exclude": ["node_modules"]
 }
