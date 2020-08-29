@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "name": "@sweepy-bot/eslint-config",
+  "version": "0.0.1",
+  "description": "Configuration eslint for sweepy-bot workspace",
+  "main": "index.js",
+  "dependencies": {
+    "eslint": "^7.7.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@sweepy-bot/prettier": "workspace:^0.0.1",
+    "typescript": "^4.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "config",
+    "eslint"
+  ],
+  "author": "Kazuhiro Mizushima <voqn.tyrant@gmail.com>",
+  "license": "MIT",
+  "prettier": "@sweepy-bot/prettier"
+}
