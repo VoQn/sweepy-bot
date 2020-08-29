@@ -20,7 +20,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "pnpm test -- --coverage"
+      "pre-push": "pnpm test"
     }
   },
   "lint-staged": {
