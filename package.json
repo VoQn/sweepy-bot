@@ -20,7 +20,8 @@
     "format": "lerna run format --no-bail --",
     "typecheck": "lerna run typecheck --",
     "test": "lerna run test --no-bail --",
-    "start": "lerna exec",
+    "start:server": "lerna run start --parallel --no-prefix ${START_OPTS}",
+    "start": "run-s build start:server",
     "precommit": "pretty-quick --staged --verbose --"
   },
   "husky": {
