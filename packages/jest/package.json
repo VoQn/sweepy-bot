@@ -23,16 +23,16 @@
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-typescript": "^7.10.4",
-    "@sweepy-bot/babel": "workspace:^0.0.1",
-    "@sweepy-bot/typescript": "workspace:^0.0.1",
+    "@sweepy-bot/babel": ">=0",
+    "@sweepy-bot/typescript": ">=0",
     "@types/jest": "^26.0.10",
     "babel-jest": "^26.3.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.3.0"
   },
   "devDependencies": {
-    "@sweepy-bot/eslint-config": "workspace:^0.0.1",
-    "@sweepy-bot/prettier": "workspace:^0.0.1"
+    "@sweepy-bot/eslint-config": ">=0",
+    "@sweepy-bot/prettier": ">=0"
   },
   "prettier": "@sweepy-bot/prettier"
 }

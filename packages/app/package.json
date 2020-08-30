@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@discordjs/collection": "^0.1.6",
-    "@sweepy-bot/typescript": "workspace:^0.0.1",
+    "@sweepy-bot/typescript": ">=0",
     "discord.js": "^12.3.1",
     "express": "^4.17.1",
     "global": "^4.4.0",
@@ -31,10 +31,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
-    "@sweepy-bot/babel": "workspace:^0.0.1",
-    "@sweepy-bot/eslint-config": "workspace:^0.0.1",
-    "@sweepy-bot/jest": "workspace:^0.0.1",
-    "@sweepy-bot/prettier": "workspace:^0.0.1",
+    "@sweepy-bot/babel": ">=0",
+    "@sweepy-bot/eslint-config": ">=0",
+    "@sweepy-bot/jest": ">=0",
+    "@sweepy-bot/prettier": ">=0",
     "@types/express": "^4.17.7",
     "@types/jest": "^26.0.9",
     "@types/node": "^14.6.0",

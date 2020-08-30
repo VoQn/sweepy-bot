@@ -17,8 +17,8 @@
     "babel"
   ],
   "devDependencies": {
-    "@sweepy-bot/eslint-config": "workspace:^0.0.1",
-    "@sweepy-bot/prettier": "workspace:^0.0.1",
+    "@sweepy-bot/eslint-config": ">=0",
+    "@sweepy-bot/prettier": ">=0",
     "rimraf": "^3.0.2"
   },
   "prettier": "@sweepy-bot/prettier",

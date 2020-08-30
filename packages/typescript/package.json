@@ -21,7 +21,7 @@
     "typescript": "<4"
   },
   "devDependencies": {
-    "@sweepy-bot/eslint-config": "workspace:^0.0.1",
-    "@sweepy-bot/prettier": "workspace:^0.0.1"
+    "@sweepy-bot/eslint-config": ">=0",
+    "@sweepy-bot/prettier": ">=0"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "packages": ["packages/*", "dev-tools/*"],
+  "version": "independent",
+  "loglevel": "silent",
+  "command": {
+    "init": {
+      "exact": true
+    },
+    "run": {
+      "npmClient": "yarn",
+      "stream": true
+    },
+    "create": {
+      "esModule": false,
+      "license": "UNLICENSED",
+      "dependencies": [],
+      "private": true
+    }
+  }
+}
