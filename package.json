@@ -7,26 +7,33 @@
   "repository": {
     "url": "https://github.com/VoQn/sweepy-bot.git"
   },
+  "workspaces": [
+    "packages/*",
+    "dev-presets/*"
+  ],
   "scripts": {
-    "clean": "pnpm recursive run clean --no-bail",
-    "lint": "pnpm recursive run lint --no-bail --",
-    "lint:fix": "pnpm recursive run lint:fix --",
-    "format": "pnpm recursive run format --no-bail --",
-    "typecheck": "pnpm recursive run typecheck --",
-    "build": "pnpm recursive run build --no-bail --",
-    "test": "pnpm recursive test --no-bail --",
-    "start": "cd ./packages/app && pnpm start",
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build --no-bail --",
+    "clean": "lerna run clean --no-bail --",
+    "lint": "lerna run lint --no-bail --",
+    "lint:fix": "lerna run lint:fix --",
+    "format": "lerna run format --no-bail --",
+    "typecheck": "lerna run typecheck --",
+    "test": "lerna run test --no-bail --",
+    "start:server": "lerna run start --parallel --no-prefix ${START_OPTS}",
+    "start": "run-s build start:server",
     "precommit": "pretty-quick --staged --verbose --"
   },
   "husky": {
     "hooks": {
       "pre-commit": "run-s lint:fix precommit",
-      "pre-push": "pnpm test"
+      "pre-push": "lerna run test"
     }
   },
   "devDependencies": {
     "husky": "^4.2.5",
     "jest": "^26.4.2",
+    "lerna": "^3.22.1",
     "lint-staged": "^10.2.13",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.1.1",
@@ -35,14 +42,11 @@
   },
   "engines": {
     "node": "12.x",
-    "pnpm": "5.5.x"
+    "yarn": "1.22.x"
   },
   "keywords": [
     "node",
     "glitch",
     "express"
-  ],
-  "dependencies": {
-    "pnpm": "^5.5.4"
-  }
+  ]
 }
