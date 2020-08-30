@@ -8,7 +8,6 @@
     "url": "https://github.com/VoQn/sweepy-bot.git"
   },
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "clean": "pnpm recursive run clean --no-bail",
     "lint": "pnpm recursive run lint --no-bail --",
     "lint:fix": "pnpm recursive run lint:fix --",
@@ -16,7 +15,7 @@
     "typecheck": "pnpm recursive run typecheck --",
     "build": "pnpm recursive run build --no-bail --",
     "test": "pnpm recursive test --no-bail --",
-    "start": "pnpm start --filter app --",
+    "start": "cd ./packages/app && pnpm start",
     "precommit": "pretty-quick --staged --verbose --"
   },
   "husky": {
@@ -42,5 +41,8 @@
     "node",
     "glitch",
     "express"
-  ]
+  ],
+  "dependencies": {
+    "pnpm": "^5.5.4"
+  }
 }
