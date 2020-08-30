@@ -1,7 +1,7 @@
 {
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "packages": ["packages/*", "dev-tools/*"],
+  "packages": ["packages/*", "dev-presets/*"],
   "version": "independent",
   "loglevel": "silent",
   "command": {

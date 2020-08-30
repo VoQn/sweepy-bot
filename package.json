@@ -9,7 +9,7 @@
   },
   "workspaces": [
     "packages/*",
-    "dev-tools/*"
+    "dev-presets/*"
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
