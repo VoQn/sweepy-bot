@@ -3,7 +3,7 @@
   "name": "@sweepy-bot/typescript",
   "version": "0.0.1",
   "description": "Configuration typescript for sweepy-bot workspace",
-  "author": "Kazuhiro Mizushima <voqn.tyrant@gmail.com>",
+  "author": "VoQn <voqn.tyrant@gmail.com>",
   "license": "MIT",
   "main": "tsconfig.json",
   "scripts": {
@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "@sweepy-bot/eslint-config": "workspace:^0.0.1",
-    "@sweepy-bot/prettier": "workspace:^0.0.1",
-    "prettier": "^2.1.1"
+    "@sweepy-bot/prettier": "workspace:^0.0.1"
   }
 }

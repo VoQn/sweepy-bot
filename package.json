@@ -8,6 +8,7 @@
     "url": "https://github.com/VoQn/sweepy-bot.git"
   },
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "clean": "pnpm recursive run clean --no-bail",
     "lint": "pnpm recursive run lint --no-bail",
     "lint:fix": "pnpm recursive run lint:fix",

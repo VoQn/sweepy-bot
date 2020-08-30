@@ -3,7 +3,7 @@
   "name": "@sweepy-bot/prettier",
   "version": "0.0.1",
   "description": "Configuration prettier for sweepy-bot workspace",
-  "author": "Kazuhiro Mizushima <voqn.tyrant@gmail.com>",
+  "author": "VoQn <voqn.tyrant@gmail.com>",
   "license": "MIT",
   "main": "prettier.config.js",
   "module": "prettier.config.js",
