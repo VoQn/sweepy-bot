@@ -1,0 +1,38 @@
+{
+  "private": true,
+  "name": "@sweepy-bot/jest",
+  "version": "0.0.1",
+  "description": "Configuration Jest for sweepy-bot",
+  "author": "VoQn <voqn.tyrant@gmail.com>",
+  "license": "MIT",
+  "main": "jest-preset.js",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts,.jsx,.tsx,.json .",
+    "lint:fix": "eslint --ext .js,.ts,.jsx,.tsx,.json .",
+    "test": "jest",
+    "format": "prettier -w"
+  },
+  "keywords": [
+    "config",
+    "jest"
+  ],
+  "dependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@sweepy-bot/babel": "workspace:^0.0.1",
+    "@sweepy-bot/typescript": "workspace:^0.0.1",
+    "@types/jest": "^26.0.10",
+    "babel-jest": "^26.3.0",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0"
+  },
+  "devDependencies": {
+    "@sweepy-bot/eslint-config": "workspace:^0.0.1",
+    "@sweepy-bot/prettier": "workspace:^0.0.1"
+  },
+  "prettier": "@sweepy-bot/prettier"
+}

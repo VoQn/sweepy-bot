@@ -1,0 +1,11 @@
+{
+  "extends": "@sweepy-bot/typescript",
+  "compilerOptions": {
+    "module": "commonjs",
+    "lib": ["esnext"],
+    "rootDir": "./src",
+    "outDir": "./dist"
+  },
+  "include": ["./src/*"],
+  "exclude": ["node_modules"]
+}

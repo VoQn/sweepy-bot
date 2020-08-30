@@ -5,7 +5,8 @@
   "description": "Configuration Babel for sweepy-bot workspace",
   "author": "VoQn <voqn.tyrant@gmail.com>",
   "license": "MIT",
-  "main": "babel.config.js",
+  "main": "babel-preset.js",
+  "module": "babel-preset.js",
   "scripts": {
     "build": "babel src --out-dir dist",
     "clean": "rimraf dist",
@@ -28,6 +29,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
-    "@babel/preset-typescript": "^7.10.4"
+    "@babel/preset-typescript": "^7.10.4",
+    "core-js": "^3.6.5"
   }
 }
