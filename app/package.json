@@ -16,15 +16,14 @@
     "type": "git",
     "url": "git+https://github.com/VoQn/sweepy-bot.git"
   },
+  "bugs": {
+    "url": "https://github.com/VoQn/sweepy-bot/issues"
+  },
   "scripts": {
     "clean": "rimraf dist yarn-error.log",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "start:server": "node dist/index.js",
-    "start": "run-s build start:server"
-  },
-  "bugs": {
-    "url": "https://github.com/VoQn/sweepy-bot/issues"
+    "start": "ts-node src/index.ts"
   },
   "dependencies": {
     "@discordjs/collection": "^0.1.6",

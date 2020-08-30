@@ -5,6 +5,13 @@
   "description": "Configuration typescript for sweepy-bot workspace",
   "author": "VoQn <voqn.tyrant@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VoQn/sweepy-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VoQn/sweepy-bot/issues"
+  },
   "main": "tsconfig.json",
   "scripts": {
     "test": "tsc -p tsconfig.build.json --noEmit",

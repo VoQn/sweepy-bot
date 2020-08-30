@@ -5,6 +5,13 @@
   "description": "Configuration Jest for sweepy-bot",
   "author": "VoQn <voqn.tyrant@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VoQn/sweepy-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VoQn/sweepy-bot/issues"
+  },
   "main": "jest-preset.js",
   "scripts": {
     "lint": "eslint --ext .js,.ts,.jsx,.tsx,.json .",

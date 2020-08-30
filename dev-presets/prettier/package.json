@@ -5,15 +5,18 @@
   "description": "Configuration prettier for sweepy-bot workspace",
   "author": "VoQn <voqn.tyrant@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VoQn/sweepy-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VoQn/sweepy-bot/issues"
+  },
   "main": "prettier.config.js",
   "module": "prettier.config.js",
   "scripts": {
     "test": "eslint prettier.config.js",
     "format": "prettier -w prettier.config.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://glitch.com/edit/#!/sweepy-bot"
   },
   "keywords": [
     "config",

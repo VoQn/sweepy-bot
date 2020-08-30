@@ -5,6 +5,13 @@
   "description": "Configuration eslint for sweepy-bot workspace",
   "author": "VoQn <voqn.tyrant@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VoQn/sweepy-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VoQn/sweepy-bot/issues"
+  },
   "main": "lib/index.js",
   "module": "lib/index.js",
   "scripts": {
