@@ -16,8 +16,8 @@
     "lint:fix": "eslint src --fix --ext .js,.ts",
     "format": "prettier -w src",
     "build": "tsc -p tsconfig.json --declaration",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "jest --",
+    "test:coverage": "jest --coverage --",
     "start": "ts-node src/index.ts"
   },
   "dependencies": {
