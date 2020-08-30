@@ -1,0 +1,27 @@
+{
+  "private": true,
+  "name": "@sweepy-bot/typescript",
+  "version": "0.0.1",
+  "description": "Configuration typescript for sweepy-bot workspace",
+  "author": "VoQn <voqn.tyrant@gmail.com>",
+  "license": "MIT",
+  "main": "tsconfig.json",
+  "scripts": {
+    "test": "tsc -p tsconfig.build.json --noEmit",
+    "lint": "eslint --ext .js,.ts,.json .",
+    "lint:fix": "eslint --fix --ext .js,.ts,.json .",
+    "format": "prettier -w src"
+  },
+  "keywords": [
+    "config",
+    "typescript"
+  ],
+  "dependencies": {
+    "@types/node": "^14.6.2",
+    "typescript": "<4"
+  },
+  "devDependencies": {
+    "@sweepy-bot/eslint-config": "workspace:^0.0.1",
+    "@sweepy-bot/prettier": "workspace:^0.0.1"
+  }
+}

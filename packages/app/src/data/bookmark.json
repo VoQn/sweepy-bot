@@ -1,0 +1,61 @@
+{
+  "oxygen-not-included-database": {
+    "name": "Oxygen Not Included Database",
+    "url": "https://oni-db.com",
+    "alias": "oni-db",
+    "keywords": [
+      "[d|D][b|B]",
+      "[d|D]atabase",
+      "データベース",
+      "[c|C]alc",
+      "計算",
+      "([s|S]team)?[t|T]urbine",
+      "(蒸気)?タービン",
+      "[g|G]eyser",
+      "([m|M]etal)?[v|V]olcano",
+      "間欠泉",
+      "噴出口",
+      "(金属)?火山"
+    ]
+  },
+  "oni-assitant": {
+    "name": "ONI Assistant",
+    "url": "https://oni-assistant.com",
+    "alias": "oni-assitant",
+    "keywords": [
+      "oni-assitant",
+      "[d|D][b|B]",
+      "[d|D]atabase",
+      "データベース",
+      "[c|C]alc",
+      "計算",
+      "[c|C]ool",
+      "[f|F]ood",
+      "[r|R]anch",
+      "[h|H]eat",
+      "[r|R]ocket",
+      "ロケット",
+      "カロリー",
+      "牧畜",
+      "熱(破壊)?"
+    ]
+  },
+  "tools-not-included": {
+    "name": "Tools Not Included",
+    "url": "https://toolsnotincluded.net",
+    "alias": "tni",
+    "keywords": ["検索", "マップ", "シード(値)?"]
+  },
+  "blueprint-not-included": {
+    "name": "BlueprintNotIncluded",
+    "url": "https://blueprintnotincluded.com",
+    "alias": "blueprint",
+    "keywords": ["blueprint", "ブループリント"]
+  },
+  "onimods": {
+    "name": "onimods",
+    "url": "https://scrapbox.io/onimods",
+    "alias": "onimods",
+    "keywords": ["[m|M][o|O][d|D]", "[s|S]crapbox", "日本(語)?"]
+  }
+}

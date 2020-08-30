@@ -110,3 +110,6 @@ dist
 
 # Editor
 .vscode
+
+# glitch.com
+.glitch-assets

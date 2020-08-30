@@ -1,0 +1,35 @@
+{
+  "private": true,
+  "name": "@sweepy-bot/eslint-config",
+  "version": "0.0.1",
+  "description": "Configuration eslint for sweepy-bot workspace",
+  "author": "VoQn <voqn.tyrant@gmail.com>",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "scripts": {
+    "test": "eslint --ext .js,.ts,.tsx,.json .",
+    "lint": "eslint --ext .js,.ts,.json .",
+    "format": "prettier -w lib"
+  },
+  "dependencies": {
+    "@sweepy-bot/babel": "workspace:^0.0.1",
+    "@sweepy-bot/prettier": "workspace:^0.0.1",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-json": "^2.1.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-simple-import-sort": "^5.0.3"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "config",
+    "eslint"
+  ],
+  "prettier": "@sweepy-bot/prettier"
+}

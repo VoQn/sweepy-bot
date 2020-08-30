@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "name": "@sweepy-bot/prettier",
+  "version": "0.0.1",
+  "description": "Configuration prettier for sweepy-bot workspace",
+  "author": "VoQn <voqn.tyrant@gmail.com>",
+  "license": "MIT",
+  "main": "prettier.config.js",
+  "module": "prettier.config.js",
+  "scripts": {
+    "test": "eslint prettier.config.js",
+    "format": "prettier -w prettier.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://glitch.com/edit/#!/sweepy-bot"
+  },
+  "keywords": [
+    "config",
+    "prettier"
+  ],
+  "dependencies": {
+    "prettier": "^2.1.1",
+    "prettier-package-json": "^2.1.3"
+  },
+  "devDependencies": {
+    "@sweepy-bot/eslint-config": "workspace:^0.0.1"
+  }
+}

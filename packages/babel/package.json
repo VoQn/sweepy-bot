@@ -1,0 +1,35 @@
+{
+  "private": true,
+  "name": "@sweepy-bot/babel",
+  "version": "0.0.1",
+  "description": "Configuration Babel for sweepy-bot workspace",
+  "author": "VoQn <voqn.tyrant@gmail.com>",
+  "license": "MIT",
+  "main": "babel-preset.js",
+  "module": "babel-preset.js",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "clean": "rimraf dist",
+    "test": "babel src --out-dir dist"
+  },
+  "keywords": [
+    "config",
+    "babel"
+  ],
+  "devDependencies": {
+    "@sweepy-bot/eslint-config": "workspace:^0.0.1",
+    "@sweepy-bot/prettier": "workspace:^0.0.1",
+    "rimraf": "^3.0.2"
+  },
+  "prettier": "@sweepy-bot/prettier",
+  "dependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "core-js": "^3.6.5"
+  }
+}
