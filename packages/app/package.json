@@ -11,15 +11,17 @@
   "author": "VoQn <voqn.tyrant@gmail.com>",
   "homepage": "https://github.com/VoQn/sweepy-bot#readme",
   "license": "UNLICENSED",
-  "main": "index.ts",
+  "main": "dist/index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VoQn/sweepy-bot.git"
   },
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf dist yarn-error.log",
     "typecheck": "tsc --noEmit",
-    "start": "ts-node src/index.ts"
+    "build": "tsc",
+    "start:server": "node dist/index.js",
+    "start": "run-s build start:server"
   },
   "bugs": {
     "url": "https://github.com/VoQn/sweepy-bot/issues"

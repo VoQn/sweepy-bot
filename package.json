@@ -20,7 +20,7 @@
     "format": "lerna run format --no-bail --",
     "typecheck": "lerna run typecheck --",
     "test": "lerna run test --no-bail --",
-    "start:server": "lerna run start --parallel --no-prefix ${START_OPTS}",
+    "start:server": "lerna run --scope @sweepy-bot/app start",
     "start": "run-s build start:server",
     "precommit": "pretty-quick --staged --verbose --"
   },

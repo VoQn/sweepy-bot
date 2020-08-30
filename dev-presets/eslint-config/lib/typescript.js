@@ -9,7 +9,7 @@ module.exports = {
           jsx: true,
         },
         sourceType: 'module',
-        project: 'packages/*/tsconfig.json',
+        project: '*/tsconfig.json',
       },
       extends: [
         'plugin:@typescript-eslint/eslint-recommended',
