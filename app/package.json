@@ -11,18 +11,19 @@
   "author": "VoQn <voqn.tyrant@gmail.com>",
   "homepage": "https://github.com/VoQn/sweepy-bot#readme",
   "license": "UNLICENSED",
-  "main": "index.ts",
+  "main": "dist/index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VoQn/sweepy-bot.git"
   },
-  "scripts": {
-    "clean": "rimraf dist",
-    "typecheck": "tsc --noEmit",
-    "start": "ts-node src/index.ts"
-  },
   "bugs": {
     "url": "https://github.com/VoQn/sweepy-bot/issues"
+  },
+  "scripts": {
+    "clean": "rimraf dist yarn-error.log",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "start": "ts-node src/index.ts"
   },
   "dependencies": {
     "@discordjs/collection": "^0.1.6",

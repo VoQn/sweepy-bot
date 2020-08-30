@@ -1,15 +1,19 @@
 {
   "private": true,
   "name": "@sweepy-bot/sweepy-dock",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple Discord chat bot about Oxygen Not Included",
   "author": "VoQn <voqn.tyrant@gmail.com>",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/VoQn/sweepy-bot.git"
+    "type": "git",
+    "url": "git+https://github.com/VoQn/sweepy-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VoQn/sweepy-bot/issues"
   },
   "main": "dist/index.js",
-  "module": "src/index.ts",
+  "types": "dist/types/index.js",
   "scripts": {
     "clean": "rimraf dist coverage",
     "typecheck": "tsc --noEmit",
