@@ -10,7 +10,7 @@
     "lint": "eslint --ext .js,.ts,.jsx,.tsx,.json .",
     "lint:fix": "eslint --ext .js,.ts,.jsx,.tsx,.json .",
     "test": "jest",
-    "format": "prettier -w"
+    "format": "prettier -w src"
   },
   "keywords": [
     "config",

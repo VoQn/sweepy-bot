@@ -10,7 +10,7 @@
     "test": "tsc -p tsconfig.build.json --noEmit",
     "lint": "eslint --ext .js,.ts,.json .",
     "lint:fix": "eslint --fix --ext .js,.ts,.json .",
-    "format": "prettier -w ."
+    "format": "prettier -w src"
   },
   "keywords": [
     "config",
