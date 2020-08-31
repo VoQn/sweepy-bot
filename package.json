@@ -27,8 +27,9 @@
     "format": "lerna run format --no-bail --",
     "typecheck": "lerna run typecheck --",
     "test": "lerna run test --no-bail --",
-    "start:server": "lerna run --stream --scope @sweepy-bot/app start --",
-    "start": "run-s build start:server",
+    "start:server": "lerna run --stream --scope @sweepy-bot/app start:server --",
+    "start:worker": "lerna run --scope @sweepy-bot/app start:worker --",
+    "start": "run-s build start:worker",
     "precommit": "pretty-quick --staged --verbose --"
   },
   "husky": {
