@@ -1,7 +1,7 @@
 module.exports = {
   preset: '@sweepy-bot/jest',
-  name: 'app',
-  displayName: 'app',
+  name: 'sweepy-dock',
+  displayName: 'sweepy-dock',
   testEnvironment: 'node',
   moduleNameMapper: {
     'src/(.*)': '<rootDir>/$1',

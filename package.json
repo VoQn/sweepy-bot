@@ -26,10 +26,12 @@
     "lint:fix": "lerna run lint:fix --",
     "format": "lerna run format --no-bail --",
     "typecheck": "lerna run typecheck --",
+    "pretest": "yarn build",
     "test": "lerna run test --no-bail --",
     "start:server": "lerna run --stream --scope @sweepy-bot/app start:server --",
     "start:worker": "lerna run --scope @sweepy-bot/app start:worker --",
-    "start": "run-s build start:worker",
+    "prestart": "yarn build",
+    "start": "start:worker",
     "precommit": "pretty-quick --staged --verbose --"
   },
   "husky": {
@@ -44,7 +46,6 @@
   },
   "devDependencies": {
     "husky": "^4.2.5",
-    "jest": "^26.4.2",
     "lint-staged": "^10.2.13",
     "prettier": "^2.1.1",
     "pretty-quick": "^3.0.0"
