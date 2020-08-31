@@ -8,7 +8,6 @@
     "url": "https://github.com/VoQn/sweepy-bot.git"
   },
   "workspaces": [
-    "app",
     "packages/*",
     "dev-presets/*"
   ],
@@ -43,8 +42,7 @@
     "jest": "^26.4.2",
     "lint-staged": "^10.2.13",
     "prettier": "^2.1.1",
-    "pretty-quick": "^3.0.0",
-    "ts-jest": "^26.3.0"
+    "pretty-quick": "^3.0.0"
   },
   "dependencies": {
     "lerna": "^3.22.1",
