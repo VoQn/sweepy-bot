@@ -11,7 +11,6 @@
   "author": "VoQn <voqn.tyrant@gmail.com>",
   "homepage": "https://github.com/VoQn/sweepy-bot#readme",
   "license": "UNLICENSED",
-  "main": "dist/index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VoQn/sweepy-bot.git"
@@ -19,6 +18,7 @@
   "bugs": {
     "url": "https://github.com/VoQn/sweepy-bot/issues"
   },
+  "main": "dist/worker.js",
   "scripts": {
     "clean": "rimraf dist",
     "lint": "eslint src --ext .js,.ts,.json",
@@ -26,7 +26,9 @@
     "format": "prettier -w src",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/index.js"
+    "start:server": "node dist/server.js",
+    "start:worker": "node dist/worker.js",
+    "start": "run-s build start:server"
   },
   "dependencies": {
     "@discordjs/collection": "^0.1.6",
