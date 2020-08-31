@@ -1,25 +1,29 @@
 import { SweepyDock } from '@sweepy-bot/sweepy-dock';
 import Discord from 'discord.js';
-import express from 'express';
+import { default as express } from 'express';
 import querystring from 'querystring';
 
 const client = new Discord.Client();
 const dock = new SweepyDock(client);
 
-const TOKEN = process.env.DISCORD_BOT_TOKEN;
-
-if (process.env) {
-  if (TOKEN == null || TOKEN.length < 1) {
+let TOKEN = '';
+if (process?.env) {
+  const token = process.env.DISCORD_BOT_TOKEN;
+  if (token == null || token.length < 1) {
     console.log('DISCORD_BOT_TOKENが設定されていません。');
     process.exit(0);
+  } else {
+    TOKEN = token;
   }
 }
 
 const app = express();
-const getPort = () => {
-  const port = process.env.PORT;
-  return !port ? 8000 : port;
-};
+
+let PORT = 8000;
+const port = process?.env?.PORT;
+if (port) {
+  PORT = Math.max(parseInt(port, 10), 0);
+}
 
 app.get('/', (_req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -38,7 +42,7 @@ app.post('/', (req, res) => {
     }
     const dataObject = querystring.parse(data);
     console.group('Server Requested');
-    console.log('post:' + dataObject.type.toLocaleString());
+    console.log('post:' + dataObject?.type?.toLocaleString());
     if (dataObject.type === 'wake') {
       console.log('Woke up in post');
       if (client.readyTimestamp) {
@@ -54,11 +58,10 @@ app.post('/', (req, res) => {
   });
 });
 
-app.listen(getPort(), () => {
-  console.log(`Server listening on port ${getPort()}...`);
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}...`);
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 dock.start(TOKEN).catch((reason) => {
   console.group('ログインに問題がありました');
   console.info(reason);

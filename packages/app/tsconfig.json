@@ -5,7 +5,10 @@
     "lib": ["esnext"],
     "rootDir": "src",
     "outDir": "dist",
-    "declarationDir": "dist/types"
+    "declarationDir": "dist/types",
+
+    "strict": true,
+    "noImplicitAny": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "**/*.test.ts"]
