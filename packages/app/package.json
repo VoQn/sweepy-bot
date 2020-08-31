@@ -44,7 +44,8 @@
     "@sweepy-bot/typescript": ">=0",
     "@sweepy-bot/eslint-config": ">=0",
     "@sweepy-bot/jest": ">=0",
-    "@sweepy-bot/prettier": ">=0"
+    "@sweepy-bot/prettier": ">=0",
+    "rimraf": "^3.0.2"
   },
   "prettier": "@sweepy-bot/prettier"
 }
