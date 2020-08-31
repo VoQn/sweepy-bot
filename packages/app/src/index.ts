@@ -16,7 +16,10 @@ if (process.env) {
 }
 
 const app = express();
-const PORT = 3000;
+const getPort = () => {
+  const port = process.env.PORT;
+  return !port ? 8000 : port;
+};
 
 app.get('/', (_req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -51,8 +54,8 @@ app.post('/', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}...`);
+app.listen(getPort(), () => {
+  console.log(`Server listening on port ${getPort()}...`);
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
