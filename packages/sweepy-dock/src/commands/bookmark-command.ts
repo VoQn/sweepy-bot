@@ -1,7 +1,7 @@
 import { Client, EmbedFieldData, MessageEmbedOptions } from 'discord.js';
 
 import bookmarks from '../data/bookmark.json';
-import { Response } from '../types';
+import { Response } from '../interfaces';
 import { Command, CommandCategory } from './command';
 
 interface Bookmark {

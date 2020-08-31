@@ -24,8 +24,8 @@
     "lint": "eslint src --ext .js,.ts,.json",
     "lint:fix": "eslint src --fix --ext .js,.ts",
     "format": "prettier -w src",
-    "typecheck": "tsc --noEmit",
-    "build": "tsc",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js"
   },
   "dependencies": {

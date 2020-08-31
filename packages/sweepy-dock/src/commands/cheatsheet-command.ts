@@ -1,5 +1,5 @@
 import cheatsheetData from '../data/cheatsheet.json';
-import { Response } from '../types';
+import { Response } from '../interfaces';
 import { Command, CommandCategory } from './command';
 const cheatsheets = Object.values(cheatsheetData);
 type Cheatsheet = { name: string; url: string; keywords: Array<string> };

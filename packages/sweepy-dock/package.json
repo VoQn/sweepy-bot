@@ -13,7 +13,7 @@
     "url": "https://github.com/VoQn/sweepy-bot/issues"
   },
   "main": "dist/index.js",
-  "types": "dist/types/index.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "clean": "rimraf dist coverage",
     "typecheck": "tsc --noEmit",
