@@ -1,4 +1,4 @@
-import { TemparetureUnit } from '../types';
+import { TemparetureUnit } from '../interfaces';
 import { round } from './math';
 
 export const convertKelvinTemp = (

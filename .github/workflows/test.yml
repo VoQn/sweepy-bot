@@ -46,7 +46,7 @@ jobs:
 
       - name: yarn install
         run: |
-          yarn install
+          yarn install --no-optional
 
       - name: Build
         run: |
