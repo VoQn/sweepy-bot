@@ -42,8 +42,5 @@
     "@sweepy-bot/eslint-config": ">=0",
     "@sweepy-bot/prettier": ">=0"
   },
-  "optionalDependencies": {
-    "fsevents": "^2.1.3"
-  },
   "prettier": "@sweepy-bot/prettier"
 }
