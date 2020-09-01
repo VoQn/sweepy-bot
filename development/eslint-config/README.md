@@ -1,4 +1,8 @@
-# @sweepy-bot/eslint-config
+# `@sweepy-bot/eslint-config`
+
+## これなに？
+
+**Linter : [eslint](https://eslint.org/)** 用のプリセット
 
 ## Install
 
@@ -38,6 +42,21 @@ yarn add --dev @sweepy-bot/eslint-config
 # .eslintrc.yaml
 extends: '@sweepy-bot'
 ```
+
+### `npm script` として `yarn lint` を追加
+
+このようなモノを `package.json` に追加する
+
+```json
+{
+  "scripts": {
+    "lint": "eslint --ext .js,.ts,.json src"
+  }
+}
+```
+
+これで `@sweepy-bot` プロジェクト全体での `precommit` 時に自動的に lint がかかる
+`eslint` が自動的に修正できるモノは `yarn lint --fix` で OK
 
 ### パッケージ独自のルールを追加したい時
 
