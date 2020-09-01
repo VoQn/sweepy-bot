@@ -2,7 +2,7 @@
   "extends": "@sweepy-bot/typescript",
   "compilerOptions": {
     "module": "commonjs",
-    "lib": ["esnext"],
+    "lib": ["es2020"],
     "rootDir": "./src",
     "outDir": "./dist"
   },

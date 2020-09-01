@@ -4,7 +4,7 @@
     "target": "es2019",
     "module": "esnext",
     "jsx": "react",
-    "lib": ["esnext"],
+    "lib": ["es2020"],
 
     "moduleResolution": "node",
     "resolveJsonModule": true,

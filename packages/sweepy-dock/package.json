@@ -17,8 +17,8 @@
   "scripts": {
     "clean": "rimraf dist coverage",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src --ext .js,.ts",
-    "lint:fix": "eslint src --fix --ext .js,.ts",
+    "lint": "eslint --ext .js,.ts src",
+    "lint:fix": "eslint --fix --ext .js,.ts src",
     "format": "prettier -w src",
     "build": "tsc -p tsconfig.json --declaration",
     "test": "jest --",
