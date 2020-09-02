@@ -20,7 +20,7 @@
   },
   "scripts": {
     "lint": "eslint --ext .js,.ts,.json src",
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "jest --"
   },
   "dependencies": {},
   "devDependencies": {
