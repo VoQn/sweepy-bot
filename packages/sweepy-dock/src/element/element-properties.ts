@@ -4,6 +4,11 @@ export const elementProperties: Array<ElementProperty> = [
   {
     prop: 'name',
     name: '物質名',
+    format: (e) => `${e.name}`,
+  },
+  {
+    prop: 'name@phase',
+    name: '物質名@状態',
     format: (e) => `${e.name}@${e.phase}`,
   },
   {

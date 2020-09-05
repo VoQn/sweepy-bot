@@ -11,26 +11,46 @@ import { Command, CommandCategory } from './command';
 import { HelpCommand } from './help-command';
 
 const nameProp = elementProperties.find((p) => p.prop === 'name');
+const nameAndPhaseProp = elementProperties.find((p) => p.prop === 'name@phase');
 
 const defaultAnswer = ':thinking: なんのこと？';
 
-function fuzzyAnswer(choice: Array<Element>, property: ElementProperty) {
-  if (choice.length === 1) {
-    const name = nameProp.format(choice[0]);
-    const value = property.format(choice[0]);
-
-    return [':bulb: もしかして、これ？', '```', name, '```', value].join('\n');
+function fuzzyAnswer(choice: Array<Element>, property?: ElementProperty) {
+  if (choice.every((e) => e.name == choice[0].name) && property) {
+    return [
+      ':bulb: もしかして、これ？',
+      nameProp.format(choice[0]),
+      `${nameProp.format(choice[0])}の${property.name}はこんな感じだよ`,
+      '```',
+      ...choice.map((e) => `${e.phase}: ${property.format(e)}`),
+      '```',
+    ].join('\n');
   }
 
   if (choice.length > 1) {
     return [
       ':thinking: 複数あるよ。聞き直してね。',
       '```',
-      ...choice.map(nameProp.format),
+      ...choice.map(nameAndPhaseProp.format),
       '```',
     ].join('\n');
   }
-  return null;
+  return defaultAnswer;
+}
+
+function parse(arg: string) {
+  const args: Array<string> = arg.split(/\s+/);
+  const lastWord = args[args.length - 1];
+
+  const property = elementProperties.find(
+    (p) => p.prop == lastWord || p.name == lastWord
+  );
+  if (property) {
+    args.pop();
+    return { elementName: args.join(' '), propertyName: lastWord };
+  } else {
+    return { elementName: args.join(' '), propertyName: null };
+  }
 }
 
 function getAnswer(arg: string): string {
@@ -42,16 +62,12 @@ function getAnswer(arg: string): string {
       '```',
     ].join('\n');
   }
-
-  const m = /^(?<elementName>.+)\s+(?<propertyName>\S+)$/.exec(arg);
-  if (!m) return defaultAnswer;
-
-  const { elementName, propertyName } = m.groups;
+  const { elementName, propertyName } = parse(arg);
 
   const property = elementProperties.find(
     (p) => p.prop == propertyName || p.name == propertyName
   );
-  if (!property) {
+  if (propertyName && !property) {
     return [
       ':thinking: 知らない属性だよ。知ってる属性は…',
       '```',
@@ -65,7 +81,23 @@ function getAnswer(arg: string): string {
     // argとnameを完全一致検索する
     const exact: Array<Element> | null = exactMatch(elementName);
     if (exact) {
-      return exact.map((e) => `${e.phase}: ${property.format(e)}`).join('\n');
+      const element = nameProp.format(exact[0]);
+      if (property) {
+        return [
+          `${element}の${property.name}はこんな感じだよ`,
+          '```',
+          ...exact.map((e) => `${e.phase}: ${property.format(e)}`),
+          '```',
+        ].join('\n');
+      } else {
+        return [
+          'その物質は知っているよ。',
+          `\`!element ${element} 属性名\` で詳細を答えられるよ`,
+          '```',
+          ...exact.map((e) => nameAndPhaseProp.format(e)),
+          '```',
+        ].join('\n');
+      }
     }
   }
 
@@ -97,10 +129,12 @@ export const ElementCommand: Command = Command.register({
   name: 'element',
   help: {
     summery: [
-      '_キーワードにマッチした物質の属性値を出すよ。何も指定してなかったらとりあえず物質一覧を出すよ_',
+      '_キーワードにマッチした物質の属性値を出すよ_',
       '```!element 物質名 属性名```',
     ].join('\n'),
     description: [
+      '_物質名を探すよ_',
+      '```!element 物質名```',
       '_キーワードに完全に一致した物質の属性値を出すよ_',
       '```!element 物質名 属性名```',
       '_キーワードにマッチした物質の属性値を出すよ_',

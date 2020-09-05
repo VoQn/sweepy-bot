@@ -12,6 +12,6 @@ export interface Element {
 
 export interface ElementProperty {
   name: string;
-  prop: keyof Element;
+  prop: keyof Element | string;
   format: (element: Element) => string;
 }
