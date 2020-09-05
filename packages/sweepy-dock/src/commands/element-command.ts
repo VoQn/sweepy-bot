@@ -10,7 +10,7 @@ import { Response } from '../interfaces';
 import { Command, CommandCategory } from './command';
 import { HelpCommand } from './help-command';
 
-const nameProp = elementProperties.find((p) => p.name === 'name');
+const nameProp = elementProperties.find((p) => p.prop === 'name');
 
 const defaultAnswer = ':thinking: なんのこと？';
 
