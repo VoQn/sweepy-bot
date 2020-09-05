@@ -31,7 +31,7 @@
     "start:server": "lerna run --stream --scope @sweepy-bot/app start:server --",
     "start:worker": "lerna run --scope @sweepy-bot/app start:worker --",
     "prestart": "yarn build",
-    "start": "start:worker",
+    "start": "yarn start:worker",
     "precommit": "pretty-quick --staged --verbose --"
   },
   "husky": {
