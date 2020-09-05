@@ -40,16 +40,20 @@ function fuzzyAnswer(choice: Array<Element>, property?: ElementProperty) {
 
 function parse(arg: string) {
   const args: Array<string> = arg.split(/\s+/);
-  const lastWord = args[args.length - 1];
+  const lastWord = args[args.length - 1].toLowerCase();
 
   const property = elementProperties.find(
-    (p) => p.prop == lastWord || p.name == lastWord
+    (p) => p.prop.toLowerCase() == lastWord || p.name.toLowerCase() == lastWord
   );
   if (property) {
     args.pop();
-    return { elementName: args.join(' '), propertyName: lastWord };
+    return {
+      elementName: args.join(' '),
+      propertyName: lastWord,
+      property: property,
+    };
   } else {
-    return { elementName: args.join(' '), propertyName: null };
+    return { elementName: args.join(' '), propertyName: null, property: null };
   }
 }
 
@@ -62,11 +66,8 @@ function getAnswer(arg: string): string {
       '```',
     ].join('\n');
   }
-  const { elementName, propertyName } = parse(arg);
+  const { elementName, propertyName, property } = parse(arg);
 
-  const property = elementProperties.find(
-    (p) => p.prop == propertyName || p.name == propertyName
-  );
   if (propertyName && !property) {
     return [
       ':thinking: 知らない属性だよ。知ってる属性は…',
@@ -112,7 +113,9 @@ function getAnswer(arg: string): string {
 }
 
 function exactMatch(elementName: string): Array<Element> | null {
-  const choice = elements.filter((o) => o.name === elementName);
+  const lower = elementName.toLowerCase();
+
+  const choice = elements.filter((o) => o.name.toLowerCase() === lower);
   if (choice.length === 1) return choice;
   if (choice.length === 0) return null;
   if (choice.every((e) => e.name == choice[0].name)) return choice;
@@ -121,7 +124,9 @@ function exactMatch(elementName: string): Array<Element> | null {
 }
 
 function partialMatch(elementName: string): Array<Element> {
-  return elements.filter((o) => o.name.includes(elementName));
+  const lower = elementName.toLowerCase();
+
+  return elements.filter((o) => o.name.toLowerCase().includes(lower));
 }
 
 export const ElementCommand: Command = Command.register({
