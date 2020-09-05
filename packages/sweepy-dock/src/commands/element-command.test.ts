@@ -1,8 +1,14 @@
 import { elementProperties } from '../element';
 import { ElementCommand } from './element-command';
+import { HelpCommand } from './help-command';
 
 describe('ElementCommand', () => {
   describe('exec', () => {
+    it('without argument', () => {
+      const result = ElementCommand.exec('');
+      expect(result).not.toBeNull();
+      expect(result.content).toEqual(HelpCommand.exec('element').content);
+    });
     it('with exact name and prop', () => {
       const result = ElementCommand.exec('Oxygen shc');
       expect(result).not.toBeNull();

@@ -1,3 +1,5 @@
+import { Client } from 'discord.js';
+
 import {
   Element,
   elementProperties,
@@ -6,12 +8,9 @@ import {
 } from '../element';
 import { Response } from '../interfaces';
 import { Command, CommandCategory } from './command';
+import { HelpCommand } from './help-command';
 
 const nameProp = elementProperties.find((p) => p.name === 'name');
-
-function getNames() {
-  return ['```', ...elements.map((e) => nameProp.format(e)), '```'].join('\n');
-}
 
 const defaultAnswer = ':thinking: なんのこと？';
 
@@ -106,17 +105,15 @@ export const ElementCommand: Command = Command.register({
       '```!element 物質名 属性名```',
       '_キーワードにマッチした物質の属性値を出すよ_',
       '```!element 物質名? 属性名```',
-      '_何も指定してなかったらとりあえず一覧リストを出すよ_',
-      '```!element```',
       '_答えられる属性一覧を出すよ_',
       '```!element 属性```',
     ].join('\n'),
   },
 
-  exec: (args: string): Response => {
+  exec: (args: string, client: Client): Response => {
     if (!args || args.length == 0) {
-      // 物質一覧
-      return { content: getNames() };
+      // 引数なしの時は HelpCommand に委譲する
+      return HelpCommand.exec('element', client);
     } else if (args.length < 2) {
       return {
         content:
