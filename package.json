@@ -26,7 +26,6 @@
     "lint:fix": "lerna run lint:fix --",
     "format": "lerna run format --no-bail --",
     "typecheck": "lerna run typecheck --",
-    "pretest": "yarn build",
     "test": "lerna run test --no-bail --",
     "start:server": "lerna run --stream --scope @sweepy-bot/app start:server --",
     "start:worker": "lerna run --scope @sweepy-bot/app start:worker --",

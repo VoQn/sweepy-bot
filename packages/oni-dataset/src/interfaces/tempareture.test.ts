@@ -9,6 +9,10 @@ describe('Tempareture', () => {
       const k = new Kelvin(0);
       expect(k.toFahrenheit.value).toBeCloseTo(-459.67);
     });
+    it('toString', () => {
+      const k = new Kelvin(273);
+      expect(`${k}`).toBe('273K');
+    });
   });
   describe('Celcius', () => {
     it('0C === 273.15K', () => {
