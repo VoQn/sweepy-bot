@@ -1,36 +1,39 @@
 {
-  "name": "@sweepy-bot/oni-dataset",
-  "version": "1.0.0",
   "private": true,
-  "description": "Dataset about OxygenNotIncluded",
+  "name": "@sweepy-bot/physics",
+  "version": "1.0.0",
+  "description": "> TODO: description",
   "keywords": [
-    "OxygenNotIncluded",
-    "game"
+    "physics",
+    "math"
   ],
   "author": "VoQn <voqn.tyrant@gmail.com>",
   "homepage": "https://github.com/VoQn/sweepy-bot#readme",
   "license": "UNLICENSED",
   "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/types",
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VoQn/sweepy-bot.git"
   },
-  "bugs": {
-    "url": "https://github.com/VoQn/sweepy-bot/issues"
-  },
   "scripts": {
     "clean": "rimraf dist coverage",
     "lint": "eslint --ext .js,.ts,.json src",
-    "lint:fix": "eslint --fix --ext .js,.ts src",
     "typecheck": "tsc --noEmit",
     "test": "jest --",
     "test:coverage": "jest --coverage --",
     "build": "tsc -p tsconfig.json --declaration",
+    "lint:fix": "eslint --fix --ext .js,.ts src",
     "format": "prettier -w src"
   },
-  "dependencies": {
-    "@sweepy-bot/physics": ">=0"
+  "bugs": {
+    "url": "https://github.com/VoQn/sweepy-bot/issues"
   },
+  "dependencies": {},
   "devDependencies": {
     "@sweepy-bot/typescript": ">=0",
     "@sweepy-bot/jest": ">=0",
