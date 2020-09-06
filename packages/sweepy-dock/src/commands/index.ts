@@ -5,3 +5,4 @@ export * from './emoji-command';
 export * from './help-command';
 export * from './bookmark-command';
 export * from './element-command';
+export * from './liquid-command';
