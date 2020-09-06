@@ -1,4 +1,4 @@
-import { lengthFloat, padFloat } from './float';
+import { lengthFloat, paddingForFloats, padFloat } from './float';
 
 describe('float', () => {
   describe('lengthFloat', () => {
@@ -13,6 +13,24 @@ describe('float', () => {
     });
     it('float without digits', () => {
       expect(lengthFloat(0.15)).toEqual({ digits: 1, decimals: 3 });
+    });
+  });
+
+  describe('paddingForFloats', () => {
+    it('two args', () => {
+      expect(paddingForFloats(0, 0.1)).toEqual({ digits: 1, decimals: 2 });
+    });
+    it('zero arg', () => {
+      expect(paddingForFloats()).toEqual({ digits: 0, decimals: 0 });
+    });
+    it('one arg', () => {
+      expect(paddingForFloats(234.15)).toEqual({ digits: 3, decimals: 3 });
+    });
+    it('splat', () => {
+      expect(paddingForFloats(...[1, 23, 4.5, 6.78])).toEqual({
+        digits: 2,
+        decimals: 3,
+      });
     });
   });
 

@@ -27,7 +27,7 @@ function format(liquids: Array<Element>): Array<string> {
   const namePadding = Math.max(...liquids.map((e) => e.name.length));
 
   // 数字はピリオドのところで整列したいので複雑なことをする
-  const molarMassPadding = paddingForFloats(liquids.map((e) => e.molarMass));
+  const molarMassPadding = paddingForFloats(...liquids.map((e) => e.molarMass));
 
   return liquids.map((e) => {
     const name = e.name.padEnd(namePadding);

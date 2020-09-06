@@ -6,6 +6,7 @@ function splitFloatStr(num: number) {
 }
 
 export type FloatLength = { digits: number; decimals: number };
+const ZeroPadding = { digits: 0, decimals: 0 };
 
 const floatLengthMax = (a: FloatLength, b: FloatLength): FloatLength => {
   return {
@@ -20,8 +21,10 @@ const floatLengthMax = (a: FloatLength, b: FloatLength): FloatLength => {
  * @param numbers target float numbers
  * @returns padding
  */
-export const paddingForFloats = (numbers: Array<number>): FloatLength => {
-  return numbers.map(lengthFloat).reduce((max, e) => floatLengthMax(max, e));
+export const paddingForFloats = (...numbers: number[]): FloatLength => {
+  return numbers
+    .map(lengthFloat)
+    .reduce((max, e) => floatLengthMax(max, e), ZeroPadding);
 };
 
 /**
