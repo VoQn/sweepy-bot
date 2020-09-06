@@ -9,7 +9,9 @@ export const isNotLessThan = <T extends number>(
   return l >= x;
 };
 
-export const makeNotLessThan = <T extends number>(l: T) => (x: number) => {
+export const makeNotLessThan = <T extends number>(l: T) => (
+  x: number
+): NotLessThan<T> => {
   if (!isNotLessThan(l, x)) {
     throw new RangeError(`argument ${x} is less than ${l}`);
   }
