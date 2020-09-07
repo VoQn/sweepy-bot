@@ -20,18 +20,18 @@
     "type": "git",
     "url": "git+https://github.com/VoQn/sweepy-bot.git"
   },
+  "bugs": {
+    "url": "https://github.com/VoQn/sweepy-bot/issues"
+  },
   "scripts": {
     "clean": "rimraf dist coverage",
     "lint": "eslint --ext .js,.ts,.json src",
     "typecheck": "tsc --noEmit",
-    "test": "jest --",
-    "test:coverage": "jest --coverage --",
+    "test": "jest --config jest.config.js --",
+    "test:coverage": "jest --config jest.config.js --coverage --",
     "build": "tsc -p tsconfig.json --declaration",
     "lint:fix": "eslint --fix --ext .js,.ts src",
     "format": "prettier -w src"
-  },
-  "bugs": {
-    "url": "https://github.com/VoQn/sweepy-bot/issues"
   },
   "dependencies": {},
   "devDependencies": {

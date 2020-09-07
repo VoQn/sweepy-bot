@@ -1,4 +1,4 @@
-import { Celsius } from '@sweepy-bot/physics/src/tempareture';
+import { Celsius } from '@sweepy-bot/physics';
 
 /**
  * 生存可能な体温の範囲。摂氏基準

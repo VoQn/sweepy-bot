@@ -1,7 +1,7 @@
 /**
  * 抽象的な『温度』を表現するオブジェクトインターフェース
  */
-export interface Tempareture {
+export interface Temperature {
   /**
    *  基本単位の記法表現。
    *  例えば 『摂氏』 に於いては **°C** を用いる。
@@ -10,11 +10,18 @@ export interface Tempareture {
   readonly unit: string;
 
   /**
+   * その『温度』における零度をケルビンで表現したもの。
+   * 例えば摂氏(セルシウス度)であれば _**0°C = 273.15K**_ となるが、
+   * 華氏（ファーレンハイト度）であれば _**0°F = 255.37K**_ となる
+   */
+  readonly zero: number;
+
+  /**
    * その『温度』単位における絶対零度
    * 例えばケルビンであれば **0K** であり、
    * 摂氏（セルシウス度）であれば **-273.15°C** となる。
    */
-  readonly zero: number;
+  readonly absoluteZero: number;
 
   /**
    * その『単位』上での数値表現
