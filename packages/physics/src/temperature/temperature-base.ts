@@ -3,11 +3,6 @@ import { Temperature } from './temperature-interface';
 
 export abstract class TemperatureBase implements Temperature {
   static readonly unit: string;
-  /**
-   * その『温度』単位における絶対零度
-   * 例えばケルビンであれば **0K** であり、
-   * 摂氏（セルシウス度）であれば **-273.15°C** となる。
-   */
   static readonly absoluteZero: number;
   static readonly kelvinByDegrees: (degrees: number) => number;
   static readonly degreesByKelvin: (kelvin: number) => number;
@@ -47,7 +42,7 @@ export abstract class TemperatureBase implements Temperature {
   }
 
   equals(other: { kelvin: number }, digits = 3): boolean {
-    if (digits) {
+    if (isNumber(digits) && digits !== 0) {
       return Math.abs(this.kelvin - other.kelvin) < parseFloat(`1e${-digits}`);
     }
     return this.kelvin === other.kelvin;

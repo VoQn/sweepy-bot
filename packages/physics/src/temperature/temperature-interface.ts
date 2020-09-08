@@ -32,3 +32,23 @@ export interface Temperature extends TemperatureData {
    */
   readonly existable: boolean;
 }
+
+export interface Convertable {
+  readonly unit: string;
+  /**
+   * その『温度単位』における絶対零度
+   * 例えばケルビンであれば **0K** であり、
+   * 摂氏（セルシウス度）であれば **-273.15°C** となる。
+   */
+  readonly absoluteZero: number;
+  /**
+   * 与えられた数値を その『温度単位』での値とした時の
+   * ケルビン温度を計算して返す
+   */
+  readonly degreesByKelvin: (kelvin: number) => number;
+  /**
+   * 与えられた数値を ケルビン温度とした時の
+   * その『温度単位』での値を計算して返す
+   */
+  readonly kelvinByDegrees: (degrees: number) => number;
+}
