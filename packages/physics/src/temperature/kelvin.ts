@@ -1,20 +1,12 @@
-import { Celsius } from './celsius';
-import { Convertable } from './convertable';
-import { Fahrenheit } from './fahrenheit';
 import { TemperatureBase } from './temperature-base';
 
-export class Kelvin extends TemperatureBase implements Convertable {
+export class Kelvin extends TemperatureBase {
   static readonly unit = 'K';
-  static readonly rate = 1;
   static readonly absoluteZero = 0;
-
-  get toKelvin(): Kelvin {
-    return this;
+  static degreesByKelvin(kelvin: number): number {
+    return kelvin;
   }
-  get toCelsius(): Celsius {
-    return new Celsius(this);
-  }
-  get toFahrenheit(): Fahrenheit {
-    return new Fahrenheit(this);
+  static kelvinByDegrees(degrees: number): number {
+    return degrees;
   }
 }

@@ -16,17 +16,9 @@ describe('Celcius', () => {
   it('-273.15 === 0K', () => {
     expect(new Celsius(-273.15).kelvin).toBeCloseTo(0);
   });
-  it('0C === 32F', () => {
-    const c = new Celsius(0);
-    expect(c.toFahrenheit.value).toBeCloseTo(32);
-  });
-  it('100C === 212F', () => {
-    const c = new Celsius(100);
-    expect(c.toFahrenheit.value).toBeCloseTo(212);
-  });
   it('toString', () => {
     const c = new Celsius(-10);
-    expect(`${c}`).toBe('-10°C');
+    expect(`${c}`).toBe('-10 °C');
   });
   it('valueOf', () => {
     const a = new Celsius(25);

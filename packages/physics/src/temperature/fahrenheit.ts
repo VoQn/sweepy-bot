@@ -1,23 +1,14 @@
-import { AbsoluteZero, UnitSymbol } from '.';
-import { Celsius } from './celsius';
-import { ZeroDegrees } from './constants';
-import { Convertable } from './convertable';
-import { Kelvin } from './kelvin';
 import { TemperatureBase } from './temperature-base';
 
-export class Fahrenheit extends TemperatureBase implements Convertable {
-  static readonly unit = UnitSymbol.Fahrenheit; // '°F';
-  static readonly zeroDegrees = ZeroDegrees.Fahrenheit; // 255.37K
-  static readonly rate = 5 / 9;
-  static readonly absoluteZero = AbsoluteZero.Fahrenheit; // -459.67°F;
+export class Fahrenheit extends TemperatureBase {
+  static readonly unit = '°F';
+  static readonly degree = 5 / 9;
+  static readonly absoluteZero = -459.67;
 
-  get toKelvin(): Kelvin {
-    return new Kelvin(this);
+  static degreesByKelvin(kelvin: number): number {
+    return kelvin / this.degree + this.absoluteZero;
   }
-  get toCelsius(): Celsius {
-    return new Celsius(this);
-  }
-  get toFahrenheit(): Fahrenheit {
-    return this;
+  static kelvinByDegrees(degrees: number): number {
+    return this.degree * (degrees - this.absoluteZero);
   }
 }

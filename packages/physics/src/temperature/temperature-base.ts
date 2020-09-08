@@ -1,50 +1,44 @@
 import { isNumber } from '../type-detection';
 import { Temperature } from './temperature-interface';
 
-export const valueOfKelvin = (t: number | Temperature): number => {
-  return isNumber(t) ? t : t.kelvin;
-};
-
 export abstract class TemperatureBase implements Temperature {
-  static readonly unit: string = undefined; // 'K';
-  static readonly rate: number = undefined; // 1;
-  static readonly zeroDegrees: number = undefined; // 0;
-  static readonly absoluteZero: number = undefined; // 0;
+  static readonly unit: string;
+  /**
+   * その『温度』単位における絶対零度
+   * 例えばケルビンであれば **0K** であり、
+   * 摂氏（セルシウス度）であれば **-273.15°C** となる。
+   */
+  static readonly absoluteZero: number;
+  static readonly kelvinByDegrees: (degrees: number) => number;
+  static readonly degreesByKelvin: (kelvin: number) => number;
 
-  static valueByKelvin(t: number | Temperature): number {
-    return valueOfKelvin(t) / this.rate + this.absoluteZero;
-  }
-
-  get static(): typeof TemperatureBase {
+  private get static(): typeof TemperatureBase {
     return this.constructor as typeof TemperatureBase;
   }
 
-  readonly value: number;
+  readonly kelvin: number;
   readonly existable: boolean;
 
-  constructor(t: number | Temperature) {
-    const value = isNumber(t) ? t : this.static.valueByKelvin(t);
-    this.existable = value >= this.static.absoluteZero;
-    this.value = value;
+  constructor(t: number | { kelvin: number }) {
+    let kelvin = 0;
+    if (isNumber(t)) {
+      kelvin = this.static.kelvinByDegrees(t);
+    } else {
+      kelvin = t.kelvin;
+    }
+    this.existable = kelvin >= 0;
+    this.kelvin = kelvin;
+  }
+
+  get degrees(): number {
+    return this.static.degreesByKelvin(this.kelvin);
   }
 
   get unit(): string {
     return this.static.unit;
   }
 
-  get zero(): number {
-    return this.static.zeroDegrees;
-  }
-
-  get absoluteZero(): number {
-    return this.static.absoluteZero;
-  }
-
-  get kelvin(): number {
-    return (this.value - this.static.absoluteZero) * this.static.rate;
-  }
-
-  deltaKelvin(other: Temperature): number {
+  deltaKelvin(other: { kelvin: number }): number {
     return this.kelvin - other.kelvin;
   }
 
@@ -52,7 +46,13 @@ export abstract class TemperatureBase implements Temperature {
     return this.kelvin;
   }
 
+  equals(other: { kelvin: number }, digits = 3): boolean {
+    if (digits) {
+      return Math.abs(this.kelvin - other.kelvin) < parseFloat(`1e${-digits}`);
+    }
+    return this.kelvin === other.kelvin;
+  }
   toString(): string {
-    return `${this.value}${this.unit}`;
+    return `${this.degrees} ${this.unit}`;
   }
 }
