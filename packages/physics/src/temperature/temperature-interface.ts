@@ -31,6 +31,8 @@ export interface Temperature extends TemperatureData {
    * ※ 例えば「温度差」を表現する場合、 _-30K_ といった温度にはなり得る
    */
   readonly existable: boolean;
+
+  equals: (other: Temperature, digits?: number) => boolean;
 }
 
 export interface Convertable {
