@@ -1,0 +1,44 @@
+{
+  "private": true,
+  "name": "@sweepy-bot/physics",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "keywords": [
+    "physics",
+    "math"
+  ],
+  "author": "VoQn <voqn.tyrant@gmail.com>",
+  "homepage": "https://github.com/VoQn/sweepy-bot#readme",
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/types",
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VoQn/sweepy-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VoQn/sweepy-bot/issues"
+  },
+  "scripts": {
+    "clean": "rimraf dist coverage",
+    "lint": "eslint --ext .js,.ts,.json src",
+    "typecheck": "tsc --noEmit",
+    "test": "jest --config jest.config.js ",
+    "test:coverage": "jest --config jest.config.js --coverage ",
+    "build": "tsc -p tsconfig.json --declaration",
+    "lint:fix": "eslint --fix --ext .js,.ts src",
+    "format": "prettier -w src"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@sweepy-bot/typescript": ">=0",
+    "@sweepy-bot/jest": ">=0",
+    "@sweepy-bot/eslint-config": ">=0",
+    "@sweepy-bot/prettier": ">=0"
+  },
+  "prettier": "@sweepy-bot/prettier"
+}
